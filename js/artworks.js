@@ -19,6 +19,14 @@ const ARTWORKS = [
     sold: false
   },
   {
+    id: 'grabado-01',
+    image: 'assets/images/grabado-01.jpg',
+    name: { es: 'Círculo velado', en: 'Veiled Circle' },
+    technique: { es: 'Grabado y técnica mixta sobre papel', en: 'Etching and mixed media on paper' },
+    measures: '57 x 57 cm',
+    sold: false
+  },
+  {
     id: 'obra-03',
     image: 'assets/images/obra-03.jpg',
     name: { es: 'Fragmento solar', en: 'Solar Fragment' },
