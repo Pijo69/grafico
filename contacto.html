@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Contacto — Manolo Granado</title>
+<meta name="description" content="Contacta con Manolo Granado para consultas sobre obra, encargos y exposiciones." />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="brand">Manolo Granado</div>
+
+  <button class="nav-toggle" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+
+  <nav class="main-nav">
+    <a href="index.html" data-i18n="nav.home">Home</a>
+    <a href="obra.html" data-i18n="nav.obra">Obra</a>
+    <a href="grabado.html" data-i18n="nav.grabado">Grabado</a>
+    <a href="curriculum.html" data-i18n="nav.curriculum">Curriculum</a>
+    <a href="editorial.html" data-i18n="nav.editorial">Editorial</a>
+    <a href="contacto.html" class="active" data-i18n="nav.contacto">Contacto</a>
+  </nav>
+
+  <div class="lang-switch">
+    <button data-lang="es">ES</button>
+    <span class="sep">/</span>
+    <button data-lang="en">EN</button>
+  </div>
+</header>
+
+<main>
+
+  <div class="page-title-wrap">
+    <h1 class="page-title" data-i18n="contacto.title">Contacto</h1>
+    <p class="lede" data-i18n="contacto.lede">Para consultas sobre obra disponible, encargos, exposiciones o prensa, escribe a través del formulario o directamente por correo electrónico.</p>
+  </div>
+
+  <div class="content-section">
+    <div class="contact-page-grid">
+
+      <div class="contact-info">
+        <div class="ci-row">
+          <span class="ci-label" data-i18n="contacto.studio">Estudio</span>
+          <span class="ci-value" data-i18n="contacto.studio.value">Sevilla, España</span>
+        </div>
+        <div class="ci-row">
+          <span class="ci-label" data-i18n="contacto.email.label">Email</span>
+          <span class="ci-value"><a href="mailto:contacto@manologranado.com">contacto@manologranado.com</a></span>
+        </div>
+        <div class="ci-row">
+          <span class="ci-label" data-i18n="contacto.social.label">Redes</span>
+          <span class="ci-value">
+            <a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a> &nbsp;·&nbsp;
+            <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+          </span>
+        </div>
+      </div>
+
+      <form class="contact-form" action="mailto:contacto@manologranado.com" method="post" enctype="text/plain">
+        <label for="cf-name" data-i18n="contacto.form.name">Nombre</label>
+        <input id="cf-name" name="nombre" type="text" required />
+
+        <label for="cf-email" data-i18n="contacto.form.email">Email</label>
+        <input id="cf-email" name="email" type="email" required />
+
+        <label for="cf-message" data-i18n="contacto.form.message">Mensaje</label>
+        <textarea id="cf-message" name="mensaje" rows="5" required></textarea>
+
+        <button type="submit" data-i18n="contacto.form.send">Enviar</button>
+        <p class="form-note" data-i18n="contacto.form.note">Este formulario abre tu gestor de correo predeterminado.</p>
+      </form>
+
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-brand">
+    <img src="assets/icons/sello.svg" alt="Sello Manolo Granado" />
+    <span>Manolo Granado</span>
+  </div>
+  <div class="footer-contact">
+    <a class="email" href="mailto:contacto@manologranado.com">contacto@manologranado.com</a>
+    <div class="footer-social">
+      <a href="https://facebook.com" target="_blank" rel="noopener"><img src="assets/icons/facebook.svg" alt="Facebook" /></a>
+      <a href="https://instagram.com" target="_blank" rel="noopener"><img src="assets/icons/instagram.svg" alt="Instagram" /></a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/artworks.js"></script>
+<script src="js/gallery.js"></script>
+<script src="js/i18n.js"></script>
+</body>
+</html>
