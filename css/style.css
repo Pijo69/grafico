@@ -532,7 +532,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .cv-intro .cv-portrait {
-  flex: 0 0 260px;
+  flex: 0 0 420px;
 }
 
 .cv-intro .cv-portrait img {
@@ -543,6 +543,13 @@ a { color: inherit; text-decoration: none; }
 .cv-intro .cv-formation {
   flex: 1;
   padding-top: 4px;
+}
+
+.cv-intro .cv-bio {
+  font-weight: 300;
+  font-size: 17px;
+  line-height: 1.6;
+  margin: 0 0 40px;
 }
 
 .cv-intro .cv-formation ul {
@@ -738,7 +745,7 @@ a { color: inherit; text-decoration: none; }
 
   .grabado-feature { flex-direction: column; gap: 30px; }
   .cv-intro { flex-direction: column; gap: 30px; }
-  .cv-intro .cv-portrait { flex: none; width: 200px; }
+  .cv-intro .cv-portrait { flex: none; width: 260px; }
   .grabado-feature .gf-image { flex: none; width: 100%; }
 
   .site-footer {

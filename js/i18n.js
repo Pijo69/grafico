@@ -25,7 +25,7 @@ const I18N = {
     'grabado.p3': 'Actualmente trabaja con talleres de estampación en Madrid y Lisboa, y sus grabados forman parte de colecciones privadas en España, Portugal y Francia.',
 
     'curriculum.title': 'Curriculum',
-    'curriculum.lede': 'Manolo Granado Giraldo (Ibi, Alicante, 1969). Actualmente reside en Banyeres de Mariola (Alicante).',
+    'curriculum.bio.rest': '(Ibi, Alicante, 1969). Actualmente reside en Banyeres de Mariola (Alicante).',
     'curriculum.group.formation': 'Formación',
     'curriculum.group.exhibitions': 'Exposiciones individuales',
     'curriculum.group.group': 'Exposiciones colectivas',
@@ -75,7 +75,7 @@ const I18N = {
     'grabado.p3': 'He currently works with print studios in Madrid and Lisbon, and his prints belong to private collections in Spain, Portugal and France.',
 
     'curriculum.title': 'CV',
-    'curriculum.lede': 'Manolo Granado Giraldo (Ibi, Alicante, 1969). He currently lives in Banyeres de Mariola (Alicante).',
+    'curriculum.bio.rest': '(Ibi, Alicante, 1969). He currently lives in Banyeres de Mariola (Alicante).',
     'curriculum.group.formation': 'Education',
     'curriculum.group.exhibitions': 'Solo exhibitions',
     'curriculum.group.group': 'Group exhibitions',
