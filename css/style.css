@@ -532,7 +532,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .cv-intro .cv-portrait {
-  flex: 0 0 420px;
+  flex: 0 0 520px;
 }
 
 .cv-intro .cv-portrait img {
@@ -745,7 +745,7 @@ a { color: inherit; text-decoration: none; }
 
   .grabado-feature { flex-direction: column; gap: 30px; }
   .cv-intro { flex-direction: column; gap: 30px; }
-  .cv-intro .cv-portrait { flex: none; width: 260px; }
+  .cv-intro .cv-portrait { flex: none; width: 320px; }
   .grabado-feature .gf-image { flex: none; width: 100%; }
 
   .site-footer {
