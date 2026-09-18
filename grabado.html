@@ -53,6 +53,17 @@
     </div>
   </div>
 
+  <div class="content-section">
+    <div class="gallery grid-2" style="margin-top: 20px;">
+      <div class="gallery-item" id="grabado-item-1">
+        <img src="assets/images/grabado-02.jpg" alt="Enredo" />
+      </div>
+      <div class="gallery-item" id="grabado-item-2">
+        <img src="assets/images/grabado-03.jpg" alt="Las raíces abrazan la tierra" />
+      </div>
+    </div>
+  </div>
+
   <section class="contact-cta">
     <p data-i18n="cta.text">Si quieres contactar conmigo, clica aquí abajo.</p>
     <a class="contact-btn" href="contacto.html" data-i18n="cta.button">Contacto</a>
@@ -109,6 +120,12 @@
 <script>
   document.getElementById('grabado-feature-img').addEventListener('click', () => {
     openLightbox('GRABADOS', 0);
+  });
+  document.getElementById('grabado-item-1').addEventListener('click', () => {
+    openLightbox('GRABADOS', 1);
+  });
+  document.getElementById('grabado-item-2').addEventListener('click', () => {
+    openLightbox('GRABADOS', 2);
   });
 </script>
 </body>
