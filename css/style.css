@@ -61,21 +61,21 @@ a { color: inherit; text-decoration: none; }
 .site-header .brand {
   font-weight: 700;
   text-transform: uppercase;
-  font-size: 18px;
+  font-size: 21px;
   letter-spacing: 1px;
   white-space: nowrap;
 }
 
 .site-header nav.main-nav {
   position: absolute;
-  left: 50%;
+  left: calc(50% + 40px);
   transform: translateX(-50%);
   display: flex;
-  gap: 34px;
+  gap: 22px;
 }
 
 .site-header nav.main-nav a {
-  font-size: 13px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 1px;
   font-weight: 400;
