@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Grabado — Manolo Granado</title>
+<meta name="description" content="Obra gráfica y grabado de Manolo Granado." />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/animations.css" />
+<script>document.documentElement.classList.add('js-anim');</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="brand">Manolo Granado</div>
+
+  <button class="nav-toggle" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+
+  <nav class="main-nav">
+    <a href="index.html" data-i18n="nav.home">Home</a>
+    <a href="obra.html" data-i18n="nav.obra">Obra</a>
+    <a href="grabado.html" class="active" data-i18n="nav.grabado">Grabado</a>
+    <a href="curriculum.html" data-i18n="nav.curriculum">Curriculum</a>
+    <a href="editorial.html" data-i18n="nav.editorial">Editorial</a>
+    <a href="contacto.html" data-i18n="nav.contacto">Contacto</a>
+  </nav>
+
+  <div class="lang-switch">
+    <button data-lang="es">ES</button>
+    <span class="sep">/</span>
+    <button data-lang="en">EN</button>
+  </div>
+</header>
+
+<main>
+
+  <div class="page-title-wrap">
+    <h1 class="page-title" data-i18n="grabado.title">Grabados</h1>
+    <p class="lede" data-i18n="grabado.lede">El grabado como laboratorio: matriz, tinta y azar controlado.</p>
+  </div>
+
+  <div class="content-section">
+    <div class="grabado-feature">
+      <div class="gf-image" data-source="GRABADOS" data-index="0" id="grabado-feature-img">
+        <img src="assets/images/grabado-01.jpg" alt="Círculo velado" />
+      </div>
+      <div class="gf-text">
+        <h2 data-i18n="grabado.h2">Sobre la obra gráfica</h2>
+        <p data-i18n="grabado.p1">Desde hace más de una década, Manolo Granado compagina la pintura con la obra gráfica, entendida como un territorio propio de experimentación.</p>
+        <p data-i18n="grabado.p2">Las series de grabado retoman el círculo como forma recurrente en toda su producción.</p>
+        <p data-i18n="grabado.p3">Actualmente trabaja con talleres de estampación en Madrid y Lisboa.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-section">
+    <div class="gallery grid-2" style="margin-top: 20px;">
+      <div class="gallery-item" id="grabado-item-1">
+        <img src="assets/images/grabado-02.jpg" alt="Enredo" />
+      </div>
+      <div class="gallery-item" id="grabado-item-2">
+        <img src="assets/images/grabado-03.jpg" alt="Las raíces abrazan la tierra" />
+      </div>
+    </div>
+  </div>
+
+  <section class="contact-cta">
+    <p data-i18n="cta.text">Si quieres contactar conmigo, clica aquí abajo.</p>
+    <a class="contact-btn" href="contacto.html" data-i18n="cta.button">Contacto</a>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-brand">
+    <img src="assets/icons/sello.png" alt="Sello Manolo Granado" />
+    <span>Manolo Granado</span>
+  </div>
+  <div class="footer-contact">
+    <a class="email" href="mailto:contacto@manologranado.com">contacto@manologranado.com</a>
+    <div class="footer-social">
+      <a href="https://facebook.com" target="_blank" rel="noopener"><img src="assets/icons/facebook.svg" alt="Facebook" /></a>
+      <a href="https://instagram.com" target="_blank" rel="noopener"><img src="assets/icons/instagram.svg" alt="Instagram" /></a>
+    </div>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-box">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1.2" stroke-linecap="round">
+        <path d="M4 4 L20 20 M20 4 L4 20" />
+      </svg>
+    </button>
+    <div class="lightbox-main">
+      <div class="lightbox-image">
+        <img id="lightbox-img" src="" alt="" />
+      </div>
+      <div class="lightbox-text">
+        <p class="work-name" id="lightbox-name"></p>
+        <p class="work-technique" id="lightbox-technique"></p>
+        <p class="work-measures" id="lightbox-measures"></p>
+        <span class="work-sold" id="lightbox-sold">VENDIDO</span>
+      </div>
+    </div>
+    <div class="lightbox-nav" id="lightbox-nav">
+      <button id="lightbox-prev" aria-label="Anterior">
+        <img src="assets/icons/arrow-left.svg" alt="" />
+      </button>
+      <button id="lightbox-next" aria-label="Siguiente">
+        <img src="assets/icons/arrow-right.svg" alt="" />
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="js/artworks.js"></script>
+<script src="js/gallery.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/animations.js"></script>
+<script>
+  document.getElementById('grabado-feature-img').addEventListener('click', () => {
+    openLightbox('GRABADOS', 0);
+  });
+  document.getElementById('grabado-item-1').addEventListener('click', () => {
+    openLightbox('GRABADOS', 1);
+  });
+  document.getElementById('grabado-item-2').addEventListener('click', () => {
+    openLightbox('GRABADOS', 2);
+  });
+</script>
+</body>
+</html>

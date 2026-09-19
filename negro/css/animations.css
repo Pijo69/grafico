@@ -1,0 +1,87 @@
+/* ==========================================================================
+   Motion layer — purely additive, loaded after style.css.
+   Guarded by .js-anim (set inline in <head>) so content is never stuck
+   hidden if JavaScript fails or is disabled.
+   ========================================================================== */
+
+:root {
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+
+  /* ---- Header: fades/settles in once on load ---- */
+  .js-anim .site-header .brand,
+  .js-anim .site-header nav.main-nav,
+  .js-anim .site-header .lang-switch {
+    opacity: 0;
+    animation: fade-down-in 420ms var(--ease-out) forwards;
+  }
+  .js-anim .site-header .brand { animation-delay: 0ms; }
+  .js-anim .site-header nav.main-nav { animation-delay: 70ms; }
+  .js-anim .site-header .lang-switch { animation-delay: 120ms; }
+
+  @keyframes fade-down-in {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ---- Scroll reveal: fade + rise, triggered by .is-visible ---- */
+  .js-anim .hero,
+  .js-anim .home-quote,
+  .js-anim .page-title-wrap,
+  .js-anim .gallery-item,
+  .js-anim .grabado-feature,
+  .js-anim .editorial-item,
+  .js-anim .contact-cta,
+  .js-anim .cv-intro,
+  .js-anim .cv-biography,
+  .js-anim .cv-list,
+  .js-anim .contact-info,
+  .js-anim .contact-form,
+  .js-anim .site-footer {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 550ms var(--ease-out), transform 550ms var(--ease-out);
+  }
+
+  .js-anim .is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Gentle stagger for grid items, capped so large grids don't drag */
+  .js-anim .gallery-item:nth-child(1) { transition-delay: 0ms; }
+  .js-anim .gallery-item:nth-child(2) { transition-delay: 40ms; }
+  .js-anim .gallery-item:nth-child(3) { transition-delay: 80ms; }
+  .js-anim .gallery-item:nth-child(4) { transition-delay: 120ms; }
+  .js-anim .gallery-item:nth-child(n+5) { transition-delay: 160ms; }
+
+  .js-anim .editorial-item:nth-child(1) { transition-delay: 0ms; }
+  .js-anim .editorial-item:nth-child(2) { transition-delay: 50ms; }
+  .js-anim .editorial-item:nth-child(3) { transition-delay: 100ms; }
+  .js-anim .editorial-item:nth-child(n+4) { transition-delay: 150ms; }
+}
+
+/* Elements the reveal script marks as already-handled (dynamic
+   re-renders, e.g. switching ES/EN) skip the animation entirely. */
+.no-anim {
+  transition: none !important;
+  animation: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Keep the lightbox's opacity fade (state change is worth signalling)
+     but drop the scale, per "fewer and gentler, not zero". */
+  .lightbox-box {
+    transform: none !important;
+  }
+
+  .contact-btn:hover {
+    transform: none !important;
+  }
+
+  .footer-social a:hover {
+    transform: none !important;
+  }
+}
