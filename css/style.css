@@ -424,6 +424,75 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ---------------------------------------------------------------------- */
+/* Pagination                                                              */
+/* ---------------------------------------------------------------------- */
+
+.pagination {
+  width: var(--content-width);
+  max-width: var(--content-max);
+  margin: 40px auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.pagination .page-arrow {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #b0b0b0;
+  padding: 0;
+}
+
+.pagination .page-arrow svg {
+  width: 18px;
+  height: 18px;
+}
+
+.pagination .page-arrow:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pagination .page-arrow:not(:disabled):hover {
+    color: var(--black);
+  }
+}
+
+.pagination .page-num {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: #9a9a9a;
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pagination .page-num:not(.active):hover {
+    background: #f2f2f2;
+    color: var(--black);
+  }
+}
+
+.pagination .page-num.active {
+  background: var(--black);
+  color: var(--white);
+}
+
+/* ---------------------------------------------------------------------- */
 /* Contact CTA                                                             */
 /* ---------------------------------------------------------------------- */
 

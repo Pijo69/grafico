@@ -60,6 +60,20 @@ const ARTWORKS = [
   }
 ];
 
+/* Home/Obra show a paginated grid. Until the full "RELACIÓN DE OBRAS"
+   list is available, this repeats the real pieces above to demonstrate
+   the pagination — replace with the real, distinct catalogue later. */
+function buildRepeatedArtworks(source, total) {
+  const out = [];
+  for (let i = 0; i < total; i++) {
+    const base = source[i % source.length];
+    out.push(Object.assign({}, base, { id: base.id + '-p' + i }));
+  }
+  return out;
+}
+
+const ARTWORKS_ALL = buildRepeatedArtworks(ARTWORKS, 36);
+
 const GRABADOS = [
   {
     id: 'grabado-01',

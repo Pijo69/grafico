@@ -2,6 +2,7 @@ let LIGHTBOX_STATE = { source: null, index: 0 };
 
 function getSourceArray(name) {
   if (name === 'ARTWORKS') return ARTWORKS;
+  if (name === 'ARTWORKS_ALL') return ARTWORKS_ALL;
   if (name === 'GRABADOS') return GRABADOS;
   if (name === 'EXHIBITIONS') return EXHIBITIONS;
   return [];
@@ -9,24 +10,87 @@ function getSourceArray(name) {
 
 function renderGalleries(lang) {
   document.querySelectorAll('[data-gallery]').forEach((container) => {
-    const sourceName = container.getAttribute('data-gallery');
-    const items = getSourceArray(sourceName);
+    renderOneGallery(container, lang);
+  });
+}
 
-    container.innerHTML = items
-      .map(
-        (work, i) => `
-        <div class="gallery-item" data-source="${sourceName}" data-index="${i}">
+function renderOneGallery(container, lang) {
+  const sourceName = container.getAttribute('data-gallery');
+  const items = getSourceArray(sourceName);
+  const pageSize = parseInt(container.getAttribute('data-paginate'), 10) || 0;
+
+  let pageItems = items;
+  let startIndex = 0;
+
+  if (pageSize > 0) {
+    const totalPages = Math.max(1, Math.ceil(items.length / pageSize));
+    let page = parseInt(container.dataset.page, 10) || 1;
+    page = Math.min(Math.max(page, 1), totalPages);
+    container.dataset.page = String(page);
+    startIndex = (page - 1) * pageSize;
+    pageItems = items.slice(startIndex, startIndex + pageSize);
+  }
+
+  container.innerHTML = pageItems
+    .map((work, i) => {
+      const globalIndex = startIndex + i;
+      return `
+        <div class="gallery-item" data-source="${sourceName}" data-index="${globalIndex}">
           <img src="${work.image}" alt="${work.name[lang] || work.name.es}" loading="lazy" />
-        </div>`
-      )
-      .join('');
+        </div>`;
+    })
+    .join('');
 
-    container.querySelectorAll('.gallery-item').forEach((el) => {
-      el.addEventListener('click', () => {
-        openLightbox(el.getAttribute('data-source'), parseInt(el.getAttribute('data-index'), 10));
-      });
+  container.querySelectorAll('.gallery-item').forEach((el) => {
+    el.addEventListener('click', () => {
+      openLightbox(el.getAttribute('data-source'), parseInt(el.getAttribute('data-index'), 10));
     });
   });
+
+  if (pageSize > 0) {
+    renderPaginationFor(container, items.length, pageSize);
+  }
+}
+
+function renderPaginationFor(container, totalItems, pageSize) {
+  const nav = container.id ? document.querySelector(`[data-pagination-for="${container.id}"]`) : null;
+  if (!nav) return;
+
+  const totalPages = Math.max(1, Math.ceil(totalItems / pageSize));
+  const page = Math.min(Math.max(parseInt(container.dataset.page, 10) || 1, 1), totalPages);
+
+  const chevron = (d) =>
+    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="${d}"/></svg>`;
+
+  const numberButtons = [];
+  for (let p = 1; p <= totalPages; p++) {
+    numberButtons.push(
+      `<button type="button" class="page-num${p === page ? ' active' : ''}" data-page="${p}">${p}</button>`
+    );
+  }
+
+  nav.innerHTML = `
+    <button type="button" class="page-arrow page-prev" aria-label="Anterior"${page <= 1 ? ' disabled' : ''}>
+      ${chevron('M15 5 L8 12 L15 19')}
+    </button>
+    ${numberButtons.join('')}
+    <button type="button" class="page-arrow page-next" aria-label="Siguiente"${page >= totalPages ? ' disabled' : ''}>
+      ${chevron('M9 5 L16 12 L9 19')}
+    </button>
+  `;
+
+  const goTo = (p) => {
+    container.dataset.page = String(p);
+    renderOneGallery(container, getLang());
+  };
+
+  nav.querySelectorAll('.page-num').forEach((btn) => {
+    btn.addEventListener('click', () => goTo(parseInt(btn.getAttribute('data-page'), 10)));
+  });
+  const prevBtn = nav.querySelector('.page-prev');
+  const nextBtn = nav.querySelector('.page-next');
+  if (prevBtn) prevBtn.addEventListener('click', () => goTo(page - 1));
+  if (nextBtn) nextBtn.addEventListener('click', () => goTo(page + 1));
 }
 
 function openLightbox(source, index) {
