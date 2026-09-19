@@ -26,6 +26,9 @@ const I18N = {
 
     'curriculum.title': 'Curriculum',
     'curriculum.bio.rest': '(Ibi, Alicante, 1969). Actualmente reside en Banyeres de Mariola (Alicante).',
+    'curriculum.bio.p1': 'Manolo Granado es un artista plástico con una sólida trayectoria de casi cuarenta años. Sus inicios son de formación autodidacta, formándose posteriormente; alcanzó muy pronto un exquisito dominio del realismo, lo que le permitió dedicarse profesionalmente al arte desde muy joven, tanto a través de obras por encargo como en el ámbito de la restauración de frescos y otras piezas artísticas.',
+    'curriculum.bio.p2': 'Sin embargo, su inquietud creativa, su interés por la investigación y la vanguardia, y su constante búsqueda de un lenguaje propio lo impulsaron a explorar nuevos caminos y a adentrarse en el universo de la abstracción.',
+    'curriculum.bio.p3': 'Actualmente compagina la creación artística con otra de sus grandes pasiones: la enseñanza. A través de clases y talleres, comparte una experiencia y unos conocimientos adquiridos durante décadas de dedicación. Es, además, un profundo conocedor del arte del grabado, cuyas técnicas se encuentran entre las más apreciadas y demandadas de sus talleres.',
     'curriculum.group.formation': 'Formación',
     'curriculum.group.exhibitions': 'Exposiciones individuales',
     'curriculum.group.group': 'Exposiciones colectivas',
@@ -76,6 +79,9 @@ const I18N = {
 
     'curriculum.title': 'CV',
     'curriculum.bio.rest': '(Ibi, Alicante, 1969). He currently lives in Banyeres de Mariola (Alicante).',
+    'curriculum.bio.p1': 'Manolo Granado is a visual artist with a solid career spanning almost forty years. He began as a self-taught artist and later pursued formal training; he achieved an exquisite command of realism early on, which allowed him to work professionally in art from a very young age, both through commissioned pieces and in the restoration of frescoes and other artworks.',
+    'curriculum.bio.p2': 'However, his creative restlessness, his interest in research and the avant-garde, and his constant search for a language of his own drove him to explore new paths and venture into the world of abstraction.',
+    'curriculum.bio.p3': 'Today he combines artistic creation with another of his great passions: teaching. Through classes and workshops, he shares the experience and knowledge gained over decades of dedication. He is also a deep connoisseur of the art of printmaking, whose techniques are among the most valued and sought-after in his workshops.',
     'curriculum.group.formation': 'Education',
     'curriculum.group.exhibitions': 'Solo exhibitions',
     'curriculum.group.group': 'Group exhibitions',

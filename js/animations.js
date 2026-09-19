@@ -6,8 +6,8 @@
 (function () {
   var SELECTOR =
     '.hero, .home-quote, .page-title-wrap, .gallery-item, .grabado-feature, ' +
-    '.editorial-item, .contact-cta, .cv-intro, .cv-list, .contact-info, ' +
-    '.contact-form, .site-footer';
+    '.editorial-item, .contact-cta, .cv-intro, .cv-biography, .cv-list, ' +
+    '.contact-info, .contact-form, .site-footer';
 
   var prefersReduced = window.matchMedia
     ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
