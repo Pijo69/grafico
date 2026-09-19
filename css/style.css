@@ -818,7 +818,7 @@ a { color: inherit; text-decoration: none; }
   .site-header { padding: 0 24px; }
   .site-header .brand { font-size: 15px; }
 
-  .nav-toggle { display: flex; }
+  .nav-toggle { display: flex; margin-left: auto; }
 
   .site-header nav.main-nav {
     position: fixed;
