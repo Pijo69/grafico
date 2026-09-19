@@ -86,3 +86,46 @@ const GRABADOS = [
     sold: false
   }
 ];
+
+const EXHIBITIONS = [
+  {
+    id: 'expo-01',
+    image: 'assets/images/expo-01.jpg',
+    name: { es: 'Visita a la exposición', en: 'Visitors at the exhibition' },
+    technique: { es: '', en: '' },
+    measures: '',
+    sold: false
+  },
+  {
+    id: 'expo-02',
+    image: 'assets/images/expo-02.jpg',
+    name: { es: 'Montaje de la obra en sala', en: 'Installing the work in the gallery' },
+    technique: { es: '', en: '' },
+    measures: '',
+    sold: false
+  },
+  {
+    id: 'expo-03',
+    image: 'assets/images/expo-03.jpg',
+    name: { es: 'Público ante la obra gráfica', en: 'Visitors viewing the graphic work' },
+    technique: { es: '', en: '' },
+    measures: '',
+    sold: false
+  },
+  {
+    id: 'expo-04',
+    image: 'assets/images/expo-04.jpg',
+    name: { es: 'Presentación del proyecto expositivo «Poiesis»', en: 'Presentation of the exhibition project «Poiesis»' },
+    technique: { es: '', en: '' },
+    measures: '',
+    sold: false
+  },
+  {
+    id: 'expo-05',
+    image: 'assets/images/expo-05.jpg',
+    name: { es: 'Inauguración de la exposición', en: 'Exhibition opening' },
+    technique: { es: '', en: '' },
+    measures: '',
+    sold: false
+  }
+];

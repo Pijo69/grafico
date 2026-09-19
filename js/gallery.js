@@ -3,6 +3,7 @@ let LIGHTBOX_STATE = { source: null, index: 0 };
 function getSourceArray(name) {
   if (name === 'ARTWORKS') return ARTWORKS;
   if (name === 'GRABADOS') return GRABADOS;
+  if (name === 'EXHIBITIONS') return EXHIBITIONS;
   return [];
 }
 
@@ -69,8 +70,15 @@ function updateLightbox() {
     img.alt = work.name[lang] || work.name.es;
   }
   if (nameEl) nameEl.textContent = work.name[lang] || work.name.es;
-  if (techEl) techEl.textContent = work.technique[lang] || work.technique.es;
-  if (measEl) measEl.textContent = work.measures;
+  if (techEl) {
+    const tech = work.technique[lang] || work.technique.es;
+    techEl.textContent = tech;
+    techEl.style.display = tech ? 'block' : 'none';
+  }
+  if (measEl) {
+    measEl.textContent = work.measures;
+    measEl.style.display = work.measures ? 'block' : 'none';
+  }
   if (soldEl) {
     const dict = I18N[lang] || I18N.es;
     soldEl.textContent = lang === 'en' ? 'Sold' : 'VENDIDO';

@@ -207,6 +207,15 @@ a { color: inherit; text-decoration: none; }
   gap: 50px 50px;
 }
 
+.gallery.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.cv-photos {
+  margin: 30px auto 40px;
+}
+
 .gallery-item {
   cursor: pointer;
   overflow: hidden;
@@ -284,10 +293,10 @@ a { color: inherit; text-decoration: none; }
 
 .lightbox-close {
   position: absolute;
-  top: -6px;
-  right: 0;
-  width: 34px;
-  height: 34px;
+  top: 18px;
+  right: 18px;
+  width: 28px;
+  height: 28px;
   cursor: pointer;
   background: none;
   border: none;
@@ -573,7 +582,14 @@ a { color: inherit; text-decoration: none; }
   padding-top: 4px;
 }
 
-.cv-intro .cv-bio {
+.cv-intro .cv-name {
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 1.3;
+  margin: 0 0 44px;
+}
+
+.cv-intro .cv-bio-rest {
   font-weight: 300;
   font-size: 17px;
   line-height: 1.6;
@@ -753,9 +769,10 @@ a { color: inherit; text-decoration: none; }
   }
 
   .gallery,
-  .gallery.grid-2 {
+  .gallery.grid-2,
+  .gallery.grid-3 {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 20px;
   }
 
   .lightbox-box {

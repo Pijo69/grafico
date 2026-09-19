@@ -44,7 +44,8 @@
         <img src="assets/images/retrato.jpg" alt="Manolo Granado" />
       </div>
       <div class="cv-formation">
-        <p class="cv-bio"><span class="montserrat-bold">Manolo Granado Giraldo</span> <span data-i18n="curriculum.bio.rest">(Ibi, Alicante, 1969). Actualmente reside en Banyeres de Mariola (Alicante).</span></p>
+        <p class="cv-name">Manolo Granado Giraldo</p>
+        <p class="cv-bio-rest" data-i18n="curriculum.bio.rest">(Ibi, Alicante, 1969). Actualmente reside en Banyeres de Mariola (Alicante).</p>
         <h3 class="cv-group-title" data-i18n="curriculum.group.formation">Formación</h3>
         <ul>
           <li>Curso de decoración de vidrio artístico, en Villena (Alicante).</li>
@@ -56,6 +57,9 @@
     </div>
 
     <h3 class="cv-group-title" data-i18n="curriculum.group.exhibitions">Exposiciones individuales</h3>
+
+    <div class="gallery grid-3 cv-photos" data-gallery="EXHIBITIONS"></div>
+
     <ul class="cv-list">
       <li><span class="year">2025</span><span class="desc">IM’PRESIONES DE ESTUDIO. Pintura y obra gráfica. Banyeres de Mariola.</span></li>
       <li><span class="year">2023</span><span class="desc">Proyecto Expositivo “POIESIS” Fundació Caixa Ontenient. (Valencia).</span></li>
@@ -207,6 +211,35 @@
     </div>
   </div>
 </footer>
+
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-box">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1.2" stroke-linecap="round">
+        <path d="M4 4 L20 20 M20 4 L4 20" />
+      </svg>
+    </button>
+    <div class="lightbox-main">
+      <div class="lightbox-image">
+        <img id="lightbox-img" src="" alt="" />
+      </div>
+      <div class="lightbox-text">
+        <p class="work-name" id="lightbox-name"></p>
+        <p class="work-technique" id="lightbox-technique"></p>
+        <p class="work-measures" id="lightbox-measures"></p>
+        <span class="work-sold" id="lightbox-sold">VENDIDO</span>
+      </div>
+    </div>
+    <div class="lightbox-nav" id="lightbox-nav">
+      <button id="lightbox-prev" aria-label="Anterior">
+        <img src="assets/icons/arrow-left.svg" alt="" />
+      </button>
+      <button id="lightbox-next" aria-label="Siguiente">
+        <img src="assets/icons/arrow-right.svg" alt="" />
+      </button>
+    </div>
+  </div>
+</div>
 
 <script src="js/artworks.js"></script>
 <script src="js/gallery.js"></script>
