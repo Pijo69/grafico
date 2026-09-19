@@ -230,14 +230,12 @@ a { color: inherit; text-decoration: none; }
 .lightbox {
   position: fixed;
   inset: 0;
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  background: transparent;
   z-index: 2000;
   display: none;
   align-items: center;
   justify-content: center;
-  padding: 40px 20px;
+  padding: 20px;
 }
 
 .lightbox.active {
@@ -247,8 +245,13 @@ a { color: inherit; text-decoration: none; }
 .lightbox-box {
   position: relative;
   width: 100%;
-  max-width: 800px;
-  max-height: min(650px, 90vh);
+  max-width: 900px;
+  max-height: min(800px, 92vh);
+  box-sizing: border-box;
+  padding: 50px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -274,7 +277,7 @@ a { color: inherit; text-decoration: none; }
   width: 100%;
   gap: 0;
   align-items: stretch;
-  max-height: min(560px, 76vh);
+  max-height: min(600px, 78vh);
 }
 
 .lightbox-image {
@@ -282,13 +285,13 @@ a { color: inherit; text-decoration: none; }
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding-left: 40px;
+  padding-left: 30px;
   min-width: 0;
 }
 
 .lightbox-image img {
   max-width: 100%;
-  max-height: min(560px, 76vh);
+  max-height: min(600px, 78vh);
   width: auto;
   height: auto;
   object-fit: contain;
@@ -728,6 +731,11 @@ a { color: inherit; text-decoration: none; }
   .gallery.grid-2 {
     grid-template-columns: 1fr;
     gap: 40px;
+  }
+
+  .lightbox-box {
+    padding: 24px;
+    max-height: 92vh;
   }
 
   .lightbox-main {
