@@ -145,6 +145,31 @@ a { color: inherit; text-decoration: none; }
   height: auto;
 }
 
+.home-quote {
+  width: var(--content-width);
+  max-width: var(--content-max);
+  margin: 50px auto;
+  text-align: center;
+}
+
+.home-quote .quote-text {
+  font-style: italic;
+  font-weight: 300;
+  font-size: 19px;
+  margin: 0 0 10px;
+}
+
+.home-quote .quote-author {
+  font-style: italic;
+  font-weight: 300;
+  font-size: 16px;
+  margin: 0;
+}
+
+.home-quote + .gallery {
+  margin-top: 0;
+}
+
 /* ---------------------------------------------------------------------- */
 /* Page title (OBRAS / GRABADOS / etc.)                                    */
 /* ---------------------------------------------------------------------- */
@@ -245,10 +270,10 @@ a { color: inherit; text-decoration: none; }
 .lightbox-box {
   position: relative;
   width: 100%;
-  max-width: 900px;
-  max-height: min(800px, 92vh);
+  max-width: 1080px;
+  max-height: min(920px, 94vh);
   box-sizing: border-box;
-  padding: 50px;
+  padding: 60px;
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
@@ -277,7 +302,7 @@ a { color: inherit; text-decoration: none; }
   width: 100%;
   gap: 0;
   align-items: stretch;
-  max-height: min(600px, 78vh);
+  max-height: min(700px, 80vh);
 }
 
 .lightbox-image {
@@ -291,7 +316,7 @@ a { color: inherit; text-decoration: none; }
 
 .lightbox-image img {
   max-width: 100%;
-  max-height: min(600px, 78vh);
+  max-height: min(700px, 80vh);
   width: auto;
   height: auto;
   object-fit: contain;
