@@ -22,8 +22,8 @@ html, body {
 }
 
 body {
-  background: var(--white);
-  color: var(--black);
+  background: var(--black);
+  color: var(--white);
   font-family: 'Montserrat', Arial, sans-serif;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
@@ -48,7 +48,7 @@ a { color: inherit; text-decoration: none; }
   left: 0;
   right: 0;
   height: var(--header-h);
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   z-index: 1000;
@@ -120,7 +120,7 @@ a { color: inherit; text-decoration: none; }
   font-size: 13px;
   letter-spacing: 1px;
   cursor: pointer;
-  color: var(--black);
+  color: var(--white);
   padding: 4px 2px;
   font-weight: 400;
 }
@@ -145,7 +145,7 @@ a { color: inherit; text-decoration: none; }
 .nav-toggle span {
   width: 24px;
   height: 1px;
-  background: var(--black);
+  background: var(--white);
   display: block;
 }
 
@@ -272,7 +272,7 @@ a { color: inherit; text-decoration: none; }
 .gallery-item .caption .work-meta {
   font-weight: 300;
   font-size: 13px;
-  color: #444;
+  color: #aaaaaa;
   margin-top: 2px;
 }
 
@@ -308,7 +308,7 @@ a { color: inherit; text-decoration: none; }
   max-height: min(920px, 94vh);
   box-sizing: border-box;
   padding: 60px;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(0, 0, 0, 0.85);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   display: flex;
@@ -337,7 +337,7 @@ a { color: inherit; text-decoration: none; }
   z-index: 5;
 }
 
-.lightbox-close svg { width: 100%; height: 100%; }
+.lightbox-close svg { width: 100%; height: 100%; stroke: var(--white); }
 
 .lightbox-main {
   display: flex;
@@ -368,7 +368,7 @@ a { color: inherit; text-decoration: none; }
   flex: 0 0 260px;
   padding: 40px;
   text-align: left;
-  color: var(--black);
+  color: var(--white);
 }
 
 .lightbox-text .work-name {
@@ -411,7 +411,7 @@ a { color: inherit; text-decoration: none; }
   width: 46px;
 }
 
-.lightbox-nav button svg { width: 100%; height: auto; display: block; }
+.lightbox-nav button svg { width: 100%; height: auto; display: block; stroke: var(--white); }
 
 .lightbox-nav button img {
   transition: transform 150ms ease;
@@ -447,8 +447,8 @@ a { color: inherit; text-decoration: none; }
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--black);
-  color: var(--black);
+  border: 1px solid var(--white);
+  color: var(--white);
   text-transform: uppercase;
   font-weight: 400;
   font-size: 14px;
@@ -466,8 +466,8 @@ a { color: inherit; text-decoration: none; }
 .contact-btn:hover,
 .contact-btn:focus,
 .contact-btn:active {
-  background-color: var(--black);
-  color: var(--white);
+  background-color: var(--white);
+  color: var(--black);
 }
 
 /* ---------------------------------------------------------------------- */
@@ -566,14 +566,14 @@ a { color: inherit; text-decoration: none; }
   list-style: none;
   margin: 40px 0 0;
   padding: 0;
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .cv-list li {
   display: flex;
   gap: 40px;
   padding: 22px 0;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
   align-items: baseline;
 }
 
@@ -619,7 +619,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .editorial-item {
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
   padding-top: 24px;
 }
 
@@ -632,7 +632,7 @@ a { color: inherit; text-decoration: none; }
 .editorial-item .ed-meta {
   font-weight: 300;
   font-size: 14px;
-  color: #444;
+  color: #aaaaaa;
   margin: 0;
   line-height: 1.5;
 }
@@ -682,7 +682,7 @@ a { color: inherit; text-decoration: none; }
   font-size: 15px;
   line-height: 1.6;
   padding: 10px 0;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .grabado-feature {
@@ -767,7 +767,7 @@ a { color: inherit; text-decoration: none; }
 .contact-form textarea {
   width: 100%;
   border: none;
-  border-bottom: 1px solid #000;
+  border-bottom: 1px solid var(--white);
   font-family: 'Montserrat', Arial, sans-serif;
   font-weight: 300;
   font-size: 15px;
@@ -785,7 +785,8 @@ a { color: inherit; text-decoration: none; }
 
 .contact-form button {
   margin-top: 30px;
-  border: 1px solid var(--black);
+  border: 1px solid var(--white);
+  color: var(--white);
   background: transparent;
   padding: 14px 40px;
   text-transform: uppercase;
@@ -796,14 +797,14 @@ a { color: inherit; text-decoration: none; }
 }
 
 .contact-form button:hover {
-  background: var(--black);
-  color: var(--white);
+  background: var(--white);
+  color: var(--black);
 }
 
 .form-note {
   font-weight: 300;
   font-size: 13px;
-  color: #777;
+  color: #999999;
   margin-top: 14px;
 }
 
@@ -824,7 +825,7 @@ a { color: inherit; text-decoration: none; }
     top: var(--header-h);
     left: 0;
     right: 0;
-    background: rgba(255, 255, 255, 0.97);
+    background: rgba(0, 0, 0, 0.97);
     flex-direction: column;
     gap: 0;
     transform: none;
@@ -839,7 +840,7 @@ a { color: inherit; text-decoration: none; }
 
   .site-header nav.main-nav a {
     padding: 16px 24px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
     width: 100%;
   }
 
