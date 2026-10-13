@@ -43,7 +43,7 @@ Todo se hace subiendo archivos por FTP o el gestor de archivos del hosting. No h
 | Imágenes | `descargas/imagenes/` | Aparecen en `imagenes.php` |
 | Iconos | `descargas/iconos/` | Aparecen en `iconos.php` |
 | Brandbook en PDF | `descargas/brandbook/` (cualquier `.pdf`) | Activa el botón "Brandbook PDF" |
-| Vídeo del brandbook | `descargas/brandbook/` (`.mp4` o `.webm`) | Sustituye el recuadro "VIDEO 01" |
+| Vídeo del brandbook | `descargas/brandbook/` (`.mp4` o `.webm`) | Sustituye el recuadro "VIDEO 01". Arranca solo al entrar (sin sonido, como exigen los navegadores), se reproduce una vez y al terminar muestra "Ver de nuevo" |
 | Plantillas Word/Excel/PPT | `descargas/plantillas/` con el nombre indicado en `inc/config.php` | Activa "Descargar plantilla" en la ventana flotante |
 
 Nombres esperados en `descargas/plantillas/` (se pueden cambiar en `inc/config.php`):

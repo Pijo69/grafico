@@ -37,9 +37,15 @@ $indice = 0;
 <section class="brandbook contenedor" id="brandbook" aria-labelledby="t-brandbook">
     <h2 class="seccion-titulo" id="t-brandbook" data-reveal>Brandbook</h2>
 
-    <div class="video" data-reveal="mascara">
+    <div class="video<?= $brandbook_video ? ' video--con-video' : '' ?>" data-reveal="mascara">
         <?php if ($brandbook_video): ?>
-            <video class="video__media" src="<?= e(url_descarga('brandbook', $brandbook_video)) ?>" controls playsinline preload="metadata"></video>
+            <video class="video__media" src="<?= e(url_descarga('brandbook', $brandbook_video)) ?>"
+                   poster="assets/img/brand/video-poster.webp" autoplay muted playsinline preload="auto"
+                   aria-label="Vídeo del brandbook de IZZON LAB" data-video-brandbook></video>
+            <button type="button" class="video__boton" data-video-boton hidden>
+                <span class="video__play" aria-hidden="true"></span>
+                <span class="video__boton-texto">Reproducir</span>
+            </button>
         <?php else: ?>
             <div class="video__vacio" aria-label="Vídeo del brandbook, próximamente">
                 <span class="video__play" aria-hidden="true"></span>

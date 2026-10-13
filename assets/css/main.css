@@ -218,7 +218,23 @@ ul { padding: 0; list-style: none; }
     background: var(--arena);
     overflow: hidden;
 }
-.video__media { width: 100%; height: 100%; object-fit: cover; background: var(--tinta); }
+.video--con-video { aspect-ratio: 16 / 9; background: #1a1a1a; }
+.video__media { width: 100%; height: 100%; object-fit: cover; background: #1a1a1a; cursor: pointer; }
+
+/* Botón de reproducir / ver de nuevo sobre el vídeo */
+.video__boton {
+    position: absolute; inset: 0; z-index: 2;
+    display: grid; place-items: center; align-content: center; gap: 16px;
+    border: 0; padding: 0; cursor: pointer;
+    background: rgba(30, 18, 13, .35);
+    color: var(--blanco);
+    animation: fundido .4s var(--ease-out);
+}
+.video__boton .video__play { border-color: var(--blanco); }
+.video__boton .video__play::before { border-left-color: var(--blanco); }
+.video__boton .video__play::after { border-color: var(--blanco); }
+.video__boton-texto { font-size: 12px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; }
+.video__boton:focus-visible { outline-color: var(--blanco); outline-offset: -8px; }
 
 .video__vacio {
     position: absolute; inset: 0;

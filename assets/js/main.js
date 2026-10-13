@@ -35,6 +35,37 @@
         }, { threshold: 0 }).observe(marca);
     }
 
+    // Vídeo del brandbook: arranca solo al entrar, se reproduce una vez y
+    // al terminar ofrece verlo de nuevo.
+    const video = document.querySelector('[data-video-brandbook]');
+    const botonVideo = document.querySelector('[data-video-boton]');
+    if (video && botonVideo) {
+        const texto = botonVideo.querySelector('.video__boton-texto');
+        const mostrarBoton = (etiqueta) => { texto.textContent = etiqueta; botonVideo.hidden = false; };
+        const reproducir = () => {
+            if (video.ended) video.currentTime = 0;
+            botonVideo.hidden = true;
+            video.play().catch(() => mostrarBoton('Reproducir'));
+        };
+
+        video.muted = true; // necesario para que el navegador permita el autoplay
+        if (reducido) {
+            video.removeAttribute('autoplay');
+            video.pause();
+            mostrarBoton('Reproducir');
+        } else {
+            const intento = video.play();
+            if (intento) intento.catch(() => mostrarBoton('Reproducir'));
+        }
+
+        video.addEventListener('ended', () => mostrarBoton('Ver de nuevo'));
+        video.addEventListener('click', () => {
+            if (video.paused) reproducir();
+            else { video.pause(); mostrarBoton('Continuar'); }
+        });
+        botonVideo.addEventListener('click', reproducir);
+    }
+
     if (reducido) return;
 
     // Parallax suave de la marca de agua y del mockup del brandbook
