@@ -81,13 +81,13 @@ const PLANTILLAS = [
         'items' => [
             [
                 'id' => 'ppt-interna', 'nombre' => 'Interna', 'archivo' => 'IZZON-LAB-PPT-Interna.pptx',
-                'tipo' => 'Presentación interna', 'formato' => 'PowerPoint · 16:9',
-                'descripcion' => 'Portada con imagen de mar, logotipo y claim, y espacio para título, año y fecha. Para reuniones y presentaciones de equipo.',
+                'tipo' => 'Presentación interna', 'formato' => 'PowerPoint · 16:9 · 13 diapositivas',
+                'descripcion' => 'Portada con imagen de mar, logotipo y claim, índice, separadores de sección y diapositivas para datos. Para reuniones y presentaciones de equipo.',
             ],
             [
                 'id' => 'ppt-externa', 'nombre' => 'Externa', 'archivo' => 'IZZON-LAB-PPT-Externa.pptx',
-                'tipo' => 'Presentación externa', 'formato' => 'PowerPoint · 16:9',
-                'descripcion' => 'Portada luminosa con velos dorados y el claim "A new horIZZON of beauty". Para clientes, proveedores y eventos.',
+                'tipo' => 'Presentación externa', 'formato' => 'PowerPoint · 16:9 · 16 diapositivas',
+                'descripcion' => 'Portada luminosa con velos dorados y el claim "A new horIZZON of beauty", índice y diapositivas de contenido y cifras. Para clientes, proveedores y eventos.',
             ],
         ],
     ],
