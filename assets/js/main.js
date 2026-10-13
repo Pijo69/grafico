@@ -2,20 +2,28 @@
 (() => {
     const reducido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Entradas al hacer scroll
-    const elementos = document.querySelectorAll('[data-reveal]');
+    // Entradas al hacer scroll. Lo visible al cargar nunca se oculta: solo se
+    // marca como pendiente lo que queda por debajo de la primera pantalla.
+    const elementos = [...document.querySelectorAll('[data-reveal]')];
     if ('IntersectionObserver' in window && !reducido) {
         const io = new IntersectionObserver((entradas) => {
             for (const entrada of entradas) {
                 if (entrada.isIntersecting) {
-                    entrada.target.classList.add('is-in');
+                    entrada.target.classList.remove('is-pending');
                     io.unobserve(entrada.target);
                 }
             }
         }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
-        elementos.forEach((el) => io.observe(el));
-    } else {
-        elementos.forEach((el) => el.classList.add('is-in'));
+
+        const alto = window.innerHeight;
+        for (const el of elementos) {
+            if (el.getBoundingClientRect().top < alto) {
+                el.classList.add('is-intro');
+            } else {
+                el.classList.add('is-pending');
+                io.observe(el);
+            }
+        }
     }
 
     // Barra fija: aparece cuando la marca de agua sale de pantalla
@@ -44,7 +52,7 @@
             const r = img.parentElement.getBoundingClientRect();
             if (r.bottom < 0 || r.top > window.innerHeight) continue;
             const p = (r.top + r.height / 2 - window.innerHeight / 2) / window.innerHeight;
-            const visible = img.parentElement.classList.contains('is-in');
+            const visible = !img.parentElement.classList.contains('is-pending');
             img.style.transform = `translate3d(0, ${p * -28}px, 0) scale(${visible ? 1.06 : 1.14})`;
         }
     };

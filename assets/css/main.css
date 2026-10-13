@@ -86,14 +86,13 @@ ul { padding: 0; list-style: none; }
 }
 
 .js .marca-agua__logo path {
-    transform: translateY(105%);
     transform-box: fill-box;
-    animation: letra-sube 1.1s var(--ease-out) forwards;
+    animation: letra-sube 1.1s var(--ease-out) both;
     animation-delay: calc(var(--l) * 70ms + 120ms);
 }
 
 @keyframes letra-sube {
-    to { transform: translateY(0); }
+    from { transform: translateY(105%); }
 }
 
 
@@ -648,41 +647,49 @@ ul { padding: 0; list-style: none; }
 .pie__copy { font-size: 11px; opacity: .8; }
 
 /* --------------------------------------------------------------------------
-   Animaciones de entrada al hacer scroll (solo con JS)
+   Animaciones de entrada al hacer scroll
+   Todo es visible por defecto. El JS marca con .is-pending solo lo que está
+   por debajo de la primera pantalla y lo descubre al llegar a ello.
    -------------------------------------------------------------------------- */
 
-.js [data-reveal] {
-    opacity: 0;
-    transform: translateY(26px);
+[data-reveal] {
     transition: opacity .9s var(--ease-out), transform 1s var(--ease-out);
     transition-delay: calc(var(--d, 0) * 90ms);
 }
-.js [data-reveal].is-in { opacity: 1; transform: none; }
+[data-reveal].is-pending { opacity: 0; transform: translateY(26px); }
 
-.js [data-reveal="linea"] { opacity: 1; transform: scaleX(0); transition: transform 1.2s var(--ease-in-out); }
-.js [data-reveal="linea"].is-in { transform: scaleX(1); }
+/* Lo que ya se ve al cargar entra con una animación que termina visible */
+[data-reveal].is-intro { animation: aparece 1s var(--ease-out) both; animation-delay: calc(var(--d, 0) * 90ms + 250ms); }
+@keyframes aparece { from { opacity: 0; transform: translateY(22px); } }
 
-/* Cortinilla: una capa del color del fondo que se recoge hacia arriba.
-   (Con clip-path el IntersectionObserver no detectaría el elemento.) */
-.js [data-reveal="mascara"] { opacity: 1; transform: none; }
-.js [data-reveal="mascara"]::after {
+[data-reveal="linea"] { transform-origin: left; transition: transform 1.2s var(--ease-in-out); }
+[data-reveal="linea"].is-pending { opacity: 1; transform: scaleX(0); }
+[data-reveal="linea"].is-intro { animation: none; }
+
+/* Cortinilla: una capa del color del fondo que se recoge hacia arriba. */
+[data-reveal="mascara"].is-pending { opacity: 1; transform: none; }
+[data-reveal="mascara"]::after {
     content: ''; position: absolute; inset: -1px; z-index: 3;
     background: var(--fondo);
+    transform: scaleY(0);
     transform-origin: 50% 100%;
     transition: transform 1.3s var(--ease-in-out);
     transition-delay: calc(var(--d, 0) * 90ms + 80ms);
     pointer-events: none;
 }
-.js [data-reveal="mascara"].is-in::after { transform: scaleY(0); }
-.js .brandbook__mockup[data-reveal] img { transition: transform .9s var(--ease-out); }
+[data-reveal="mascara"].is-pending::after { transform: scaleY(1); }
+[data-reveal="mascara"].is-intro { animation: none; }
+[data-reveal="mascara"].is-intro::after { animation: cortinilla 1.3s var(--ease-in-out) both .2s; }
+@keyframes cortinilla { from { transform: scaleY(1); } }
 
-.js [data-reveal="logo"] { opacity: 1; transform: none; }
-.js [data-reveal="logo"] path {
-    transform: translateY(110%); transform-box: fill-box;
+[data-reveal="logo"].is-pending { opacity: 1; transform: none; }
+[data-reveal="logo"] path {
+    transform-box: fill-box;
     transition: transform 1s var(--ease-out);
     transition-delay: calc(var(--l) * 60ms);
 }
-.js [data-reveal="logo"].is-in path { transform: none; }
+[data-reveal="logo"].is-pending path { transform: translateY(110%); }
+[data-reveal="logo"].is-intro { animation: none; }
 
 /* --------------------------------------------------------------------------
    Responsive
@@ -732,6 +739,6 @@ ul { padding: 0; list-style: none; }
         transition-duration: .01ms !important;
         transition-delay: 0s !important;
     }
-    .js .marca-agua__logo path { transform: none; animation: none; }
+    .js .marca-agua__logo path { animation: none; }
     .video__vacio::before, .video__play::after { display: none; }
 }
