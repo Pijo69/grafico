@@ -1,0 +1,16 @@
+DirectoryIndex index.php
+Options -Indexes
+
+# Los parciales PHP no se sirven directamente
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^inc/ - [F,L]
+</IfModule>
+
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/webp "access plus 1 month"
+    ExpiresByType image/svg+xml "access plus 1 month"
+    ExpiresByType text/css "access plus 1 week"
+    ExpiresByType application/javascript "access plus 1 week"
+</IfModule>
