@@ -61,6 +61,7 @@ $indice = 0;
                 <a class="descarga-pdf" href="<?= e(url_descarga('brandbook', $brandbook_pdf)) ?>" download data-reveal style="--d:1">
                     <?= svg_descarga('descarga-pdf__icono') ?>
                     <span>BRANDBOOK PDF</span>
+                    <small><?= number_format(filesize(RAIZ . '/' . DIR_DESCARGAS . '/brandbook/' . $brandbook_pdf) / 1000000, 1, ',', '.') ?> MB</small>
                 </a>
             <?php else: ?>
                 <span class="descarga-pdf is-pendiente" data-reveal style="--d:1" title="Sube el PDF a /descargas/brandbook">
