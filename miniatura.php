@@ -6,12 +6,21 @@
 require __DIR__ . '/inc/archivos.php';
 
 $categoria = (string) ($_GET['c'] ?? '');
-$nombre = basename((string) ($_GET['f'] ?? ''));
+$nombre = str_replace('\\', '/', (string) ($_GET['f'] ?? ''));
 
-$dir = realpath(dir_categoria($categoria));
+// Se admite "archivo.jpg" o "CARPETA/archivo.jpg", nunca rutas hacia fuera.
+$partes = explode('/', $nombre);
+$valido = isset(CATEGORIAS[$categoria]) && count($partes) <= 2;
+foreach ($partes as $parte) {
+    if ($parte === '' || $parte[0] === '.' || $parte[0] === '_') {
+        $valido = false;
+    }
+}
+
+$dir = $valido ? realpath(dir_categoria($categoria)) : false;
 $ruta = $dir ? realpath($dir . '/' . $nombre) : false;
 
-if (!isset(CATEGORIAS[$categoria]) || !$ruta || dirname($ruta) !== $dir || !is_file($ruta) || $nombre[0] === '.') {
+if (!$ruta || strpos($ruta, $dir . DIRECTORY_SEPARATOR) !== 0 || !is_file($ruta)) {
     http_response_code(404);
     exit;
 }

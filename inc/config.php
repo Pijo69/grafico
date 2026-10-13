@@ -101,7 +101,9 @@ function e(string $s): string
 /* URL de un archivo dentro de /descargas, con cada segmento codificado. */
 function url_descarga(string $carpeta, string $archivo): string
 {
-    return DIR_DESCARGAS . '/' . rawurlencode($carpeta) . '/' . rawurlencode($archivo);
+    // $archivo puede incluir una subcarpeta ("EMPRESA/foto.jpg")
+    $partes = array_map('rawurlencode', explode('/', $archivo));
+    return DIR_DESCARGAS . '/' . rawurlencode($carpeta) . '/' . implode('/', $partes);
 }
 
 /* Primer archivo con alguna de las extensiones dadas dentro de una carpeta de descargas. */

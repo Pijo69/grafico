@@ -1,7 +1,7 @@
 /* Páginas de descarga: miniaturas de respaldo, fondo de miniaturas y aviso de descarga. */
 (() => {
-    const lista = document.querySelector('[data-archivos]');
-    if (!lista) return;
+    const listas = [...document.querySelectorAll('[data-archivos]')];
+    if (!listas.length) return;
 
     const PDFJS = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/';
     let pdfjs = null;
@@ -54,7 +54,7 @@
         }, { rootMargin: '200px' })
         : null;
 
-    lista.querySelectorAll('.archivo__link').forEach((enlace) => {
+    document.querySelectorAll('[data-archivos] .archivo__link').forEach((enlace) => {
         const mini = enlace.querySelector('.archivo__mini');
         const img = mini.querySelector('img');
         const ext = enlace.dataset.ext;
@@ -91,8 +91,10 @@
         b.addEventListener('click', () => {
             const oscuro = b.dataset.fondo === 'oscuro';
             botones.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
-            lista.classList.toggle('is-oscuro', oscuro);
-            lista.classList.toggle('is-claro', !oscuro);
+            listas.forEach((lista) => {
+                lista.classList.toggle('is-oscuro', oscuro);
+                lista.classList.toggle('is-claro', !oscuro);
+            });
         });
     });
 })();

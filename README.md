@@ -40,7 +40,7 @@ Todo se hace subiendo archivos por FTP o el gestor de archivos del hosting. No h
 | Qué | Dónde se sube | Resultado |
 | --- | --- | --- |
 | Logos y recursos gráficos | `descargas/logos/` | Aparecen en `logos.php` |
-| Imágenes | `descargas/imagenes/` | Aparecen en `imagenes.php` |
+| Imágenes | `descargas/imagenes/` o una subcarpeta (`descargas/imagenes/EMPRESA/`) | Aparecen en `imagenes.php`; cada subcarpeta es un apartado con su nombre como título |
 | Iconos | `descargas/iconos/` | Aparecen en `iconos.php` |
 | Brandbook en PDF | `descargas/brandbook/` (cualquier `.pdf`) | Activa el botón "Brandbook PDF" |
 | Vídeo del brandbook | `descargas/brandbook/` (`.mp4` o `.webm`) | Sustituye el recuadro "VIDEO 01". Arranca solo al entrar (sin sonido, como exigen los navegadores), se reproduce una vez y al terminar muestra "Ver de nuevo" |
@@ -74,7 +74,10 @@ la miniatura se regenera sola.
 Los archivos cuyo nombre contiene `blanco`, `white` o `negativo` se muestran sobre fondo oscuro.
 En logos e iconos hay además un selector de fondo claro/oscuro.
 
-Los archivos que empiezan por `.` o `_` no se listan (útil para ocultar algo sin borrarlo).
+Esto vale para las tres páginas de recursos: una subcarpeta dentro de `logos/`, `imagenes/` o `iconos/`
+se muestra como un apartado propio. Si hay más de un apartado, arriba aparecen accesos directos a cada uno.
+
+Los archivos y carpetas que empiezan por `.` o `_` no se listan (útil para ocultar algo sin borrarlo).
 
 ## Editar textos
 

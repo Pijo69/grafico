@@ -13,27 +13,37 @@ function dir_categoria(string $categoria): string
     return RAIZ . '/' . DIR_DESCARGAS . '/' . $categoria;
 }
 
-/* Archivos de una categoría ordenados por nombre (orden natural). */
-function listar_archivos(string $categoria): array
+/* Nombres que nunca se listan: ocultos, "_borrador", índices del servidor... */
+function ignorado(string $nombre): bool
 {
-    $dir = dir_categoria($categoria);
+    return $nombre === '' || $nombre[0] === '.' || $nombre[0] === '_' || in_array(strtolower($nombre), IGNORAR, true);
+}
+
+/*
+ * Archivos de una categoría (o de una de sus subcarpetas) ordenados por
+ * nombre en orden natural.
+ */
+function listar_archivos(string $categoria, string $subcarpeta = ''): array
+{
+    $dir = dir_categoria($categoria) . ($subcarpeta !== '' ? '/' . $subcarpeta : '');
     if (!is_dir($dir)) {
         return [];
     }
     $archivos = [];
     foreach (scandir($dir) ?: [] as $nombre) {
         $ruta = $dir . '/' . $nombre;
-        if ($nombre[0] === '.' || $nombre[0] === '_' || !is_file($ruta) || in_array(strtolower($nombre), IGNORAR, true)) {
+        if (ignorado($nombre) || !is_file($ruta)) {
             continue;
         }
+        $relativa = ($subcarpeta !== '' ? $subcarpeta . '/' : '') . $nombre;
         $ext = strtolower(pathinfo($nombre, PATHINFO_EXTENSION));
         $archivos[] = [
             'nombre'  => $nombre,
             'titulo'  => titulo_legible($nombre),
             'ext'     => $ext,
             'peso'    => filesize($ruta),
-            'url'     => url_descarga($categoria, $nombre),
-            'mini'    => url_miniatura($categoria, $nombre, $ext, filemtime($ruta)),
+            'url'     => url_descarga($categoria, $relativa),
+            'mini'    => url_miniatura($categoria, $relativa, $ext, filemtime($ruta)),
             'oscuro'  => (bool) preg_match('/(blanc|white|negativ)/i', $nombre),
         ];
     }
@@ -41,9 +51,44 @@ function listar_archivos(string $categoria): array
     return $archivos;
 }
 
+/*
+ * Apartados de una categoría: los archivos sueltos (sin título) y después
+ * uno por cada subcarpeta, titulado con el nombre de la carpeta.
+ */
+function listar_apartados(string $categoria): array
+{
+    $apartados = [];
+    $sueltos = listar_archivos($categoria);
+    if ($sueltos) {
+        $apartados[] = ['titulo' => null, 'id' => 'general', 'archivos' => $sueltos];
+    }
+
+    $dir = dir_categoria($categoria);
+    $carpetas = [];
+    foreach (is_dir($dir) ? (scandir($dir) ?: []) : [] as $nombre) {
+        if (!ignorado($nombre) && is_dir($dir . '/' . $nombre)) {
+            $carpetas[] = $nombre;
+        }
+    }
+    natcasesort($carpetas);
+
+    foreach ($carpetas as $carpeta) {
+        $archivos = listar_archivos($categoria, $carpeta);
+        if ($archivos) {
+            $apartados[] = [
+                'titulo'   => trim(preg_replace('/[_\s]+/', ' ', $carpeta)),
+                'id'       => 'apartado-' . trim(preg_replace('/[^a-z0-9]+/', '-', strtolower(iconv('UTF-8', 'ASCII//TRANSLIT', $carpeta) ?: $carpeta)), '-'),
+                'archivos' => $archivos,
+            ];
+        }
+    }
+    return $apartados;
+}
+
 function titulo_legible(string $nombre): string
 {
     $base = pathinfo($nombre, PATHINFO_FILENAME);
+    $base = preg_replace('/[-_\s]+(copia|copy)(\s*\d+)?$/i', '', $base);
     return trim(preg_replace('/[_\s]+/', ' ', $base));
 }
 

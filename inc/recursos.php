@@ -12,7 +12,8 @@ $cat = CATEGORIAS[$categoria];
 $titulo_pagina = $cat['titulo'];
 $pagina_actual = $categoria;
 $scripts = ['assets/js/recursos.js'];
-$archivos = listar_archivos($categoria);
+$apartados = listar_apartados($categoria);
+$total = array_sum(array_map(fn($a) => count($a['archivos']), $apartados));
 
 require __DIR__ . '/header.php';
 ?>
@@ -28,9 +29,11 @@ require __DIR__ . '/header.php';
 
     <div class="descargas__barra" data-reveal style="--d:2">
         <p class="descargas__cuenta">
-            <?= count($archivos) ?> <?= count($archivos) === 1 ? 'archivo' : 'archivos' ?>
+            <?= $total ?> <?= $total === 1 ? 'archivo' : 'archivos' ?><?php
+            $con_titulo = array_filter($apartados, fn($a) => $a['titulo'] !== null);
+            if ($con_titulo): ?> · <?= count($con_titulo) ?> <?= count($con_titulo) === 1 ? 'apartado' : 'apartados' ?><?php endif; ?>
         </p>
-        <?php if ($cat['fondo'] && $archivos): ?>
+        <?php if ($cat['fondo'] && $total): ?>
             <div class="fondo-selector" role="group" aria-label="Fondo de las miniaturas">
                 <button type="button" data-fondo="claro" aria-pressed="true">Fondo claro</button>
                 <button type="button" data-fondo="oscuro" aria-pressed="false">Fondo oscuro</button>
@@ -40,27 +43,45 @@ require __DIR__ . '/header.php';
 
     <hr class="regla" data-reveal="linea">
 
-    <?php if ($archivos): ?>
-        <ul class="archivos" role="list" data-archivos>
-            <?php foreach ($archivos as $i => $a): ?>
-                <li class="archivo" data-reveal style="--d:<?= min($i, 12) ?>">
-                    <a class="archivo__link" href="<?= e($a['url']) ?>" download="<?= e($a['nombre']) ?>"
-                       data-ext="<?= e($a['ext']) ?>" aria-label="Descargar <?= e($a['nombre']) ?> (<?= e(peso_legible($a['peso'])) ?>)">
-                        <span class="archivo__mini<?= $a['oscuro'] ? ' is-oscuro' : '' ?>">
-                            <?php if ($a['mini']): ?>
-                                <img src="<?= e($a['mini']) ?>" alt="" loading="lazy" decoding="async">
-                            <?php endif; ?>
-                            <span class="archivo__tipo" aria-hidden="true"><?= e(strtoupper($a['ext'] ?: 'archivo')) ?></span>
-                            <span class="archivo__accion" aria-hidden="true">
-                                <?= svg_descarga() ?>
+    <?php if ($total): ?>
+        <?php if (count($con_titulo) > 1): ?>
+            <nav class="apartados-nav" aria-label="Apartados" data-reveal style="--d:3">
+                <?php foreach ($con_titulo as $ap): ?>
+                    <a href="#<?= e($ap['id']) ?>"><?= e($ap['titulo']) ?> <span><?= count($ap['archivos']) ?></span></a>
+                <?php endforeach; ?>
+            </nav>
+        <?php endif; ?>
+
+        <?php foreach ($apartados as $ap): ?>
+        <section class="apartado" id="<?= e($ap['id']) ?>"<?= $ap['titulo'] ? ' aria-labelledby="t-' . e($ap['id']) . '"' : '' ?>>
+            <?php if ($ap['titulo']): ?>
+                <header class="apartado__cabeza" data-reveal>
+                    <h2 class="seccion-titulo apartado__titulo" id="t-<?= e($ap['id']) ?>"><?= e($ap['titulo']) ?></h2>
+                    <span class="apartado__cuenta"><?= count($ap['archivos']) ?> <?= count($ap['archivos']) === 1 ? 'archivo' : 'archivos' ?></span>
+                </header>
+            <?php endif; ?>
+            <ul class="archivos" role="list" data-archivos>
+                <?php foreach ($ap['archivos'] as $n => $a): ?>
+                    <li class="archivo" data-reveal style="--d:<?= min($n, 12) ?>">
+                        <a class="archivo__link" href="<?= e($a['url']) ?>" download="<?= e($a['nombre']) ?>"
+                           data-ext="<?= e($a['ext']) ?>" aria-label="Descargar <?= e($a['nombre']) ?> (<?= e(peso_legible($a['peso'])) ?>)">
+                            <span class="archivo__mini<?= $a['oscuro'] ? ' is-oscuro' : '' ?>">
+                                <?php if ($a['mini']): ?>
+                                    <img src="<?= e($a['mini']) ?>" alt="" loading="lazy" decoding="async">
+                                <?php endif; ?>
+                                <span class="archivo__tipo" aria-hidden="true"><?= e(strtoupper($a['ext'] ?: 'archivo')) ?></span>
+                                <span class="archivo__accion" aria-hidden="true">
+                                    <?= svg_descarga() ?>
+                                </span>
                             </span>
-                        </span>
-                        <span class="archivo__nombre" title="<?= e($a['nombre']) ?>"><?= e($a['titulo']) ?></span>
-                        <span class="archivo__meta"><?= e(strtoupper($a['ext'])) ?> · <?= e(peso_legible($a['peso'])) ?></span>
-                    </a>
-                </li>
-            <?php endforeach; ?>
-        </ul>
+                            <span class="archivo__nombre" title="<?= e($a['nombre']) ?>"><?= e($a['titulo']) ?></span>
+                            <span class="archivo__meta"><?= e(strtoupper($a['ext'])) ?> · <?= e(peso_legible($a['peso'])) ?></span>
+                        </a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </section>
+        <?php endforeach; ?>
     <?php else: ?>
         <div class="vacio" data-reveal>
             <?= svg_zz('vacio__zz') ?>
