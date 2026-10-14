@@ -391,7 +391,8 @@ ul { padding: 0; list-style: none; }
    -------------------------------------------------------------------------- */
 
 .recursos { padding-bottom: clamp(72px, 12vw, 180px); }
-.recursos__intro { padding-top: clamp(28px, 3.2vw, 44px); }
+.recursos__titulo { padding-top: clamp(28px, 3.2vw, 44px); }
+.recursos__intro { padding-top: clamp(14px, 1.6vw, 22px); }
 
 .recursos__grid {
     display: grid;

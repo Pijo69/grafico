@@ -106,8 +106,9 @@ $indice = 0;
 <?php endforeach; ?>
 </div>
 
-<section class="recursos contenedor" id="recursos" aria-label="Descarga de recursos">
+<section class="recursos contenedor" id="recursos" aria-labelledby="t-recursos">
     <hr class="regla" data-reveal="linea">
+    <h2 class="seccion-titulo recursos__titulo" id="t-recursos" data-reveal>Material y recursos</h2>
     <p class="texto-peq recursos__intro" data-reveal>Selecciona el tipo de recursos que necesites. Entra en la página y descarga los archivos.</p>
 
     <ul class="recursos__grid" role="list">
