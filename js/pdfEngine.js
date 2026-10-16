@@ -1,27 +1,24 @@
-// Thin wrapper around the vendored pdf.js build: loads a PDF from a File,
-// renders its first page to a canvas at a given width, and extracts text
-// items with their bounding boxes already converted to canvas pixel space.
+// Thin wrapper around the vendored pdf.js build (loaded as a static <script>
+// in index.html, not injected at runtime, so it survives a strict CSP):
+// loads a PDF from a File, renders its first page to a canvas at a given
+// width, and extracts text items with their bounding boxes already
+// converted to canvas pixel space.
 
-let pdfjsReadyPromise = null;
+let configured = false;
 
 function ensurePdfJs() {
-  if (window.pdfjsLib) return Promise.resolve(window.pdfjsLib);
-  if (pdfjsReadyPromise) return pdfjsReadyPromise;
-  pdfjsReadyPromise = new Promise((resolve, reject) => {
-    const script = document.createElement('script');
-    script.src = 'vendor/pdfjs/pdf.min.js';
-    script.onload = () => {
-      window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'vendor/pdfjs/pdf.worker.min.js';
-      resolve(window.pdfjsLib);
-    };
-    script.onerror = () => reject(new Error('No se pudo cargar el motor de lectura de PDF.'));
-    document.head.appendChild(script);
-  });
-  return pdfjsReadyPromise;
+  if (!window.pdfjsLib) {
+    throw new Error('El motor de lectura de PDF (pdf.js) no se ha cargado.');
+  }
+  if (!configured) {
+    window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'vendor/pdfjs/pdf.worker.min.js';
+    configured = true;
+  }
+  return window.pdfjsLib;
 }
 
 export async function loadPdfFromFile(file) {
-  const pdfjsLib = await ensurePdfJs();
+  const pdfjsLib = ensurePdfJs();
   const data = await file.arrayBuffer();
   const task = pdfjsLib.getDocument({ data });
   return task.promise;
@@ -45,7 +42,7 @@ export async function renderFirstPage(pdfDoc, targetWidth) {
 }
 
 export async function extractTextItems(page, viewport) {
-  const pdfjsLib = await ensurePdfJs();
+  const pdfjsLib = ensurePdfJs();
   const content = await page.getTextContent();
   const items = [];
   for (const raw of content.items) {

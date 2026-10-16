@@ -57,7 +57,8 @@ function setMode(mode) {
   els.panelDetect.classList.toggle('is-locked', detectLocked);
   els.panelCompare.classList.toggle('is-locked', compareLocked);
   if (mode === 'idle') {
-    els.modeHint.hidden = true;
+    els.modeHint.hidden = false;
+    els.modeHint.textContent = 'Sube un archivo para activar «GENERA REVISIÓN».';
   } else {
     els.modeHint.hidden = false;
     els.modeHint.textContent =
