@@ -39,7 +39,7 @@ function makeSlotRefs(key) {
     icon: root.querySelector('.upload-slot__icon'),
     thumb: root.querySelector('.upload-slot__thumb'),
     spinner: root.querySelector('.upload-slot__spinner'),
-    removeBtn: root.querySelector('.upload-slot__remove'),
+    removeBtn: document.querySelector(`[data-remove-slot="${key}"]`),
     file: null,
     pdfDoc: null,
   };

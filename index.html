@@ -32,9 +32,9 @@
 
       <div class="panel" id="panel-detect" data-panel="detect">
         <h2 class="panel__title">DETECTAR FALLOS</h2>
-        <div class="upload-slot" data-slot="detect">
+        <div class="upload-slot">
           <span class="upload-slot__label">ARTE FINAL 01</span>
-          <div class="upload-slot__box">
+          <div class="upload-slot__box" data-slot="detect">
             <input type="file" accept="application/pdf" class="upload-slot__input" aria-label="Subir arte final a revisar" />
             <svg class="upload-slot__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M12 16V4M12 4L7 9M12 4l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -43,7 +43,7 @@
             <img class="upload-slot__thumb" alt="Miniatura del arte final 01" hidden />
             <div class="upload-slot__spinner" hidden></div>
           </div>
-          <button class="btn btn--red upload-slot__remove" type="button" disabled>BORRAR</button>
+          <button class="btn btn--red upload-slot__remove" type="button" disabled data-remove-slot="detect">BORRAR</button>
         </div>
       </div>
 
@@ -53,9 +53,14 @@
         <h2 class="panel__title">COMPARATIVA ARCHIVOS</h2>
         <div class="compare-slots">
 
-          <div class="upload-slot" data-slot="compareA">
+          <div class="compare-slots__row compare-slots__row--labels">
             <span class="upload-slot__label">ARTE FINAL 01</span>
-            <div class="upload-slot__box">
+            <span class="compare-slots__arrow-space" aria-hidden="true"></span>
+            <span class="upload-slot__label">ARTE FINAL 02</span>
+          </div>
+
+          <div class="compare-slots__row compare-slots__row--boxes">
+            <div class="upload-slot__box" data-slot="compareA">
               <input type="file" accept="application/pdf" class="upload-slot__input" aria-label="Subir arte final 01 para comparar" />
               <svg class="upload-slot__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M12 16V4M12 4L7 9M12 4l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -64,16 +69,12 @@
               <img class="upload-slot__thumb" alt="Miniatura del arte final 01" hidden />
               <div class="upload-slot__spinner" hidden></div>
             </div>
-            <button class="btn btn--red upload-slot__remove" type="button" disabled>BORRAR</button>
-          </div>
 
-          <div class="compare-slots__arrow" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
+            <div class="compare-slots__arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
 
-          <div class="upload-slot" data-slot="compareB">
-            <span class="upload-slot__label">ARTE FINAL 02</span>
-            <div class="upload-slot__box">
+            <div class="upload-slot__box" data-slot="compareB">
               <input type="file" accept="application/pdf" class="upload-slot__input" aria-label="Subir arte final 02 para comparar" />
               <svg class="upload-slot__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M12 16V4M12 4L7 9M12 4l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -82,7 +83,12 @@
               <img class="upload-slot__thumb" alt="Miniatura del arte final 02" hidden />
               <div class="upload-slot__spinner" hidden></div>
             </div>
-            <button class="btn btn--red upload-slot__remove" type="button" disabled>BORRAR</button>
+          </div>
+
+          <div class="compare-slots__row compare-slots__row--buttons">
+            <button class="btn btn--red upload-slot__remove" type="button" disabled data-remove-slot="compareA">BORRAR</button>
+            <span class="compare-slots__arrow-space" aria-hidden="true"></span>
+            <button class="btn btn--red upload-slot__remove" type="button" disabled data-remove-slot="compareB">BORRAR</button>
           </div>
 
         </div>
