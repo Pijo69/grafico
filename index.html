@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>IZZON Lab · Revisión AAFF</title>
+<meta name="description" content="Herramienta interna IZZON Lab para detectar fallos y comparar artes finales en PDF." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fahkwang:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/styles.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23191715'/%3E%3Cpath d='M18 33l10 10 18-20' stroke='%23ffde00' stroke-width='6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+</head>
+<body>
+<div class="page">
+
+  <header class="header">
+    <div class="container header__inner">
+      <div class="logo">IZZON<span class="logo__lab">LAB</span></div>
+      <p class="header__subtitle">
+        <span class="header__subtitle-main">DISEÑO EJECUTIVO</span>
+        <span class="header__subtitle-accent">(Revisión AAFF)</span>
+      </p>
+    </div>
+  </header>
+
+  <main class="container main">
+
+    <section class="panels" id="panels">
+
+      <div class="panel" id="panel-detect" data-panel="detect">
+        <h2 class="panel__title">DETECTAR FALLOS</h2>
+        <div class="upload-slot" data-slot="detect">
+          <span class="upload-slot__label">ARTE FINAL 01</span>
+          <div class="upload-slot__box">
+            <input type="file" accept="application/pdf" class="upload-slot__input" aria-label="Subir arte final a revisar" />
+            <svg class="upload-slot__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 16V4M12 4L7 9M12 4l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <img class="upload-slot__thumb" alt="Miniatura del arte final 01" hidden />
+            <div class="upload-slot__spinner" hidden></div>
+          </div>
+          <button class="btn btn--red upload-slot__remove" type="button" disabled>BORRAR</button>
+        </div>
+      </div>
+
+      <div class="panels__divider" aria-hidden="true"></div>
+
+      <div class="panel" id="panel-compare" data-panel="compare">
+        <h2 class="panel__title">COMPARATIVA ARCHIVOS</h2>
+        <div class="compare-slots">
+
+          <div class="upload-slot" data-slot="compareA">
+            <span class="upload-slot__label">ARTE FINAL 01</span>
+            <div class="upload-slot__box">
+              <input type="file" accept="application/pdf" class="upload-slot__input" aria-label="Subir arte final 01 para comparar" />
+              <svg class="upload-slot__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 16V4M12 4L7 9M12 4l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <img class="upload-slot__thumb" alt="Miniatura del arte final 01" hidden />
+              <div class="upload-slot__spinner" hidden></div>
+            </div>
+            <button class="btn btn--red upload-slot__remove" type="button" disabled>BORRAR</button>
+          </div>
+
+          <div class="compare-slots__arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+
+          <div class="upload-slot" data-slot="compareB">
+            <span class="upload-slot__label">ARTE FINAL 02</span>
+            <div class="upload-slot__box">
+              <input type="file" accept="application/pdf" class="upload-slot__input" aria-label="Subir arte final 02 para comparar" />
+              <svg class="upload-slot__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 16V4M12 4L7 9M12 4l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <img class="upload-slot__thumb" alt="Miniatura del arte final 02" hidden />
+              <div class="upload-slot__spinner" hidden></div>
+            </div>
+            <button class="btn btn--red upload-slot__remove" type="button" disabled>BORRAR</button>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+    <p class="mode-hint" id="mode-hint" hidden></p>
+
+    <div class="actions">
+      <button class="btn btn--dark" id="btn-generate" type="button" disabled>
+        <span class="btn__label">GENERA REVISIÓN</span>
+        <span class="btn__spinner" aria-hidden="true"></span>
+      </button>
+      <button class="btn btn--red" id="btn-clear" type="button" disabled>BORRAR REVISIÓN</button>
+    </div>
+
+    <section class="result">
+      <h2 class="section-title">RESULTADO REVISIÓN</h2>
+
+      <div class="result-zone" id="result-zone" role="button" tabindex="0" aria-label="Ampliar zona de resultado">
+        <img class="result-zone__image" id="result-image" alt="Resultado de la revisión" hidden />
+        <div class="result-zone__boxes" id="result-boxes" hidden></div>
+        <span class="result-zone__placeholder" id="result-placeholder">ZONA RESULTADO</span>
+        <div class="result-zone__scanline" id="scanline" hidden></div>
+        <span class="result-zone__expand" aria-hidden="true">⤢</span>
+      </div>
+
+      <div class="result-footer">
+        <div class="result-footer__download">
+          <p>Descarga el resultado final.</p>
+          <button class="btn btn--dark" id="btn-download" type="button" disabled>DESCARGA</button>
+        </div>
+        <div class="result-footer__list">
+          <h3 class="section-title">RESULTADO POR PUNTOS (errores o diferencias)</h3>
+          <ol class="issue-list" id="issue-list">
+            <li class="issue-list__empty">Sube un archivo y pulsa «GENERA REVISIÓN» para comenzar.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="logo logo--small">IZZON<span class="logo__lab">LAB</span></div>
+      <div class="footer__text">
+        <p>Documentos para uso exclusivamente interno para trabajadores de la empresa.</p>
+        <p>© 2026 IZZON Lab / Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<div class="modal" id="modal" hidden>
+  <div class="modal__backdrop" id="modal-backdrop"></div>
+  <div class="modal__content">
+    <button class="modal__close" id="modal-close" type="button" aria-label="Cerrar ventana ampliada">✕</button>
+    <img class="modal__image" id="modal-image" alt="Resultado ampliado" />
+  </div>
+</div>
+
+<div class="toast" id="toast" hidden></div>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
