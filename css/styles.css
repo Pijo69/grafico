@@ -1,6 +1,6 @@
 :root {
   /* Sampled directly from the client's reference PDF (REVISION_AAFF_01) */
-  --c-bg: #f8f8f9;
+  --c-bg: #ffffff;
   --c-ink: #211915;
   --c-ink-soft: #4a4136;
   --c-muted: #9c988d;
@@ -113,23 +113,16 @@ img { max-width: 100%; display: block; }
 /* ---------- header ---------- */
 .header { padding: clamp(24px, 5vw, 40px) 0 clamp(16px, 3vw, 24px); }
 
-.logo {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(32px, 6vw, 52px);
-  letter-spacing: -0.01em;
-  line-height: 1;
+.logo-mark {
+  height: clamp(30px, 5.6vw, 46px);
+  width: auto;
+  display: block;
+  color: var(--c-ink);
 }
-.logo__lab {
-  font-family: var(--font-ui);
-  font-weight: 600;
-  font-size: 0.34em;
-  letter-spacing: 0.08em;
-  vertical-align: 6%;
-  margin-left: 2px;
+.logo-mark--small {
+  height: 24px;
+  color: var(--c-white);
 }
-.logo--small { font-size: 26px; color: var(--c-white); }
-.logo--small .logo__lab { color: var(--c-white); }
 
 .header__subtitle {
   margin: 14px 0 0;
