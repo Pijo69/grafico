@@ -1,6 +1,27 @@
 import { loadPdfFromFile, renderFirstPage, extractTextItems } from './pdfEngine.js';
+import { ocrExtractItems } from './ocrEngine.js';
 import { analyzeDocument } from './analyze.js';
 import { diffTextTokens, visualDiffBoxes } from './diffEngine.js';
+
+// A flattened "arte final" is often one placed image covering the whole
+// page, so pdf.js's real text layer comes back empty or near-empty even
+// though the page is full of text pixel-wise. When that happens, fall
+// back to OCR on the rendered canvas instead of silently analyzing
+// nothing.
+const MIN_REAL_TEXT_CHARS = 15;
+
+async function getTextItems(page, viewport, canvas) {
+  const pdfItems = await extractTextItems(page, viewport);
+  const totalChars = pdfItems.reduce((sum, it) => sum + it.str.length, 0);
+  if (totalChars >= MIN_REAL_TEXT_CHARS) return pdfItems;
+  try {
+    const ocrItems = await ocrExtractItems(canvas);
+    return ocrItems.length ? ocrItems : pdfItems;
+  } catch (err) {
+    console.warn('OCR no disponible, usando solo el texto real del PDF:', err);
+    return pdfItems;
+  }
+}
 
 const THUMB_WIDTH = 260;
 const RESULT_WIDTH = 1100;
@@ -211,7 +232,7 @@ async function runGenerate() {
     if (activeMode === 'detect') {
       const slot = slots.detect;
       const { page, viewport, canvas } = await renderFirstPage(slot.pdfDoc, RESULT_WIDTH);
-      const items = await extractTextItems(page, viewport);
+      const items = await getTextItems(page, viewport, canvas);
       const issues = await analyzeDocument(items, canvas.width, canvas.height);
       renderResult(canvas, issues, 'No se han encontrado fallos.');
     } else if (activeMode === 'compare') {
@@ -222,8 +243,8 @@ async function runGenerate() {
         renderFirstPage(b.pdfDoc, RESULT_WIDTH),
       ]);
       const [itemsA, itemsB] = await Promise.all([
-        extractTextItems(renderA.page, renderA.viewport),
-        extractTextItems(renderB.page, renderB.viewport),
+        getTextItems(renderA.page, renderA.viewport, renderA.canvas),
+        getTextItems(renderB.page, renderB.viewport, renderB.canvas),
       ]);
       const textIssues = diffTextTokens(itemsA, itemsB, renderB.canvas.width, renderB.canvas.height);
       // A text edit reflows everything after it on the same line, so widen

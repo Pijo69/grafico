@@ -23,8 +23,11 @@ python3 -m http.server 8080
   relevantes (color/diseño).
 - Ambas funciones comparten la misma zona de resultado y son mutuamente excluyentes: al
   empezar a usar una se bloquea la otra hasta pulsar «Borrar revisión».
-- El resultado se puede ampliar en una ventana flotante y descargar como JPG con las
-  marcas ya incluidas.
+- El resultado se puede ampliar en una ventana flotante con zoom (100%–400%, botones +/−)
+  y descargar como JPG con las marcas ya incluidas.
+- Si un PDF no tiene capa de texto real (p. ej. un «arte final» aplanado donde la página
+  entera es una imagen colocada), la herramienta recurre automáticamente a OCR sobre la
+  imagen renderizada para seguir detectando texto, ortografía y diferencias.
 
 ## Dependencias (vendorizadas, sin CDN)
 
@@ -35,6 +38,14 @@ python3 -m http.server 8080
   archivos no cargan por cualquier motivo, la comprobación ortográfica simplemente se
   omite; el resto de comprobaciones (espaciado, puntuación, palabras repetidas,
   comparativa) sigue funcionando con normalidad.
+- `tesseract.js` + datos de idioma español (OCR) — usado solo como respaldo cuando el PDF
+  no trae texto real extraíble. `vendor/tesseract/worker-shim.js` es un pequeño envoltorio
+  que carga el worker real de Tesseract; existe porque Tesseract pide el fichero de idioma
+  con el nombre `spa.traineddata.gz`, una extensión que algunos servidores de archivos
+  (incluido el de este artifact) no sirven — el shim reescribe esa petición hacia
+  `spa.traineddata.wasm`, que son los mismos bytes gzip renombrados a una extensión
+  servible; Tesseract los descomprime igualmente (`gzip: true`), así que el cambio de
+  nombre no afecta al contenido.
 
 ## Tipografías
 
