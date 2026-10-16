@@ -21,9 +21,17 @@ const els = {
   modal: document.getElementById('modal'),
   modalBackdrop: document.getElementById('modal-backdrop'),
   modalClose: document.getElementById('modal-close'),
+  modalViewport: document.getElementById('modal-viewport'),
   modalImage: document.getElementById('modal-image'),
+  zoomIn: document.getElementById('zoom-in'),
+  zoomOut: document.getElementById('zoom-out'),
   toast: document.getElementById('toast'),
 };
+
+const ZOOM_MIN = 1;
+const ZOOM_MAX = 4;
+const ZOOM_STEP = 0.5;
+let zoomLevel = ZOOM_MIN;
 
 const slots = {
   detect: makeSlotRefs('detect'),
@@ -299,9 +307,27 @@ function runDownload() {
   link.click();
 }
 
+function applyZoom() {
+  els.modalImage.style.width = `${zoomLevel * 100}%`;
+  els.zoomOut.disabled = zoomLevel <= ZOOM_MIN;
+  els.zoomIn.disabled = zoomLevel >= ZOOM_MAX;
+}
+
+function zoomInModal() {
+  zoomLevel = Math.min(ZOOM_MAX, zoomLevel + ZOOM_STEP);
+  applyZoom();
+}
+
+function zoomOutModal() {
+  zoomLevel = Math.max(ZOOM_MIN, zoomLevel - ZOOM_STEP);
+  applyZoom();
+}
+
 function openModal() {
   if (!resultCanvas) return;
   els.modalImage.src = els.resultImage.src;
+  zoomLevel = ZOOM_MIN;
+  applyZoom();
   els.modal.hidden = false;
 }
 
@@ -326,6 +352,8 @@ els.resultZone.addEventListener('keydown', (e) => {
 });
 els.modalClose.addEventListener('click', closeModal);
 els.modalBackdrop.addEventListener('click', closeModal);
+els.zoomIn.addEventListener('click', zoomInModal);
+els.zoomOut.addEventListener('click', zoomOutModal);
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && !els.modal.hidden) closeModal();
 });
