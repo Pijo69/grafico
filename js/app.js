@@ -155,6 +155,7 @@ function renderResult(canvas, issues, emptyMessage) {
   els.resultBoxes.innerHTML = '';
   els.resultBoxes.hidden = issues.length === 0;
   issues.forEach((issue, i) => {
+    if (!issue.rectPct) return;
     const box = document.createElement('div');
     box.className = 'result-box';
     box.style.left = `${issue.rectPct.xPct}%`;
@@ -217,15 +218,25 @@ async function runGenerate() {
         extractTextItems(renderB.page, renderB.viewport),
       ]);
       const textIssues = diffTextTokens(itemsA, itemsB, renderB.canvas.width, renderB.canvas.height);
+      // A text edit reflows everything after it on the same line, so widen
+      // each text issue's rect to the full row width before using it to
+      // suppress visual-diff noise: otherwise that reflow (not a separate
+      // design difference) gets reported a second time as a visual box.
+      const rowExclusions = textIssues
+        .map((i) => i.rectPx)
+        .filter(Boolean)
+        .map((r) => ({ x0: 0, y0: r.y0, x1: renderB.canvas.width, y1: r.y1 }));
       const visualIssues = visualDiffBoxes(
         renderA.canvas,
         renderB.canvas,
-        textIssues.map((i) => i.rectPx),
+        rowExclusions,
         renderB.canvas.width,
         renderB.canvas.height
       );
       const issues = [...textIssues, ...visualIssues].sort(
-        (x, y) => x.rectPx.y0 - y.rectPx.y0 || x.rectPx.x0 - y.rectPx.x0
+        (x, y) =>
+          (x.rectPx?.y0 ?? Infinity) - (y.rectPx?.y0 ?? Infinity) ||
+          (x.rectPx?.x0 ?? Infinity) - (y.rectPx?.x0 ?? Infinity)
       );
       renderResult(renderB.canvas, issues, 'No se han encontrado diferencias.');
     }
@@ -262,6 +273,7 @@ function buildCompositeImage() {
   ctx.lineWidth = 3;
   ctx.strokeStyle = '#ffde00';
   currentIssues.forEach((issue, i) => {
+    if (!issue.rectPx) return;
     const { x0, y0, x1, y1 } = issue.rectPx;
     ctx.strokeRect(x0, y0, x1 - x0, y1 - y0);
     const label = String(i + 1).padStart(2, '0');
