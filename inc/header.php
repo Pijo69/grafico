@@ -18,7 +18,9 @@ $inicio = $pagina_actual === 'home' ? '' : 'index.php';
 <meta name="description" content="Branding Page de IZZON LAB: brandbook, plantillas y recursos para un uso correcto de nuestra marca.">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#f7f7f8">
-<link rel="icon" href="assets/img/brand/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="<?= e(version_img('assets/img/brand/favicon.svg')) ?>" type="image/svg+xml">
+<link rel="icon" href="<?= e(version_img('assets/img/brand/favicon-32.png')) ?>" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="<?= e(version_img('assets/img/brand/apple-touch-icon.png')) ?>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fahkwang:wght@600;700&family=Montserrat:wght@300;400;500;600;700&display=swap">
