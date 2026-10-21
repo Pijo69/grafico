@@ -84,8 +84,8 @@ const PLANTILLAS = [
         'items' => [
             [
                 'id' => 'ppt-interna', 'nombre' => 'Interna', 'archivo' => 'IZZON-LAB-PPT-Interna.pptx',
-                'tipo' => 'Presentación interna', 'formato' => 'PowerPoint · 16:9 · 13 diapositivas',
-                'descripcion' => 'Portada con imagen de mar, logotipo y claim, índice, separadores de sección y diapositivas para datos. Para reuniones y presentaciones de equipo.',
+                'tipo' => 'Presentación interna', 'formato' => 'PowerPoint · 16:9 · 17 diapositivas',
+                'descripcion' => 'Portada con la fachada de IZZON LAB, índice y diapositivas para datos: tablas, gráficos, comparativas y roadmap. Para reuniones y presentaciones de equipo.',
             ],
             [
                 'id' => 'ppt-externa', 'nombre' => 'Externa', 'archivo' => 'IZZON-LAB-PPT-Externa.pptx',
@@ -119,4 +119,11 @@ function primer_archivo(string $carpeta, array $extensiones): ?string
         }
     }
     return null;
+}
+
+/* Añade la fecha del archivo a la URL para que el navegador no use una versión antigua. */
+function version_img(string $ruta): string
+{
+    $real = RAIZ . '/' . $ruta;
+    return is_file($real) ? $ruta . '?v=' . filemtime($real) : $ruta;
 }

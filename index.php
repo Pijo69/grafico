@@ -19,7 +19,7 @@ foreach (PLANTILLAS as $clave => $grupo) {
             'tipo'        => $item['tipo'],
             'formato'     => $item['formato'],
             'descripcion' => $item['descripcion'],
-            'imagen'      => 'assets/img/plantillas/' . $item['id'] . '.webp',
+            'imagen'      => version_img('assets/img/plantillas/' . $item['id'] . '.webp'),
             'archivo'     => $existe ? url_descarga('plantillas', $item['archivo']) : null,
             'nombreArchivo' => $item['archivo'],
         ];
@@ -93,7 +93,7 @@ $indice = 0;
                         <button type="button" class="ficha__boton" data-visor="<?= $indice++ ?>"
                                 aria-label="Ver <?= e(strip_tags(str_replace('<br>', ' ', $grupo['titulo'])) . ' ' . $item['nombre']) ?> ampliada">
                             <span class="ficha__papel">
-                                <img src="assets/img/plantillas/<?= e($item['id']) ?>-sm.webp" alt="" loading="lazy" decoding="async">
+                                <img src="<?= e(version_img('assets/img/plantillas/' . $item['id'] . '-sm.webp')) ?>" alt="" loading="lazy" decoding="async">
                                 <span class="ficha__lupa" aria-hidden="true"></span>
                             </span>
                             <span class="ficha__nombre"><?= e($item['nombre']) ?></span>
