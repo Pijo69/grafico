@@ -25,7 +25,7 @@ require __DIR__ . '/header.php';
     </a>
 
     <h1 class="intro__titulo descargas__titulo" id="t-descargas" data-reveal><?= $cat['titulo_html'] ?></h1>
-    <p class="intro__texto" data-reveal style="--d:1"><?= e($cat['descripcion']) ?> Haz clic sobre cualquier archivo para descargarlo.</p>
+    <p class="intro__texto" data-reveal style="--d:1"><?= e($cat['intro'] ?? $cat['descripcion'] . ' Haz clic sobre cualquier archivo para descargarlo.') ?></p>
 
     <div class="descargas__barra" data-reveal style="--d:2">
         <p class="descargas__cuenta">

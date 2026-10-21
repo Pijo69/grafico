@@ -33,6 +33,8 @@ const CATEGORIAS = [
         'titulo'      => 'Iconos',
         'titulo_html' => 'ICONOS',
         'descripcion' => 'Iconos en formato PPT para las presentaciones.',
+        // Texto de la cabecera de la página (si falta, se usa la descripción + "Haz clic…")
+        'intro'       => 'Iconos en formato PPT para las presentaciones. Descarga la hoja y selecciona los que necesites. Se pueden ampliar sin que se pixele y cambiar de color.',
         'fondo'       => false,
         'grande'      => true, // pocos archivos: miniatura grande
     ],
