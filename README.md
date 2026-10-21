@@ -83,6 +83,12 @@ Para fijar el orden de los apartados, pon un número delante del nombre de la ca
 Para poner un texto bajo el título de un apartado, crea dentro de su carpeta un archivo
 `_descripcion.txt` con ese texto (por ejemplo `descargas/logos/01 SVG/_descripcion.txt`).
 
+Si un archivo no trae vista previa (por ejemplo un PowerPoint guardado sin ella), sube a la misma
+carpeta una imagen llamada `_miniatura_<nombre del archivo>.jpg` (o `.png`, `.webp`). Ejemplo:
+`IZZON_LAB_ICONOS.pptx` → `_miniatura_IZZON_LAB_ICONOS.webp`. Se usa como miniatura y no aparece como descarga.
+
+En `inc/config.php`, `'grande' => true` en una categoría muestra miniaturas grandes (se usa en Iconos).
+
 Los archivos y carpetas que empiezan por `.` o `_` no se listan (útil para ocultar algo sin borrarlo).
 
 ## Editar textos

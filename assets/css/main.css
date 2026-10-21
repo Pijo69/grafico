@@ -558,6 +558,17 @@ ul { padding: 0; list-style: none; }
     padding-top: clamp(28px, 3.5vw, 48px);
 }
 
+/* Páginas con pocos archivos: una miniatura grande en lugar de la rejilla */
+.archivos--grande { grid-template-columns: minmax(0, 860px); }
+.archivos--grande .archivo__mini { aspect-ratio: 16 / 9; padding: 4%; }
+.archivos--grande .archivo__mini img { box-shadow: 0 10px 30px -18px rgba(30, 18, 13, .35); }
+.archivos--grande .archivo__accion { right: 18px; bottom: 18px; width: 52px; height: 52px; padding: 13px; }
+.archivos--grande .archivo__nombre { font-size: 18px; white-space: normal; }
+.archivos--grande .archivo__meta { font-size: 12px; }
+@media (hover: hover) and (pointer: fine) {
+    .archivos--grande .archivo__link:hover .archivo__mini { transform: translate(-6px, -6px); box-shadow: 14px 14px 0 var(--tinta); }
+}
+
 .archivo__link {
     display: grid; gap: 4px;
     text-decoration: none;

@@ -33,7 +33,8 @@ const CATEGORIAS = [
         'titulo'      => 'Iconos',
         'titulo_html' => 'ICONOS',
         'descripcion' => 'Iconos en formato PPT para las presentaciones.',
-        'fondo'       => true,
+        'fondo'       => false,
+        'grande'      => true, // pocos archivos: miniatura grande
     ],
 ];
 

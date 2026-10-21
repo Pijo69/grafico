@@ -63,7 +63,7 @@ require __DIR__ . '/header.php';
                     <p class="apartado__desc" data-reveal style="--d:1"><?= nl2br(e($ap['descripcion'])) ?></p>
                 <?php endif; ?>
             <?php endif; ?>
-            <ul class="archivos" role="list" data-archivos>
+            <ul class="archivos<?= !empty($cat['grande']) ? ' archivos--grande' : '' ?>" role="list" data-archivos>
                 <?php foreach ($ap['archivos'] as $n => $a): ?>
                     <li class="archivo" data-reveal style="--d:<?= min($n, 12) ?>">
                         <a class="archivo__link" href="<?= e($a['url']) ?>" download="<?= e($a['nombre']) ?>"

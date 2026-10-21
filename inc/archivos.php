@@ -43,7 +43,8 @@ function listar_archivos(string $categoria, string $subcarpeta = ''): array
             'ext'     => $ext,
             'peso'    => filesize($ruta),
             'url'     => url_descarga($categoria, $relativa),
-            'mini'    => url_miniatura($categoria, $relativa, $ext, filemtime($ruta)),
+            'mini'    => vista_previa_manual($categoria, $subcarpeta, $nombre)
+                         ?? url_miniatura($categoria, $relativa, $ext, filemtime($ruta)),
             'oscuro'  => (bool) preg_match('/(blanc|white|negativ)/i', $nombre),
         ];
     }
@@ -105,6 +106,25 @@ function titulo_legible(string $nombre): string
     $base = pathinfo($nombre, PATHINFO_FILENAME);
     $base = preg_replace('/[-_\s]+(copia|copy)(\s*\d+)?$/i', '', $base);
     return trim(preg_replace('/[_\s]+/', ' ', $base));
+}
+
+/*
+ * Vista previa hecha a mano para archivos que no traen la suya (p. ej. un PPTX):
+ * una imagen llamada "_miniatura_<nombre del archivo sin extensión>.jpg|png|webp"
+ * en la misma carpeta. Al empezar por "_" no aparece en el listado.
+ */
+function vista_previa_manual(string $categoria, string $subcarpeta, string $nombre): ?string
+{
+    $dir = dir_categoria($categoria) . ($subcarpeta !== '' ? '/' . $subcarpeta : '');
+    $base = pathinfo($nombre, PATHINFO_FILENAME);
+    foreach (['webp', 'jpg', 'jpeg', 'png'] as $ext) {
+        $previa = '_miniatura_' . $base . '.' . $ext;
+        if (is_file($dir . '/' . $previa)) {
+            $relativa = ($subcarpeta !== '' ? $subcarpeta . '/' : '') . $previa;
+            return url_descarga($categoria, $relativa) . '?v=' . filemtime($dir . '/' . $previa);
+        }
+    }
+    return null;
 }
 
 /* null = sin miniatura posible: se muestra una ficha con la extensión. */
