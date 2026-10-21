@@ -390,7 +390,14 @@ ul { padding: 0; list-style: none; }
    Recursos (home)
    -------------------------------------------------------------------------- */
 
-.recursos { padding-bottom: clamp(72px, 12vw, 180px); }
+.recursos { padding-bottom: clamp(56px, 7vw, 100px); }
+
+/* Maximiza tu tiempo con la IA: texto y una imagen a todo el ancho pegada al pie */
+.ia { padding-bottom: clamp(36px, 4.5vw, 64px); }
+.ia__titulo { padding-top: clamp(28px, 3.2vw, 44px); }
+.ia__texto { padding-top: clamp(14px, 1.6vw, 22px); max-width: 40ch; }
+.ia-imagen { position: relative; margin: 0; overflow: hidden; line-height: 0; }
+.ia-imagen img { width: 100%; height: auto; display: block; }
 .recursos__titulo { padding-top: clamp(28px, 3.2vw, 44px); }
 .recursos__intro { padding-top: clamp(14px, 1.6vw, 22px); }
 

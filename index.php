@@ -122,6 +122,19 @@ $indice = 0;
     </ul>
 </section>
 
+<section class="ia contenedor" id="ia" aria-labelledby="t-ia">
+    <hr class="regla" data-reveal="linea">
+    <h2 class="seccion-titulo ia__titulo" id="t-ia" data-reveal>Maximiza tu tiempo con la IA</h2>
+    <p class="texto-peq ia__texto" data-reveal style="--d:1">Videos tutoriales para acelerar y mejorar tus presentaciones y documentos.</p>
+</section>
+
+<figure class="ia-imagen" data-reveal="mascara">
+    <img src="assets/img/brand/ia-tutoriales.webp"
+         srcset="assets/img/brand/ia-tutoriales-sm.webp 1000w, assets/img/brand/ia-tutoriales.webp 2000w"
+         sizes="100vw" width="2000" height="916" loading="lazy" decoding="async"
+         alt="Operarios en miniatura montando unas grandes letras IZZON LAB entre los logotipos de Claude y ChatGPT. Texto: En breve dispondrás de videos tutoriales para sacarle el máximo partido a ChatGPT y a Claude. ¡Te avisaremos!">
+</figure>
+
 <dialog class="visor" id="visor" aria-labelledby="visor-titulo">
     <div class="visor__panel">
         <button type="button" class="visor__cerrar" data-cerrar aria-label="Cerrar">
