@@ -59,6 +59,9 @@ require __DIR__ . '/header.php';
                     <h2 class="seccion-titulo apartado__titulo" id="t-<?= e($ap['id']) ?>"><?= e($ap['titulo']) ?></h2>
                     <span class="apartado__cuenta"><?= count($ap['archivos']) ?> <?= count($ap['archivos']) === 1 ? 'archivo' : 'archivos' ?></span>
                 </header>
+                <?php if (!empty($ap['descripcion'])): ?>
+                    <p class="apartado__desc" data-reveal style="--d:1"><?= nl2br(e($ap['descripcion'])) ?></p>
+                <?php endif; ?>
             <?php endif; ?>
             <ul class="archivos" role="list" data-archivos>
                 <?php foreach ($ap['archivos'] as $n => $a): ?>

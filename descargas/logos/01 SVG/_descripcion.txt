@@ -1,0 +1,1 @@
+Este formato no se pixela cuando se aumenta el tamaño y además permite cambiar el color. Ideal para PPT, WORD y EXCEL.

@@ -79,12 +79,25 @@ function listar_apartados(string $categoria): array
         if ($archivos) {
             $apartados[] = [
                 'titulo'   => $titulo,
+                'descripcion' => leer_descripcion(dir_categoria($categoria) . '/' . $carpeta),
                 'id'       => 'apartado-' . trim(preg_replace('/[^a-z0-9]+/', '-', strtolower(iconv('UTF-8', 'ASCII//TRANSLIT', $titulo) ?: $titulo)), '-'),
                 'archivos' => $archivos,
             ];
         }
     }
     return $apartados;
+}
+
+/* Texto opcional bajo el título del apartado: _descripcion.txt dentro de la carpeta. */
+function leer_descripcion(string $dir): ?string
+{
+    $ruta = $dir . '/_descripcion.txt';
+    if (!is_file($ruta)) {
+        return null;
+    }
+    $texto = trim((string) file_get_contents($ruta));
+    $texto = preg_replace('/^\xEF\xBB\xBF/', '', $texto); // BOM de algunos editores
+    return $texto !== '' ? $texto : null;
 }
 
 function titulo_legible(string $nombre): string

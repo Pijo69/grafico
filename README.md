@@ -80,6 +80,9 @@ se muestra como un apartado propio. Si hay más de un apartado, arriba aparecen 
 Para fijar el orden de los apartados, pon un número delante del nombre de la carpeta
 (`01 SVG`, `02 PNG`): el número no se muestra en la web. Sin número, van por orden alfabético.
 
+Para poner un texto bajo el título de un apartado, crea dentro de su carpeta un archivo
+`_descripcion.txt` con ese texto (por ejemplo `descargas/logos/01 SVG/_descripcion.txt`).
+
 Los archivos y carpetas que empiezan por `.` o `_` no se listan (útil para ocultar algo sin borrarlo).
 
 ## Editar textos

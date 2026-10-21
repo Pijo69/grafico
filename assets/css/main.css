@@ -655,6 +655,11 @@ ul { padding: 0; list-style: none; }
     padding-bottom: 14px;
     border-bottom: 1px solid rgba(30, 18, 13, .2);
 }
+.apartado__desc {
+    max-width: 62ch;
+    padding-top: 14px;
+    font-size: 15px; line-height: 1.55;
+}
 .apartado__cuenta { font-size: 12px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; opacity: .65; font-variant-numeric: tabular-nums; }
 
 .vacio {
