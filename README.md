@@ -14,6 +14,18 @@ Para probar en local:
 php -S localhost:8080
 ```
 
+## Publicar
+
+1. Sube **todo el contenido** de esta carpeta a la raíz pública del hosting (normalmente `public_html/`
+   o `www/`), incluidos los archivos ocultos `.htaccess` (en la raíz, en `inc/` y en `descargas/`).
+2. El hosting debe tener **PHP 7.4 o superior** con la extensión GD (activada casi siempre).
+3. La carpeta `descargas/.miniaturas/` debe poder escribirse (permisos 755 o 775): ahí se guardan
+   las miniaturas que la web genera sola la primera vez que se visita cada página.
+4. Abre la web en el navegador. Si ves el código PHP en lugar de la página, el hosting no tiene PHP activado.
+
+Si el gestor de archivos del hosting no muestra los archivos que empiezan por punto, activa la opción
+"Mostrar archivos ocultos" para comprobar que se han subido los `.htaccess`.
+
 ## Estructura
 
 ```
