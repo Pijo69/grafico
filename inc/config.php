@@ -73,6 +73,11 @@ const PLANTILLAS = [
         'items' => [
             [
                 'id' => 'excel-modelo-01', 'nombre' => 'Modelo 01', 'archivo' => 'IZZON-LAB-Excel-Modelo-01.xlsx',
+                'tipo' => 'Tablas de datos', 'formato' => 'Excel · 5 hojas',
+                'descripcion' => 'Libro con cuatro modelos de tabla editables con la imagen de marca: tabla básica, tabla por secciones, tabla de seguimiento con estados de color y registro colorido para catálogos e inventarios.',
+            ],
+            [
+                'id' => 'excel-modelo-02', 'nombre' => 'Modelo 02', 'archivo' => 'IZZON-LAB-Excel-Modelo-02.xlsx',
                 'tipo' => 'Hoja de datos', 'formato' => 'Excel · A4 vertical',
                 'descripcion' => 'Plantilla con cabecera de indicadores comparativos y cuatro modelos de tabla: seguimiento diario, categorías con totales, estados con fechas y referencias.',
             ],
