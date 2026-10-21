@@ -79,7 +79,7 @@ const PLANTILLAS = [
             [
                 'id' => 'excel-modelo-02', 'nombre' => 'Modelo 02', 'archivo' => 'IZZON-LAB-Excel-Modelo-02.xlsx',
                 'tipo' => 'Hoja de datos', 'formato' => 'Excel · A4 vertical',
-                'descripcion' => 'Plantilla con cabecera de indicadores comparativos y cuatro modelos de tabla: seguimiento diario, categorías con totales, estados con fechas y referencias.',
+                'descripcion' => 'Plantilla con cabecera de indicadores comparativos y seis modelos de tabla: seguimiento diario, categorías con totales, estados con fechas, referencias y resúmenes por categoría.',
             ],
         ],
     ],
