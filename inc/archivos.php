@@ -74,10 +74,12 @@ function listar_apartados(string $categoria): array
 
     foreach ($carpetas as $carpeta) {
         $archivos = listar_archivos($categoria, $carpeta);
+        // Un número delante del nombre ("01 SVG", "02_PNG") solo fija el orden: no se muestra.
+        $titulo = trim(preg_replace('/[_\s]+/', ' ', preg_replace('/^\d+[\s._-]+/', '', $carpeta)));
         if ($archivos) {
             $apartados[] = [
-                'titulo'   => trim(preg_replace('/[_\s]+/', ' ', $carpeta)),
-                'id'       => 'apartado-' . trim(preg_replace('/[^a-z0-9]+/', '-', strtolower(iconv('UTF-8', 'ASCII//TRANSLIT', $carpeta) ?: $carpeta)), '-'),
+                'titulo'   => $titulo,
+                'id'       => 'apartado-' . trim(preg_replace('/[^a-z0-9]+/', '-', strtolower(iconv('UTF-8', 'ASCII//TRANSLIT', $titulo) ?: $titulo)), '-'),
                 'archivos' => $archivos,
             ];
         }

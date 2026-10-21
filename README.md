@@ -77,6 +77,9 @@ En logos e iconos hay además un selector de fondo claro/oscuro.
 Esto vale para las tres páginas de recursos: una subcarpeta dentro de `logos/`, `imagenes/` o `iconos/`
 se muestra como un apartado propio. Si hay más de un apartado, arriba aparecen accesos directos a cada uno.
 
+Para fijar el orden de los apartados, pon un número delante del nombre de la carpeta
+(`01 SVG`, `02 PNG`): el número no se muestra en la web. Sin número, van por orden alfabético.
+
 Los archivos y carpetas que empiezan por `.` o `_` no se listan (útil para ocultar algo sin borrarlo).
 
 ## Editar textos
