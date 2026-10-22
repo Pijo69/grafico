@@ -24,6 +24,15 @@
                 io.observe(el);
             }
         }
+
+        // Al llegar al final de la página se muestra todo lo que quede pendiente
+        // (lo más bajo puede no llegar a entrar en la zona de activación).
+        const alFinal = () => {
+            if (window.innerHeight + window.scrollY < document.documentElement.scrollHeight - 4) return;
+            document.querySelectorAll('.is-pending').forEach((el) => el.classList.remove('is-pending'));
+            window.removeEventListener('scroll', alFinal);
+        };
+        window.addEventListener('scroll', alFinal, { passive: true });
     }
 
     // Barra fija: aparece cuando la marca de agua sale de pantalla
