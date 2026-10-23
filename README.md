@@ -33,6 +33,7 @@ index.php            Home (intro, brandbook, plantillas, recursos)
 logos.php            Página de descarga: logos y recursos gráficos
 imagenes.php         Página de descarga: imágenes
 iconos.php           Página de descarga: iconos
+linkedin-teams.php   Página de descarga: fondos de LinkedIn y Teams
 miniatura.php        Genera y sirve las miniaturas automáticas
 inc/
   config.php         Textos de plantillas y categorías (editar aquí)
@@ -54,6 +55,7 @@ Todo se hace subiendo archivos por FTP o el gestor de archivos del hosting. No h
 | Logos y recursos gráficos | `descargas/logos/` | Aparecen en `logos.php` |
 | Imágenes | `descargas/imagenes/` o una subcarpeta (`descargas/imagenes/EMPRESA/`) | Aparecen en `imagenes.php`; cada subcarpeta es un apartado con su nombre como título |
 | Iconos | `descargas/iconos/` | Aparecen en `iconos.php` |
+| Fondos de LinkedIn y Teams | `descargas/linkedin-teams/01 LINKEDIN/` y `descargas/linkedin-teams/02 TEAMS/` | Aparecen en `linkedin-teams.php`, con la imagen entera |
 | Brandbook en PDF | `descargas/brandbook/` (cualquier `.pdf`) | Activa el botón "Brandbook PDF" |
 | Vídeo del brandbook | `descargas/brandbook/` (`.mp4` o `.webm`) | Sustituye el recuadro "VIDEO 01". Arranca solo al entrar (sin sonido, como exigen los navegadores), se reproduce una vez y al terminar muestra "Ver de nuevo" |
 | Plantillas Word/Excel/PPT | `descargas/plantillas/` con el nombre indicado en `inc/config.php` | Activa "Descargar plantilla" en la ventana flotante |
@@ -86,7 +88,7 @@ la miniatura se regenera sola.
 Los archivos cuyo nombre contiene `blanco`, `white` o `negativo` se muestran sobre fondo oscuro.
 En logos e iconos hay además un selector de fondo claro/oscuro.
 
-Esto vale para las tres páginas de recursos: una subcarpeta dentro de `logos/`, `imagenes/` o `iconos/`
+Esto vale para todas las páginas de recursos: una subcarpeta dentro de `logos/`, `imagenes/`, `iconos/` o `linkedin-teams/`
 se muestra como un apartado propio. Si hay más de un apartado, arriba aparecen accesos directos a cada uno.
 
 Para fijar el orden de los apartados, pon un número delante del nombre de la carpeta
@@ -99,14 +101,15 @@ Si un archivo no trae vista previa (por ejemplo un PowerPoint guardado sin ella)
 carpeta una imagen llamada `_miniatura_<nombre del archivo>.jpg` (o `.png`, `.webp`). Ejemplo:
 `IZZON_LAB_ICONOS.pptx` → `_miniatura_IZZON_LAB_ICONOS.webp`. Se usa como miniatura y no aparece como descarga.
 
-En `inc/config.php`, `'grande' => true` en una categoría muestra miniaturas grandes (se usa en Iconos).
+En `inc/config.php`, `'grande' => true` en una categoría muestra miniaturas grandes (se usa en Iconos) y
+`'ancho' => true` muestra miniaturas anchas sin recortar la imagen (se usa en LinkedIn y Teams).
 
 Los archivos y carpetas que empiezan por `.` o `_` no se listan (útil para ocultar algo sin borrarlo).
 
 ## Editar textos
 
 - Textos y descripciones de cada plantilla de la ventana flotante: `inc/config.php` → `PLANTILLAS`.
-- Títulos y descripciones de las tres páginas de recursos: `inc/config.php` → `CATEGORIAS`.
+- Títulos y descripciones de las páginas de recursos (cada entrada de `CATEGORIAS` es un botón de "Material y recursos"): `inc/config.php` → `CATEGORIAS`.
 - Para añadir otra plantilla a un grupo, se añade un elemento a su lista `items` y sus imágenes
   `assets/img/plantillas/<id>.webp` (grande) y `<id>-sm.webp` (miniatura).
 

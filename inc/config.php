@@ -38,6 +38,14 @@ const CATEGORIAS = [
         'fondo'       => false,
         'grande'      => true, // pocos archivos: miniatura grande
     ],
+    'linkedin-teams' => [
+        'pagina'      => 'linkedin-teams.php',
+        'titulo'      => 'LinkedIn y Teams',
+        'titulo_html' => 'LINKEDIN Y TEAMS',
+        'descripcion' => 'Fondos de perfil de LINKEDIN y fondo pantalla para reuniones de TEAMS.',
+        'fondo'       => false,
+        'ancho'       => true, // fondos apaisados: miniatura ancha con la imagen entera
+    ],
 ];
 
 /*

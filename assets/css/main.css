@@ -403,21 +403,21 @@ ul { padding: 0; list-style: none; }
 
 .recursos__grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: clamp(28px, 4vw, 56px);
-    padding: clamp(48px, 7vw, 96px) clamp(0px, 5vw, 64px) 0;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(24px, 3vw, 40px);
+    padding: clamp(48px, 7vw, 96px) clamp(0px, 2vw, 24px) 0;
 }
 
 .recurso-opcion {
-    display: grid; grid-template-rows: 3em auto auto; justify-items: center; gap: 22px;
+    display: grid; grid-template-rows: 3em auto auto; justify-items: center; align-content: start; gap: 22px;
     text-align: center;
 }
 .recurso-opcion__titulo {
     align-self: center;
     font-size: clamp(15px, 1.5vw, 18px); font-weight: 700; line-height: 1.25; letter-spacing: .01em;
 }
-.recurso-opcion .boton { min-width: min(100%, 230px); }
-.recurso-opcion__texto { font-size: 14px; line-height: 1.4; max-width: 27ch; text-align: left; }
+.recurso-opcion .boton { min-width: min(100%, 200px); }
+.recurso-opcion__texto { font-size: 14px; line-height: 1.4; max-width: 30ch; text-align: left; }
 
 /* --------------------------------------------------------------------------
    Ventana flotante de plantillas
@@ -572,6 +572,10 @@ ul { padding: 0; list-style: none; }
 .archivos--grande .archivo__accion { right: 18px; bottom: 18px; width: 52px; height: 52px; padding: 13px; }
 .archivos--grande .archivo__nombre { font-size: 18px; white-space: normal; }
 .archivos--grande .archivo__meta { font-size: 12px; }
+/* Fondos (LinkedIn, Teams): miniaturas anchas con la imagen entera, sin recortar */
+.archivos--ancho { grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr)); align-items: start; }
+.archivos--ancho .archivo__mini { aspect-ratio: auto; padding: 0; }
+.archivos--ancho .archivo__mini img.is-foto { position: relative; height: auto; }
 @media (hover: hover) and (pointer: fine) {
     .archivos--grande .archivo__link:hover .archivo__mini { transform: translate(-6px, -6px); box-shadow: 14px 14px 0 var(--tinta); }
 }
@@ -761,6 +765,10 @@ ul { padding: 0; list-style: none; }
 /* --------------------------------------------------------------------------
    Responsive
    -------------------------------------------------------------------------- */
+
+@media (max-width: 1100px) and (min-width: 861px) {
+    .recursos__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 56px; }
+}
 
 @media (max-width: 860px) {
     .brandbook__fila { grid-template-columns: 1fr; }

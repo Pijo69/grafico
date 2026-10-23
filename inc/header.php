@@ -24,7 +24,7 @@ $inicio = $pagina_actual === 'home' ? '' : 'index.php';
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fahkwang:wght@600;700&family=Montserrat:wght@300;400;500;600;700&display=swap">
-<link rel="stylesheet" href="assets/css/main.css?v=1">
+<link rel="stylesheet" href="assets/css/main.css?v=2">
 <script>document.documentElement.classList.add('js');</script>
 </head>
 <body class="pagina-<?= e($pagina_actual) ?>">
