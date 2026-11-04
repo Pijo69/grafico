@@ -114,3 +114,76 @@ export function gabriSeed() {
   }
   return out;
 }
+
+/* ───────── Franci · 3.º de Primaria (curso 2026–2027, horario de octubre a mayo) ───────── */
+
+export const FRANCI_START = '2026-10-01';
+export const FRANCI_END = '2027-05-31';
+
+// [hora inicio, hora fin, Lunes, Martes, Miércoles, Jueves, Viernes]
+const FRANCI_SCHOOL = [
+  ['09:00', '09:45', 'Tutoría', 'Lectura\n(Apoyo Joan)', 'Matemáticas\n(Apoyo Pilar)', 'Castellano\n(1.º: JM · 2.º y 3.º: Pilar)', 'Conocimiento del Medio\n(Apoyo Marta)'],
+  ['09:45', '10:30', 'Matemáticas\n(Apoyo Bea PT)', 'Educación Física', 'Inglés', 'Castellano\n(1.º: JM · 2.º y 3.º: Pilar)', 'Matemáticas\n(Apoyo Pilar)'],
+  ['10:30', '11:15', 'Matemáticas\n(Apoyo Bea PT)', 'Educación Física', 'Inglés', 'Música', 'Arte en el patio / Matemáticas\n(Apoyo Pilar)'],
+  ['11:15', '11:45', 'RECREO', 'RECREO', 'RECREO', 'RECREO', 'RECREO'],
+  ['11:45', '12:30', 'Castellano\n(Apoyo Elena AL)', 'Valenciano\n(1.º y 2.º: Inma · 3.º y 4.º: Joan)', 'Música', 'Educación Física', 'Arte\n(Apoyo Inma)'],
+  ['12:30', '13:15', 'Castellano\n(Apoyo Elena AL)', 'Valenciano\n(1.º y 2.º: Inma · 3.º y 4.º: Joan)', 'Huerto / Conocimiento del Medio\n(Apoyo Bea)', 'Valenciano\n(1.º y 2.º: Inma · 3.º y 4.º: Joan)', 'Inglés'],
+  ['13:15', '14:00', 'Lectura\n(Apoyos de Pilar y Elena)', 'Religión / Alternativa\n(Primaria)', 'Conocimiento del Medio', 'Valenciano\n(1.º y 2.º: Inma · 3.º y 4.º: Joan)', 'Biblioteca / Valenciano'],
+];
+
+// Extraescolares con etiqueta habitual. El Excel solo da la hora de inicio de algunas: se pone 1 h.
+// [día (1=lunes), actividad, etiqueta, inicio, fin, notas]
+const FRANCI_EXTRA = [
+  [1, 'Gimnasia', 'gimnasia', '16:30', '17:30', ''],
+  [2, 'Inglés', 'ingles', '16:00', '17:00', 'Hora de fin no indicada (1 h)'],
+  [2, 'Solfeo', 'solfeo', '17:15', '18:15', 'Hora de fin no indicada (1 h)'],
+  [3, 'Piano', 'piano', '15:30', '16:30', 'Hora de fin no indicada (1 h)'],
+  [5, 'Bicicleta', 'extraescolar', '15:30', '16:30', 'Hora de fin no indicada (1 h)'],
+];
+
+function franciBase(weekday, startTime, endTime) {
+  const d = firstWeekday(FRANCI_START, weekday);
+  return {
+    person: 'franci',
+    startDate: d,
+    endDate: d,
+    startTime,
+    endTime,
+    allDay: false,
+    repeat: 'weekly',
+    repeatUntil: FRANCI_END,
+    exceptions: [],
+    alert: { enabled: false, minutesBefore: 15 },
+    source: 'excel-3prim',
+  };
+}
+
+export function franciSeed() {
+  const out = [];
+  for (const [start, end, ...days] of FRANCI_SCHOOL) {
+    days.forEach((cell, i) => {
+      const weekday = i + 1;
+      const [subject, ...rest] = cell.split('\n');
+      const title = subject === 'RECREO' ? 'Recreo' : subject;
+      out.push({
+        id: `seed-franci-${DAY_IDS[weekday]}-${start.replace(':', '')}`,
+        ...franciBase(weekday, start, end),
+        title,
+        tag: 'colegio',
+        priority: 'muy_importante', // toda la jornada escolar (9:00–14:00) es IMPORTANTE
+        notes: rest.join(' ').replace(/[()]/g, ''),
+      });
+    });
+  }
+  for (const [weekday, title, tag, start, end, notes] of FRANCI_EXTRA) {
+    out.push({
+      id: `seed-franci-${DAY_IDS[weekday]}-${slug(title)}-${start.replace(':', '')}`,
+      ...franciBase(weekday, start, end),
+      title,
+      tag,
+      priority: 'normal',
+      notes,
+    });
+  }
+  return out;
+}

@@ -1,5 +1,5 @@
 /* Service worker: caché de la app + avisos push de Firebase Cloud Messaging. */
-const CACHE = 'guachis-v10';
+const CACHE = 'guachis-v11';
 const SHELL = [
   './', 'index.html', 'manifest.webmanifest', 'css/styles.css',
   'js/app.js', 'js/config.js', 'js/dates.js', 'js/i18n.js', 'js/icons.js', 'js/logo.js',

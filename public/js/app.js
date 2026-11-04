@@ -8,7 +8,7 @@ import { occurrencesOn, occurrenceOn, layoutLanes } from './recurrence.js';
 import { logoFull, logoMark, logoFace, loader } from './logo.js';
 import { ICON } from './icons.js';
 import { personSummary, speak, stopSpeaking } from './summary.js';
-import { gabriSeed, workSeed } from './seed-gabri.js';
+import { gabriSeed, workSeed, franciSeed } from './seed-gabri.js';
 import { localStore } from './store-local.js';
 
 /* ───────────────────────── Estado ───────────────────────── */
@@ -168,6 +168,7 @@ function subscribe() {
 const SEEDS = [
   { flag: 'gh.seeded.gabri', source: 'excel-1eso-b', items: gabriSeed, msg: 'imported' },
   { flag: 'gh.seeded.work', source: 'seed-work', items: workSeed, msg: 'importedWork' },
+  { flag: 'gh.seeded.franci', source: 'excel-3prim', items: franciSeed, msg: 'importedFranci' },
 ];
 
 function onceFlag(flag) {
@@ -1040,6 +1041,7 @@ function openSettings(onboarding) {
       try {
         await store.importMissing(gabriSeed());
         await store.importMissing(workSeed());
+        await store.importMissing(franciSeed());
         toast(t('imported'));
       } catch (err) {
         toast(err.message || String(err));

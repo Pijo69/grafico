@@ -14,7 +14,7 @@ App web (PWA, se instala en el móvil) para ver y editar los horarios de **Carle
 - **Resumen** del día en texto y **voz**: global (los 4) o las personas que elijas (1, 2 o 3).
 - Idiomas: **Español** (predefinido), **Italiano** y **Valenciano**.
 - Pantalla de carga con el **logo animado**. El logo también aparece animado en los cargadores, los avisos y el estado vacío.
-- El **horario de Gabri (1.º ESO B 2026‑27)** del Excel se importa automáticamente la primera vez (clases semanales del 7/9/2026 al 18/6/2027 y extraescolares). También se puede importar desde Ajustes.
+- Los **horarios de Gabri (1.º ESO B) y Franci (3.º Primaria, octubre–mayo)** de los Excel se importan automáticamente la primera vez (clases semanales del 7/9/2026 al 18/6/2027 y extraescolares). También se puede importar desde Ajustes.
 
 ## Probar ya (modo demo)
 
