@@ -237,7 +237,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
 .avatar {
   width: 26px; height: 26px; flex: none; border-radius: 50%; display: grid; place-items: center; font-size: 15px;
   --logo-fill: #fff;
-  background: var(--navy); box-shadow: 0 0 0 2px var(--c);
+  background: color-mix(in srgb, var(--c) 78%, #000); box-shadow: 0 0 0 2px var(--c);
 }
 .avatar.big { width: 44px; height: 44px; font-size: 24px; }
 .avatar.sm { width: 22px; height: 22px; display: inline-grid; vertical-align: -5px; margin-right: 6px; }
@@ -484,7 +484,7 @@ textarea { resize: vertical; }
 .who { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 12px 4px; border-radius: 18px; background: var(--bg); box-shadow: inset 0 0 0 2px transparent; }
 .who b { font-weight: 900; }
 .who small { color: var(--muted); font-weight: 700; }
-.who .avatar { background: var(--navy); box-shadow: 0 0 0 3px var(--c); }
+.who .avatar { background: color-mix(in srgb, var(--c) 78%, #000); box-shadow: 0 0 0 3px var(--c); }
 .who.on { background: color-mix(in srgb, var(--c) 14%, #fff); box-shadow: inset 0 0 0 2px var(--c); }
 
 /* ───────── Toast ───────── */
