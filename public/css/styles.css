@@ -421,7 +421,10 @@ textarea { resize: vertical; }
 .seg { display: flex; gap: 4px; padding: 4px; background: var(--bg); border-radius: 15px; overflow-x: auto; scrollbar-width: none; }
 .seg button { flex: 1 0 auto; padding: 9px 10px; border-radius: 11px; font-weight: 800; font-size: 13.5px; color: var(--ink-2); white-space: nowrap; }
 .seg button.on { background: var(--surface); color: var(--ink); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); }
-.sum-seg button.on { background: var(--c, var(--ink)); color: #fff; }
+.sum-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.sum-chips .chip { box-shadow: none; background: var(--bg); }
+.sum-chips .chip.on { background: var(--c); color: #fff; }
+.sum-chips .chip-all.on { background: var(--ink); }
 .inline-field { display: flex; align-items: center; gap: 10px; margin-top: 10px; font-weight: 800; font-size: 13.5px; color: var(--ink-2); animation: fadeUp 260ms var(--ease-out) both; }
 .inline-field input, .inline-field select { flex: 1; }
 

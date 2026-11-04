@@ -11,7 +11,7 @@ App web (PWA, se instala en el móvil) para ver y editar los horarios de **Carle
 - **Botón + flotante** (cuando hay una sola persona seleccionada): toca una hora para elegirla y pulsa + para añadir una actividad. Si tocas una actividad, se abre para editarla.
 - **Editor**: etiqueta habitual (trabajo, colegio, extraescolar, deberes, fútbol, piano, solfeo, inglés, gimnasia) o extra (examen, compra, tarea, médico, burocracia, taller arte, viaje trabajo, festivo), desde/hasta (minutos, horas o días, con botones de duración rápida), repetición (extra, diario, entre semana, semanal), importancia (muy importante, urgente, normal, relajado) y **aviso en el móvil**.
 - El **color de cada actividad es más o menos intenso** según su importancia.
-- **Resumen** del día en texto y **voz** (global o de cada persona).
+- **Resumen** del día en texto y **voz**: global (los 4) o las personas que elijas (1, 2 o 3).
 - Idiomas: **Español** (predefinido), **Italiano** y **Valenciano**.
 - Pantalla de carga con el **logo animado**. El logo también aparece animado en los cargadores, los avisos y el estado vacío.
 - El **horario de Gabri (1.º ESO B 2026‑27)** del Excel se importa automáticamente la primera vez (clases semanales del 7/9/2026 al 18/6/2027 y extraescolares). También se puede importar desde Ajustes.

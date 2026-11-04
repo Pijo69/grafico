@@ -906,8 +906,8 @@ function openEditor(a, { occ } = {}) {
 /* ───────────────────────── Resumen (texto + voz) ───────────────────────── */
 
 function openSummary() {
-  const ids = selectedIds();
-  let mode = ids.length === 1 ? ids[0] : 'global';
+  // Selección múltiple: Global (los 4) o las personas que quieras (1, 2 o 3)
+  let sel = new Set(selectedIds());
   const html = `
     <div class="summary">
       <div class="sheet-title">
@@ -915,21 +915,26 @@ function openSummary() {
         <div><h2 class="tx-in">${esc(t('summary'))}</h2><p>${esc(fmtDate(fromKey(state.date), { weekday: 'long', day: 'numeric', month: 'long' }))}</p></div>
         <button type="button" class="icon-btn press" data-close aria-label="${esc(t('cancel'))}">${ICON.close}</button>
       </div>
-      <div class="seg sum-seg">
-        <button class="press" data-mode="global">${esc(t('summaryGlobal'))}</button>
-        ${PEOPLE.map((p) => `<button class="press" data-mode="${p.id}" style="--c:${p.color}">${esc(p.name)}</button>`).join('')}
+      <div class="sum-chips">
+        <button class="chip chip-all press" data-mode="global" aria-pressed="false">${esc(t('summaryGlobal'))}</button>
+        ${PEOPLE.map((p) => `<button class="chip press" data-mode="${p.id}" style="--c:${p.color}" aria-pressed="false"><span class="chip-dot"></span><span>${esc(p.name)}</span></button>`).join('')}
       </div>
       <div class="sum-text" id="sumText" aria-live="polite"></div>
       <button class="btn btn-primary press wide" id="btnSpeak">${ICON.speaker}<span>${esc(t('listen'))}</span></button>
     </div>`;
   const root = openSheet(html, { onClose: stopSpeaking });
   const textFor = () => {
-    const people = mode === 'global' ? PEOPLE.map((p) => p.id) : [mode];
+    const people = PEOPLE.map((p) => p.id).filter((id) => sel.has(id));
     return people.map((id) => ({ id, text: personSummary(state.activities, state.date, id) }));
   };
   const intro = () => `${relLabel(state.date)}, ${fmtDate(fromKey(state.date), { weekday: 'long', day: 'numeric', month: 'long' })}.`;
   const paint = () => {
-    $$('.sum-seg button', root).forEach((b) => b.classList.toggle('on', b.dataset.mode === mode));
+    const all = sel.size === PEOPLE.length;
+    $$('.sum-chips button', root).forEach((b) => {
+      const on = b.dataset.mode === 'global' ? all : sel.has(b.dataset.mode);
+      b.classList.toggle('on', on);
+      b.setAttribute('aria-pressed', on);
+    });
     $('#sumText', root).innerHTML = textFor()
       .map(({ id, text }, i) => `<p class="sum-p fade-up" style="--c:${PERSON[id].color};--d:${i}"><b><span class="avatar sm">${logoFace()}</span>${esc(PERSON[id].name)}</b>${esc(text)}</p>`)
       .join('');
@@ -945,7 +950,12 @@ function openSummary() {
     if (!b) return;
     if (b.hasAttribute('data-close')) return closeSheet();
     if (b.dataset.mode) {
-      mode = b.dataset.mode;
+      const m = b.dataset.mode;
+      if (m === 'global') {
+        sel = sel.size === PEOPLE.length ? new Set([prefs.me || PEOPLE[0].id]) : new Set(PEOPLE.map((x) => x.id));
+      } else if (sel.has(m)) {
+        if (sel.size > 1) sel.delete(m);
+      } else sel.add(m);
       stopSpeaking();
       setBtn(false);
       paint();
