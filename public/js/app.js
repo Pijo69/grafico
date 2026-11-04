@@ -120,7 +120,8 @@ function showLogin(msg = '') {
       const bad = ['auth/wrong-password', 'auth/invalid-credential', 'auth/invalid-login-credentials', 'auth/user-not-found'];
       btn.disabled = false;
       btn.innerHTML = old;
-      showLogin(bad.includes(err?.code) ? t('wrongPassword') : err?.message || '');
+      const msgs = { 'auth/operation-not-allowed': t('authNotEnabled'), 'auth/too-many-requests': t('tooMany'), 'auth/network-request-failed': t('noNetwork') };
+      showLogin(bad.includes(err?.code) ? t('wrongPassword') : msgs[err?.code] || err?.message || '');
     }
   };
   if (family) {
