@@ -66,6 +66,14 @@ export const localStore = {
     write(list);
     return n;
   },
+  async patchMany(patches) {
+    const list = read();
+    for (const { id, data } of patches) {
+      const i = list.findIndex((x) => x.id === id);
+      if (i >= 0) list[i] = { ...list[i], ...data };
+    }
+    write(list);
+  },
   async registerDevice() {
     return null;
   },

@@ -118,6 +118,12 @@ export const firebaseStore = {
     return n;
   },
 
+  async patchMany(patches) {
+    const batch = fb.writeBatch(db);
+    for (const { id, data } of patches) batch.update(fb.doc(db, 'activities', id), data);
+    await batch.commit();
+  },
+
   /** Registra este dispositivo para recibir avisos push de las personas indicadas. */
   async registerDevice(persons, lang, swReg) {
     const m = await import(`${CDN}/firebase-messaging.js`);

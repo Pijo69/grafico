@@ -5,10 +5,10 @@ import {
 import { fromKey, todayKey, addDays, diffDays, timeToMin, minToTime, fmtTime, nowMin } from './dates.js';
 import { LANGS, setLang, getLang, t, fmtDate } from './i18n.js';
 import { occurrencesOn, occurrenceOn, layoutLanes } from './recurrence.js';
-import { logoFull, logoMark, loader } from './logo.js';
+import { logoFull, logoMark, logoFace, loader } from './logo.js';
 import { ICON } from './icons.js';
 import { personSummary, speak, stopSpeaking } from './summary.js';
-import { gabriSeed } from './seed-gabri.js';
+import { gabriSeed, workSeed } from './seed-gabri.js';
 import { localStore } from './store-local.js';
 
 /* ───────────────────────── Estado ───────────────────────── */
@@ -165,21 +165,42 @@ function subscribe() {
   );
 }
 
-async function maybeSeed(list) {
-  // Carga automática del horario de Gabri la primera vez (si aún no existe en la base de datos).
-  if (list.some((a) => a.source === 'excel-1eso-b')) return;
-  const flag = 'gh.seeded.gabri';
+const SEEDS = [
+  { flag: 'gh.seeded.gabri', source: 'excel-1eso-b', items: gabriSeed, msg: 'imported' },
+  { flag: 'gh.seeded.work', source: 'seed-work', items: workSeed, msg: 'importedWork' },
+];
+
+function onceFlag(flag) {
   try {
-    if (localStorage.getItem(flag)) return;
+    if (localStorage.getItem(flag)) return false;
     localStorage.setItem(flag, '1');
   } catch {
     /* sin almacenamiento */
   }
-  try {
-    const n = await store.importMissing(gabriSeed());
-    if (n) toast(t('imported'));
-  } catch (e) {
-    console.warn('No se pudo importar el horario', e);
+  return true;
+}
+
+async function maybeSeed(list) {
+  // Carga automática de los horarios iniciales la primera vez (si aún no existen en la base de datos).
+  for (const seed of SEEDS) {
+    if (list.some((a) => a.source === seed.source) || !onceFlag(seed.flag)) continue;
+    try {
+      const n = await store.importMissing(seed.items());
+      if (n) toast(t(seed.msg));
+    } catch (e) {
+      console.warn('No se pudo importar', seed.source, e);
+    }
+  }
+  // Migración: la jornada escolar de Gabri (8:00–15:00) pasa a IMPORTANTE.
+  const patches = list
+    .filter((a) => a.source === 'excel-1eso-b' && a.startTime < '15:00' && ['normal', 'relajado'].includes(a.priority))
+    .map((a) => ({ id: a.id, data: { priority: 'muy_importante' } }));
+  if (patches.length && onceFlag('gh.migr.gabri-importante')) {
+    try {
+      await store.patchMany(patches);
+    } catch (e) {
+      console.warn('Migración', e);
+    }
   }
 }
 
@@ -265,7 +286,11 @@ function renderTitle(dir) {
 
 function dayStatus(day, ids) {
   const occs = occurrencesOn(state.activities, day, ids);
-  return { superImp: occs.some((o) => o.a.priority === 'super_importante'), occs };
+  return {
+    superImp: occs.some((o) => o.a.priority === 'super_importante'),
+    urgent: occs.some((o) => o.a.priority === 'urgente'),
+    occs,
+  };
 }
 
 function renderPeople() {
@@ -316,7 +341,7 @@ function renderStrip() {
       <span class="num">${d.getDate()}</span>
       <span class="mo">${d.getDate() === 1 || k === start ? esc(fmtDate(d, { month: 'short' }).replace('.', '')) : '&nbsp;'}</span>
       <span class="dots">${persons.map((p) => `<i style="--c:${PERSON[p].color}"></i>`).join('')}</span>
-      ${st.superImp ? '<span class="red-dot mark-dot"></span>' : ''}
+      ${st.superImp || st.urgent ? `<span class="mark-dots">${st.superImp ? '<span class="red-dot"></span>' : ''}${st.urgent ? '<span class="red-dot yellow-dot"></span>' : ''}</span>` : ''}
     </button>`;
   }
   const keepScroll = state.stripRange === `${start}|${end}` ? strip.scrollLeft : null;
@@ -409,7 +434,7 @@ function renderBoard(dir) {
 
   const head = `<div class="cols-head" style="--n:${ids.length}">
       <div class="gutter-head"></div>
-      ${cols.map((c) => `<div class="col-head" style="--c:${PERSON[c.id].color}"><span class="avatar">${PERSON[c.id].emoji}</span><span>${esc(PERSON[c.id].name)}</span></div>`).join('')}
+      ${cols.map((c) => `<div class="col-head" style="--c:${PERSON[c.id].color}"><span class="avatar">${logoFace()}</span><span>${esc(PERSON[c.id].name)}</span></div>`).join('')}
     </div>`;
 
   const allDayRow = anyAllDay
@@ -461,7 +486,9 @@ function intensityStyle(o) {
 }
 
 function prioBadge(a) {
-  return a.priority === 'super_importante' ? '<span class="red-dot"></span>' : '';
+  if (a.priority === 'super_importante') return '<span class="red-dot"></span>';
+  if (a.priority === 'urgente') return '<span class="red-dot yellow-dot"></span>';
+  return '';
 }
 
 function block(o, startH, i) {
@@ -672,7 +699,7 @@ function openEditor(a, { occ } = {}) {
   const html = `
     <form class="editor" id="editor" style="--c:${p.color}" novalidate>
       <div class="sheet-title">
-        <span class="avatar big" id="edAvatar">${p.emoji}</span>
+        <span class="avatar big" id="edAvatar">${logoFace()}</span>
         <div><h2 class="tx-in">${esc(isNew ? t('newActivity') : t('editActivity'))}</h2><p id="edName">${esc(p.name)}</p></div>
         <button type="button" class="icon-btn press" data-close aria-label="${esc(t('cancel'))}">${ICON.close}</button>
       </div>
@@ -716,7 +743,7 @@ function openEditor(a, { occ } = {}) {
 
       <div class="field"><span>${esc(t('priority'))}</span>
         <div class="prio-grid" data-seg="priority">${PRIORITIES.map((pr) => `<button type="button" class="prio press ${d.priority === pr.id ? 'on' : ''}" data-v="${pr.id}" style="--k:${pr.intensity}%">
-          <i class="swatch"></i><span>${esc(t(`priority.${pr.id}`))}</span>${pr.id === 'super_importante' ? '<span class="red-dot"></span>' : ''}
+          <i class="swatch"></i><span>${esc(t(`priority.${pr.id}`))}</span>${pr.id === 'super_importante' ? '<span class="red-dot"></span>' : pr.id === 'urgente' ? '<span class="red-dot yellow-dot"></span>' : ''}
         </button>`).join('')}</div>
       </div>
 
@@ -755,7 +782,6 @@ function openEditor(a, { occ } = {}) {
       d.person = b.dataset.who;
       $$('[data-who]', form).forEach((x) => x.classList.toggle('on', x === b));
       form.style.setProperty('--c', PERSON[d.person].color);
-      $('#edAvatar', form).textContent = PERSON[d.person].emoji;
       $('#edName', form).textContent = PERSON[d.person].name;
     }
     if (b.dataset.tag) {
@@ -893,7 +919,7 @@ function openSummary() {
   const paint = () => {
     $$('.sum-seg button', root).forEach((b) => b.classList.toggle('on', b.dataset.mode === mode));
     $('#sumText', root).innerHTML = textFor()
-      .map(({ id, text }, i) => `<p class="sum-p fade-up" style="--c:${PERSON[id].color};--d:${i}"><b>${PERSON[id].emoji} ${esc(PERSON[id].name)}</b>${esc(text)}</p>`)
+      .map(({ id, text }, i) => `<p class="sum-p fade-up" style="--c:${PERSON[id].color};--d:${i}"><b><span class="avatar sm">${logoFace()}</span>${esc(PERSON[id].name)}</b>${esc(text)}</p>`)
       .join('');
   };
   paint();
@@ -943,7 +969,7 @@ function openSettings(onboarding) {
       </div>
       <div class="field"><span>${esc(t('iAm'))}</span>
         <div class="who-grid">${PEOPLE.map((p, i) => `<button class="who press fade-up ${prefs.me === p.id ? 'on' : ''}" data-me="${p.id}" style="--c:${p.color};--d:${i}">
-          <span class="avatar big">${p.emoji}</span><b>${esc(p.name)}</b><small>${esc(t(`role_${p.role}`))}</small></button>`).join('')}</div>
+          <span class="avatar big">${logoFace()}</span><b>${esc(p.name)}</b><small>${esc(t(`role_${p.role}`))}</small></button>`).join('')}</div>
       </div>
       ${onboarding ? '' : `
       <div class="field"><span>${esc(t('language'))}</span>
@@ -990,6 +1016,7 @@ function openSettings(onboarding) {
       b.innerHTML = loader(t('loading'), 'inline');
       try {
         await store.importMissing(gabriSeed());
+        await store.importMissing(workSeed());
         toast(t('imported'));
       } catch (err) {
         toast(err.message || String(err));

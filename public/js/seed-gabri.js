@@ -62,6 +62,28 @@ function base(weekday, startTime, endTime) {
   };
 }
 
+// Jornada laboral de Carles y Adriana: entre semana de 9:00 a 18:00, IMPORTANTE
+export function workSeed() {
+  return ['carles', 'adriana'].map((person) => ({
+    id: `seed-work-${person}`,
+    person,
+    title: 'Trabajo',
+    tag: 'trabajo',
+    priority: 'muy_importante',
+    startDate: '2026-09-01',
+    endDate: '2026-09-01',
+    startTime: '09:00',
+    endTime: '18:00',
+    allDay: false,
+    repeat: 'weekdays',
+    repeatUntil: null,
+    exceptions: [],
+    alert: { enabled: false, minutesBefore: 15 },
+    notes: '',
+    source: 'seed-work',
+  }));
+}
+
 export function gabriSeed() {
   const out = [];
   for (const [start, end, ...days] of SCHOOL) {
@@ -75,7 +97,7 @@ export function gabriSeed() {
         ...base(weekday, start, end),
         title,
         tag: 'colegio',
-        priority: isBreak ? 'relajado' : 'normal',
+        priority: 'muy_importante', // toda la jornada escolar (8:00–15:00) es IMPORTANTE
         notes: rest.join(' · '),
       });
     });

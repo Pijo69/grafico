@@ -42,6 +42,13 @@ export function logoMark(cls = '') {
   return `<svg class="logo-mark ${cls}" viewBox="176 200 132 128" aria-hidden="true">${figure()}</svg>`;
 }
 
+/** Solo los ojos y la boca del logo (avatar de cada persona). */
+export function logoFace(cls = '') {
+  return `<svg class="logo-face ${cls}" viewBox="224 226 46 52" aria-hidden="true">
+    <path class="lg-smile" d="${SMILE}"/><g class="lg-eyes"><path d="${EYE_R}"/><path d="${EYE_L}"/></g>
+  </svg>`;
+}
+
 /** Cargador animado con el logo. */
 export function loader(text = '', cls = '') {
   return `<div class="loader ${cls}" role="status">${logoMark('bob')}${text ? `<span class="loader-text">${text}</span>` : ''}</div>`;
