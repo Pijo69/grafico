@@ -74,8 +74,9 @@ exports.sendActivityAlerts = onSchedule(
     for (const doc of snap.docs) {
       const a = doc.data();
       if ((a.lastDate || '9999') < addDays(today, -1)) continue;
-      // Un aviso puede ser hasta 1 día antes, así que se miran hoy, mañana y pasado
-      for (const day of [addDays(today, -1), today, addDays(today, 1), addDays(today, 2)]) {
+      // Un aviso puede ser hasta 5 días antes, así que se miran los próximos 6 días
+      for (let k = -1; k <= 6; k++) {
+        const day = addDays(today, k);
         if (!isStartDay(a, day)) continue;
         const start = zonedToUtc(day, a.allDay ? '08:00' : a.startTime);
         const fire = start - (a.alert.minutesBefore || 0) * 60000;

@@ -285,7 +285,15 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
 .mark-dots .red-dot { animation: none; width: 9px; height: 9px; box-shadow: 0 0 0 2px var(--bg); }
 @keyframes redPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.18); } }
 .prio span.red-dot { animation: none; flex: none; }
-.act.prio-super_importante { box-shadow: 0 6px 18px color-mix(in srgb, var(--c) 50%, transparent); }
+/* SÚPER IMPORTANTE: tarjeta y barra en rojo · Urgente: barra amarilla */
+.act.prio-super_importante, .pill.prio-super_importante {
+  background: #ff3b30; border-left: 6px solid #b80d0d; color: #fff;
+}
+.act.prio-super_importante { box-shadow: 0 6px 18px rgba(255, 59, 48, 0.45); }
+.prio-super_importante .red-dot { background: #fff; box-shadow: 0 0 0 2px #b80d0d; }
+.act.prio-urgente, .pill.prio-urgente { border-left: 6px solid #ffc400; }
+.prio[data-v="super_importante"] .swatch { background: #ff3b30; border-color: #b80d0d; }
+.prio[data-v="urgente"] .swatch { border-color: #ffc400; border-width: 3px; }
 .who-row { display: flex; flex-wrap: wrap; gap: 8px; }
 .who-row .chip { box-shadow: none; background: var(--bg); }
 .who-row .chip.on { background: var(--c); }

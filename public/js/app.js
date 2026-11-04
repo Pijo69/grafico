@@ -673,6 +673,7 @@ function bindSheetDrag(root) {
 function alertLabel(m) {
   if (m === 0) return t('alert.0');
   if (m === 1440) return t('alert.day');
+  if (m > 1440) return t('alert.days', { n: m / 1440 });
   if (m >= 60) return t('alert.hour', { n: m / 60 });
   return t('alert.min', { n: m });
 }
@@ -1085,7 +1086,8 @@ function scheduleLocalAlerts() {
   if (store.mode === 'firebase' || !prefs.notif || !swReg || Notification.permission !== 'granted') return;
   const me = prefs.me || selectedIds()[0];
   const now = Date.now();
-  for (const day of [todayKey(), addDays(todayKey(), 1)]) {
+  for (let k = 0; k <= 6; k++) {
+    const day = addDays(todayKey(), k);
     for (const a of state.activities) {
       if (a.person !== me || !a.alert?.enabled) continue;
       const o = occurrenceOn(a, day);
@@ -1093,7 +1095,7 @@ function scheduleLocalAlerts() {
       const start = fromKey(day);
       start.setMinutes(a.allDay ? 8 * 60 : timeToMin(a.startTime));
       const fire = start.getTime() - (a.alert.minutesBefore || 0) * 60000;
-      if (fire > now && fire - now < 36 * 3600 * 1000) {
+      if (fire > now && fire - now < 6 * 24 * 3600 * 1000) {
         alertTimers.push(
           setTimeout(() => {
             swReg.showNotification(t('notifTitle', { name: PERSON[a.person].name }), {

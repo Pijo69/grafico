@@ -37,7 +37,7 @@ export const PRIORITY = Object.fromEntries(PRIORITIES.map((p) => [p.id, p]));
 // Repetición: extra = puntual
 export const REPEATS = ['none', 'daily', 'weekdays', 'weekly'];
 
-export const ALERT_OPTIONS = [0, 5, 10, 15, 30, 60, 120, 1440];
+export const ALERT_OPTIONS = [0, 5, 10, 15, 30, 60, 120, 1440, 2880, 4320, 7200];
 
 // Ventana de datos: 2 meses antes y 2 después (se amplía si navegas más lejos)
 export const WINDOW_DAYS = 62;
