@@ -12,6 +12,9 @@ export const PERSON = Object.fromEntries(PEOPLE.map((p) => [p.id, p]));
 // Etiquetas de actividad (el texto se traduce en i18n.js con la clave tag.<id>)
 export const TAGS = [
   { id: 'evento', icon: '🎉' },
+  { id: 'examen', icon: '📝' },
+  { id: 'deberes', icon: '📚' },
+  { id: 'compras', icon: '🛒' },
   { id: 'tarea', icon: '✅' },
   { id: 'trabajo', icon: '💼' },
   { id: 'colegio', icon: '🏫' },
@@ -30,8 +33,9 @@ export const TAG = Object.fromEntries(TAGS.map((t) => [t.id, t]));
 
 // Prioridades: la intensidad define cuánto color de la persona se mezcla en la tarjeta.
 export const PRIORITIES = [
-  { id: 'muy_importante', intensity: 100, rank: 3 },
-  { id: 'urgente', intensity: 78, rank: 2 },
+  { id: 'super_importante', intensity: 100, rank: 4 },
+  { id: 'muy_importante', intensity: 86, rank: 3 },
+  { id: 'urgente', intensity: 70, rank: 2 },
   { id: 'normal', intensity: 42, rank: 1 },
   { id: 'relajado', intensity: 18, rank: 0 },
 ];

@@ -7,7 +7,7 @@ App web (PWA, se instala en el móvil) para ver y editar los horarios de **Carle
 - **Home**: el día actual arriba, flechas, tira de días deslizable (2 meses antes y 2 después) y selector de fecha para ir a cualquier otro día. También se puede deslizar el dedo a izquierda/derecha sobre el horario.
 - **Filtro de personas**: una, varias o «Todos». Cada persona tiene su columna y su color.
 - **Franjas horarias** desde las 8:00 (o antes si hay algo más temprano) hasta las 21:00 (o más tarde si hace falta), con una línea que marca la hora actual.
-- **Iconos del día**: ⭐ algo muy importante, 🔨 algo obligatorio/urgente, 🪶 todo tranquilo.
+- **Punto rojo**: aparece en la actividad y en el día de la tira cuando algo es SÚPER IMPORTANTE.
 - **Botón + flotante** (cuando hay una sola persona seleccionada): toca una hora para elegirla y pulsa + para añadir una actividad. Si tocas una actividad, se abre para editarla.
 - **Editor**: etiqueta (evento, tarea, trabajo, colegio, extraescolar, médico, burocracia, fútbol, música, inglés, gimnasia, taller arte, viaje trabajo), desde/hasta (minutos, horas o días, con botones de duración rápida), repetición (extra, diario, entre semana, semanal), importancia (muy importante, urgente, normal, relajado) y **aviso en el móvil**.
 - El **color de cada actividad es más o menos intenso** según su importancia.

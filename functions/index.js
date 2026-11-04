@@ -14,10 +14,6 @@ const TZ = 'Europe/Madrid';
 const EVERY_MIN = 5;
 
 const NAMES = { carles: 'Carles', adriana: 'Adriana', gabri: 'Gabri', franci: 'Franci' };
-const ICONS = {
-  evento: '🎉', tarea: '✅', trabajo: '💼', colegio: '🏫', extraescolar: '🧩', medico: '🩺', burocracia: '📄',
-  futbol: '⚽', musica: '🎵', ingles: '🔤', gimnasia: '🤸', taller_arte: '🎨', viaje_trabajo: '✈️',
-};
 const TITLE = { es: 'Aviso · {name}', it: 'Avviso · {name}', va: 'Avís · {name}' };
 const IN_MIN = { es: 'en {n} min', it: 'tra {n} min', va: 'en {n} min' };
 const NOW = { es: 'ahora', it: 'adesso', va: 'ara' };
@@ -102,6 +98,7 @@ exports.sendActivityAlerts = onSchedule(
       devices.docs.forEach((d) => (byLang[d.data().lang || 'es'] ||= []).push(d.id));
       const mins = Math.max(0, Math.round((start - now) / 60000));
       const what = a.title || a.tag;
+      const isSuper = a.priority === 'super_importante';
       const time = a.allDay ? '' : ` · ${a.startTime}`;
 
       for (const [lang, tokens] of Object.entries(byLang)) {
@@ -110,10 +107,10 @@ exports.sendActivityAlerts = onSchedule(
           tokens,
           notification: {
             title: (TITLE[lang] || TITLE.es).replace('{name}', NAMES[a.person] || a.person),
-            body: `${ICONS[a.tag] || '🔔'} ${what}${time} (${when})`,
+            body: `${isSuper ? '🔴 ' : ''}${what}${time} (${when})`,
           },
           webpush: {
-            notification: { icon: '/icons/icon-192.png', badge: '/icons/icon-192.png', tag: `${id}_${day}`, requireInteraction: a.priority === 'muy_importante' },
+            notification: { icon: '/icons/icon-192.png', badge: '/icons/icon-192.png', tag: `${id}_${day}`, requireInteraction: isSuper || a.priority === 'muy_importante' },
             fcmOptions: { link: '/' },
           },
           data: { activityId: id, day },

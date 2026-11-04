@@ -34,11 +34,13 @@ export function personSummary(activities, day, personId) {
   });
   const list = listJoin(items);
   parts.push(list.charAt(0).toUpperCase() + list.slice(1) + '.');
+  const supers = occs.filter((o) => o.a.priority === 'super_importante').map(nameOf);
   const stars = occs.filter((o) => o.a.priority === 'muy_importante').map(nameOf);
   const hammers = occs.filter((o) => o.a.priority === 'urgente').map(nameOf);
+  if (supers.length) parts.push(t('sum.super', { list: listJoin([...new Set(supers)]) }));
   if (stars.length) parts.push(t('sum.star', { list: listJoin([...new Set(stars)]) }));
   if (hammers.length) parts.push(t('sum.hammer', { list: listJoin([...new Set(hammers)]) }));
-  if (!stars.length && !hammers.length) parts.push(t('sum.calm'));
+  if (!supers.length && !stars.length && !hammers.length) parts.push(t('sum.calm'));
   return parts.join(' ');
 }
 

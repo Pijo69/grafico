@@ -1,5 +1,5 @@
 import {
-  PEOPLE, PERSON, TAGS, TAG, PRIORITIES, PRIORITY, REPEATS, ALERT_OPTIONS,
+  PEOPLE, PERSON, TAGS, PRIORITIES, PRIORITY, REPEATS, ALERT_OPTIONS,
   WINDOW_DAYS, DEFAULT_START_HOUR, DEFAULT_END_HOUR, PX_PER_MIN,
 } from './config.js';
 import { fromKey, todayKey, addDays, diffDays, timeToMin, minToTime, fmtTime, nowMin } from './dates.js';
@@ -207,7 +207,6 @@ function renderShell() {
       </div>
       <nav class="people" id="people" aria-label="${esc(t('who'))}"></nav>
       <div class="status-row">
-        <div class="day-icons" id="dayIcons"></div>
         <button class="sum-btn press" id="btnSummary">${ICON.chat}<span>${esc(t('summary'))}</span>${ICON.speaker}</button>
       </div>
     </header>
@@ -230,10 +229,6 @@ function renderShell() {
   $('#btnSummary').onclick = openSummary;
   $('#btnSettings').onclick = () => openSettings(false);
   $('#fab').onclick = () => openEditor(null);
-  $('#dayIcons').onclick = (e) => {
-    const b = e.target.closest('[data-tip]');
-    if (b) toast(b.dataset.tip);
-  };
   bindSwipe($('#board'));
   renderTitle(0);
   renderPeople();
@@ -243,7 +238,6 @@ function renderShell() {
 
 function renderData() {
   renderStrip();
-  renderIcons();
   renderBoard(0);
 }
 
@@ -271,25 +265,7 @@ function renderTitle(dir) {
 
 function dayStatus(day, ids) {
   const occs = occurrencesOn(state.activities, day, ids);
-  const star = occs.some((o) => o.a.priority === 'muy_importante');
-  const hammer = occs.some((o) => o.a.priority === 'urgente');
-  return { star, hammer, feather: !star && !hammer, occs };
-}
-
-function renderIcons() {
-  const st = dayStatus(state.date, selectedIds());
-  const items = [];
-  if (st.star) items.push(['star', ICON.star]);
-  if (st.hammer) items.push(['hammer', ICON.hammer]);
-  if (st.feather) items.push(['feather', ICON.feather]);
-  const html = items
-    .map(([k, svg], i) => `<button class="status st-${k} press" style="--d:${i}" data-tip="${esc(t(`icon.${k}`))}" aria-label="${esc(t(`icon.${k}`))}">${svg}<span>${esc(t(`short.${k}`))}</span></button>`)
-    .join('');
-  const el = $('#dayIcons');
-  if (el.dataset.sig !== items.map((x) => x[0]).join()) {
-    el.innerHTML = html;
-    el.dataset.sig = items.map((x) => x[0]).join();
-  }
+  return { superImp: occs.some((o) => o.a.priority === 'super_importante'), occs };
 }
 
 function renderPeople() {
@@ -335,13 +311,12 @@ function renderStrip() {
     const d = fromKey(k);
     const st = dayStatus(k, ids);
     const persons = [...new Set(st.occs.map((o) => o.a.person))];
-    const mark = st.star ? ICON.star : st.hammer ? ICON.hammer : '';
     html += `<button class="dchip press ${k === state.date ? 'on' : ''} ${k === today ? 'today' : ''} ${d.getDay() % 6 === 0 ? 'weekend' : ''}" data-day="${k}">
       <span class="wd">${esc(fmtDate(d, { weekday: 'short' }).replace('.', ''))}</span>
       <span class="num">${d.getDate()}</span>
       <span class="mo">${d.getDate() === 1 || k === start ? esc(fmtDate(d, { month: 'short' }).replace('.', '')) : '&nbsp;'}</span>
       <span class="dots">${persons.map((p) => `<i style="--c:${PERSON[p].color}"></i>`).join('')}</span>
-      ${mark ? `<span class="mark ${st.star ? 'st-star' : 'st-hammer'}">${mark}</span>` : ''}
+      ${st.superImp ? '<span class="red-dot mark-dot"></span>' : ''}
     </button>`;
   }
   const keepScroll = state.stripRange === `${start}|${end}` ? strip.scrollLeft : null;
@@ -381,7 +356,6 @@ function goTo(key) {
     $$('.dchip', $('#strip')).forEach((b) => b.classList.toggle('on', b.dataset.day === key));
     centerStrip();
   } else renderStrip();
-  renderIcons();
   renderBoard(dir);
   renderFab();
 }
@@ -452,7 +426,7 @@ function renderBoard(dir) {
 
   const columns = cols
     .map(
-      (c) => `<div class="col ${single ? 'selectable' : ''}" data-person="${c.id}" style="--c:${PERSON[c.id].color}">
+      (c) => `<div class="col selectable" data-person="${c.id}" style="--c:${PERSON[c.id].color}">
         ${c.timed.map((o, i) => block(o, startH, i)).join('')}
       </div>`
     )
@@ -468,11 +442,9 @@ function renderBoard(dir) {
       <div class="grid" style="--n:${ids.length};--hour:${hourPx}px;height:${height}px" data-start="${startH}">
         <div class="gutter">${hours}</div>
         ${columns}
-        <div class="slot-layer"></div>
         <div class="now-line" hidden></div>
         ${emptyHtml}
       </div>
-      ${single ? '' : `<p class="hint">${esc(t('selectOneHint'))}</p>`}
     </div>`;
 
   state.firstPainted = true;
@@ -489,28 +461,24 @@ function intensityStyle(o) {
 }
 
 function prioBadge(a) {
-  if (a.priority === 'muy_importante') return `<span class="badge st-star">${ICON.star}</span>`;
-  if (a.priority === 'urgente') return `<span class="badge st-hammer">${ICON.hammer}</span>`;
-  return '';
+  return a.priority === 'super_importante' ? '<span class="red-dot"></span>' : '';
 }
 
 function block(o, startH, i) {
   const top = (o.startMin - startH * 60) * PX_PER_MIN;
   const h = Math.max(18, (o.endMin - o.startMin) * PX_PER_MIN - 2);
   const w = 100 / (o._lanes || 1);
-  const tag = TAG[o.a.tag] || TAG.evento;
   const compact = h < 40 ? 'compact' : '';
   const time = `${fmtTime(minToTime(o.startMin))}–${fmtTime(minToTime(o.endMin))}`;
   return `<button class="act prio-${o.a.priority || 'normal'} ${compact} ${state.loaded && !state.firstPainted ? 'enter' : ''}"
-      style="${intensityStyle(o)};top:${top}px;height:${h}px;left:calc(${w * o._lane}% + 2px);width:calc(${w}% - 4px);--i:${Math.min(i, 12)}"
+      style="${intensityStyle(o)};top:${top}px;height:${h}px;left:calc((100% - var(--free)) * ${w * o._lane / 100} + 2px);width:calc((100% - var(--free)) * ${w / 100} - 4px);--i:${Math.min(i, 12)}"
       data-id="${esc(o.a.id)}" data-occ="${o.occStart}">
-      <span class="act-top"><span class="act-icon">${tag.icon}</span><span class="act-title">${esc(o.a.title || t(`tag.${o.a.tag}`))}</span>${prioBadge(o.a)}</span>
+      <span class="act-top"><span class="act-title">${esc(o.a.title || t(`tag.${o.a.tag}`))}</span>${prioBadge(o.a)}</span>
       <span class="act-time">${time}${o.a.repeat && o.a.repeat !== 'none' ? ` ${ICON.repeat}` : ''}${o.a.alert?.enabled ? ` ${ICON.bell}` : ''}</span>
     </button>`;
 }
 
 function pill(o) {
-  const tag = TAG[o.a.tag] || TAG.evento;
   const until =
     o.multiDay && !o.a.allDay
       ? ` · ${t('until')} ${fmtDate(fromKey(o.occEndDate), { weekday: 'short', day: 'numeric' })} ${fmtTime(o.a.endTime)}`
@@ -518,7 +486,7 @@ function pill(o) {
         ? ` · ${t('until')} ${fmtDate(fromKey(o.occEndDate), { weekday: 'short', day: 'numeric' })}`
         : '';
   return `<button class="pill prio-${o.a.priority || 'normal'}" style="${intensityStyle(o)}" data-id="${esc(o.a.id)}" data-occ="${o.occStart}">
-    <span>${tag.icon}</span><span class="pill-title">${esc(o.a.title || t(`tag.${o.a.tag}`))}${esc(until)}</span>${prioBadge(o.a)}
+    <span class="pill-title">${esc(o.a.title || t(`tag.${o.a.tag}`))}${esc(until)}</span>${prioBadge(o.a)}
   </button>`;
 }
 
@@ -540,43 +508,42 @@ function onGridClick(e) {
   const rect = col.getBoundingClientRect();
   const startH = Number(grid.dataset.start);
   const min = startH * 60 + Math.floor((e.clientY - rect.top) / PX_PER_MIN / 30) * 30;
-  if (state.slot && state.slot.min === min && state.slot.day === state.date) {
+  const person = col.dataset.person;
+  if (state.slot && state.slot.min === min && state.slot.day === state.date && state.slot.person === person) {
     openEditor(null);
     return;
   }
-  state.slot = { day: state.date, min };
+  state.slot = { day: state.date, min, person };
   renderSlot();
   renderFab();
 }
 
 function renderSlot() {
-  const layer = $('.slot-layer');
-  if (!layer) return;
-  const grid = layer.closest('.grid');
-  if (!state.slot || state.slot.day !== state.date || selectedIds().length !== 1) {
-    layer.innerHTML = '';
-    return;
-  }
-  const startH = Number(grid.dataset.start);
+  $$('.slot').forEach((x) => {
+    if (!state.slot || x.parentElement.dataset.person !== state.slot.person) x.remove();
+  });
+  if (!state.slot || state.slot.day !== state.date) return;
+  const col = $(`.col[data-person="${state.slot.person}"]`);
+  if (!col) return;
+  const startH = Number(col.closest('.grid').dataset.start);
   const top = (state.slot.min - startH * 60) * PX_PER_MIN;
-  const color = PERSON[selectedIds()[0]].color;
-  const existing = $('.slot', layer);
+  const existing = $('.slot', col);
   if (existing) {
     // transición (no keyframes) para que se pueda mover rápido entre horas
     existing.style.transform = `translateY(${top}px)`;
     $('.slot-time', existing).textContent = fmtTime(minToTime(state.slot.min));
     return;
   }
-  layer.innerHTML = `<button class="slot" style="--c:${color};transform:translateY(${top}px);height:${30 * PX_PER_MIN}px">
-    <span class="slot-time">${fmtTime(minToTime(state.slot.min))}</span>${ICON.plus}
-  </button>`;
+  col.insertAdjacentHTML(
+    'beforeend',
+    `<button class="slot" style="transform:translateY(${top}px);height:${30 * PX_PER_MIN}px">
+      <span class="slot-time">${fmtTime(minToTime(state.slot.min))}</span>${ICON.plus}
+    </button>`
+  );
 }
 
 function renderFab() {
   const fab = $('#fab');
-  const single = selectedIds().length === 1;
-  fab.classList.toggle('hidden', !single);
-  fab.style.setProperty('--c', single ? PERSON[selectedIds()[0]].color : '#222');
   const hasSlot = state.slot && state.slot.day === state.date;
   fab.classList.toggle('has-slot', !!hasSlot);
   $('#fabLabel').textContent = hasSlot ? fmtTime(minToTime(state.slot.min)) : '';
@@ -674,7 +641,10 @@ function alertLabel(m) {
 
 function openEditor(a, { occ } = {}) {
   const isNew = !a;
-  const person = a ? a.person : selectedIds()[0];
+  const ids = selectedIds();
+  const person = a
+    ? a.person
+    : state.slot?.person || (ids.length === 1 ? ids[0] : ids.includes(prefs.me) ? prefs.me : ids[0]);
   const p = PERSON[person];
   let startMin;
   if (state.slot && state.slot.day === state.date) startMin = state.slot.min;
@@ -702,9 +672,13 @@ function openEditor(a, { occ } = {}) {
   const html = `
     <form class="editor" id="editor" style="--c:${p.color}" novalidate>
       <div class="sheet-title">
-        <span class="avatar big" style="--c:${p.color}">${p.emoji}</span>
-        <div><h2 class="tx-in">${esc(isNew ? t('newActivity') : t('editActivity'))}</h2><p>${esc(p.name)}</p></div>
+        <span class="avatar big" id="edAvatar">${p.emoji}</span>
+        <div><h2 class="tx-in">${esc(isNew ? t('newActivity') : t('editActivity'))}</h2><p id="edName">${esc(p.name)}</p></div>
         <button type="button" class="icon-btn press" data-close aria-label="${esc(t('cancel'))}">${ICON.close}</button>
+      </div>
+
+      <div class="field"><span>${esc(t('who'))}</span>
+        <div class="who-row">${PEOPLE.map((pp) => `<button type="button" class="chip press ${pp.id === person ? 'on' : ''}" data-who="${pp.id}" style="--c:${pp.color}"><span class="chip-dot"></span><span>${esc(pp.name)}</span></button>`).join('')}</div>
       </div>
 
       <label class="field"><span>${esc(t('title'))}</span>
@@ -712,7 +686,7 @@ function openEditor(a, { occ } = {}) {
       </label>
 
       <div class="field"><span>${esc(t('tagLabel'))}</span>
-        <div class="tags">${TAGS.map((tg) => `<button type="button" class="tag press ${d.tag === tg.id ? 'on' : ''}" data-tag="${tg.id}"><span>${tg.icon}</span>${esc(t(`tag.${tg.id}`))}</button>`).join('')}</div>
+        <div class="tags">${TAGS.map((tg) => `<button type="button" class="tag press ${d.tag === tg.id ? 'on' : ''}" data-tag="${tg.id}">${esc(t(`tag.${tg.id}`))}</button>`).join('')}</div>
       </div>
 
       <div class="field">
@@ -742,7 +716,7 @@ function openEditor(a, { occ } = {}) {
 
       <div class="field"><span>${esc(t('priority'))}</span>
         <div class="prio-grid" data-seg="priority">${PRIORITIES.map((pr) => `<button type="button" class="prio press ${d.priority === pr.id ? 'on' : ''}" data-v="${pr.id}" style="--k:${pr.intensity}%">
-          <i class="swatch"></i><span>${esc(t(`priority.${pr.id}`))}</span>${pr.id === 'muy_importante' ? ICON.star : pr.id === 'urgente' ? ICON.hammer : pr.id === 'relajado' ? ICON.feather : ''}
+          <i class="swatch"></i><span>${esc(t(`priority.${pr.id}`))}</span>${pr.id === 'super_importante' ? '<span class="red-dot"></span>' : ''}
         </button>`).join('')}</div>
       </div>
 
@@ -777,6 +751,13 @@ function openEditor(a, { occ } = {}) {
     const b = e.target.closest('button');
     if (!b) return;
     if (b.hasAttribute('data-close')) return closeSheet();
+    if (b.dataset.who) {
+      d.person = b.dataset.who;
+      $$('[data-who]', form).forEach((x) => x.classList.toggle('on', x === b));
+      form.style.setProperty('--c', PERSON[d.person].color);
+      $('#edAvatar', form).textContent = PERSON[d.person].emoji;
+      $('#edName', form).textContent = PERSON[d.person].name;
+    }
     if (b.dataset.tag) {
       $$('.tag', form).forEach((x) => x.classList.toggle('on', x === b));
       d.tag = b.dataset.tag;
@@ -869,6 +850,7 @@ function openEditor(a, { occ } = {}) {
       await store.save(out);
       state.slot = null;
       closeSheet();
+      renderSlot();
       renderFab();
       toast(t('saved'));
       if (out.alert.enabled && !prefs.notif) enableNotifications(true);
@@ -1077,7 +1059,7 @@ function scheduleLocalAlerts() {
         alertTimers.push(
           setTimeout(() => {
             swReg.showNotification(t('notifTitle', { name: PERSON[a.person].name }), {
-              body: `${TAG[a.tag]?.icon || ''} ${a.title || t(`tag.${a.tag}`)} · ${fmtTime(a.startTime)}`,
+              body: `${a.title || t(`tag.${a.tag}`)} · ${fmtTime(a.startTime)}`,
               icon: 'icons/icon-192.png',
               badge: 'icons/icon-192.png',
               tag: `${a.id}-${day}`,
