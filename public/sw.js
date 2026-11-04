@@ -1,10 +1,10 @@
 /* Service worker: caché de la app + avisos push de Firebase Cloud Messaging. */
-const CACHE = 'guachis-v11';
+const CACHE = 'guachis-v12';
 const SHELL = [
   './', 'index.html', 'manifest.webmanifest', 'css/styles.css',
   'js/app.js', 'js/config.js', 'js/dates.js', 'js/i18n.js', 'js/icons.js', 'js/logo.js',
   'js/recurrence.js', 'js/seed-gabri.js', 'js/store-local.js', 'js/store-firebase.js',
-  'js/summary.js', 'js/firebase-config.js', 'icons/icon.svg', 'icons/icon-192.png',
+  'js/summary.js', 'js/firebase-config.js', 'icons/icon.svg', 'icons/icon-192.png', 'icons/apple-touch-icon.png',
 ];
 
 self.addEventListener('install', (e) => {

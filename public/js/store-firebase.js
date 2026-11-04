@@ -57,8 +57,17 @@ export const firebaseStore = {
       this.user = r.user;
       return r.user;
     } catch (e) {
-      if (e && (e.code === 'auth/popup-blocked' || e.code === 'auth/operation-not-supported-in-this-environment')) {
+      // En móviles (sobre todo app instalada en iPhone) la ventana emergente puede fallar: se usa redirección
+      const useRedirect = [
+        'auth/popup-blocked',
+        'auth/operation-not-supported-in-this-environment',
+        'auth/cancelled-popup-request',
+        'auth/internal-error',
+        'auth/web-storage-unsupported',
+      ];
+      if (e && useRedirect.includes(e.code)) {
         await f.signInWithRedirect(auth, provider);
+        return null;
       }
       throw e;
     }

@@ -32,6 +32,8 @@ Después abre http://localhost:8080
 
 ## Conectar con Firebase (para compartirla con la familia)
 
+👉 **Guía detallada paso a paso: [PUBLICAR.md](PUBLICAR.md)**
+
 1. Crea un proyecto en https://console.firebase.google.com
 2. **Authentication** → Métodos de acceso → activa **Google**.
 3. **Firestore Database** → Crear base de datos (modo producción, región `eur3` o `europe-west1`).
