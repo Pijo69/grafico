@@ -1,0 +1,37 @@
+rules_version = '2';
+
+// Solo los correos de la familia pueden leer y escribir.
+// ✏️ Cambia estos correos por las cuentas de Google de Carles, Adriana, Gabri y Franci.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isFamily() {
+      return request.auth != null
+        && request.auth.token.email_verified == true
+        && request.auth.token.email in [
+          'carles@example.com',
+          'adriana@example.com',
+          'gabri@example.com',
+          'franci@example.com'
+        ];
+    }
+
+    match /activities/{id} {
+      allow read: if isFamily();
+      allow create, update: if isFamily()
+        && request.resource.data.person in ['carles', 'adriana', 'gabri', 'franci']
+        && request.resource.data.startDate is string
+        && request.resource.data.lastDate is string;
+      allow delete: if isFamily();
+    }
+
+    // Tokens de dispositivos para los avisos push
+    match /devices/{token} {
+      allow read, write: if isFamily();
+    }
+
+    // Registro interno de avisos enviados (solo lo usa la Cloud Function)
+    match /sentAlerts/{id} {
+      allow read, write: if false;
+    }
+  }
+}
