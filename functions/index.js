@@ -48,6 +48,22 @@ function dow(key) {
   return new Date(Date.UTC(y, m - 1, d)).getUTCDay();
 }
 
+const OVERRIDE_TAGS = ['festivo', 'vacaciones'];
+const HABITUAL_TAGS = ['trabajo', 'colegio', 'extraescolar', 'deberes', 'futbol', 'piano', 'solfeo', 'ingles', 'gimnasia'];
+
+function daysBetween(a, b) {
+  const [y1, m1, d1] = a.split('-').map(Number);
+  const [y2, m2, d2] = b.split('-').map(Number);
+  return Math.round((Date.UTC(y2, m2 - 1, d2) - Date.UTC(y1, m1 - 1, d1)) / 86400000);
+}
+
+/** ¿La actividad (p. ej. unas vacaciones de varios días) cubre ese día? */
+function covers(a, day) {
+  const span = Math.max(0, daysBetween(a.startDate, a.endDate || a.startDate));
+  for (let k = 0; k <= span; k++) if (isStartDay(a, addDays(day, -k))) return true;
+  return false;
+}
+
 /* ── repetición (misma lógica que la app) ── */
 function isStartDay(a, day) {
   if (day < a.startDate) return false;
@@ -70,6 +86,9 @@ exports.sendActivityAlerts = onSchedule(
     const today = localParts(now).key;
 
     const snap = await db.collection('activities').where('alert.enabled', '==', true).get();
+    const offSnap = await db.collection('activities').where('tag', 'in', OVERRIDE_TAGS).get();
+    const offs = offSnap.docs.map((d) => d.data());
+    const isOff = (a, day) => HABITUAL_TAGS.includes(a.tag) && offs.some((f) => f.person === a.person && covers(f, day));
     const due = [];
     for (const doc of snap.docs) {
       const a = doc.data();
@@ -77,7 +96,7 @@ exports.sendActivityAlerts = onSchedule(
       // Un aviso puede ser hasta 5 días antes, así que se miran los próximos 6 días
       for (let k = -1; k <= 6; k++) {
         const day = addDays(today, k);
-        if (!isStartDay(a, day)) continue;
+        if (!isStartDay(a, day) || isOff(a, day)) continue;
         const start = zonedToUtc(day, a.allDay ? '08:00' : a.startTime);
         const fire = start - (a.alert.minutesBefore || 0) * 60000;
         if (fire > windowStart && fire <= now) due.push({ id: doc.id, a, day, start });

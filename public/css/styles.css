@@ -415,6 +415,10 @@ textarea { resize: vertical; }
   display: inline-flex; align-items: center; gap: 5px; padding: 8px 12px; border-radius: 999px; background: var(--bg); font-weight: 800; font-size: 13.5px;
 }
 .tag.on { background: var(--c); color: #fff; }
+.field > span small { display: block; text-transform: none; letter-spacing: 0; font-weight: 700; margin-top: 2px; }
+.tag-group-cojonuda .tags { padding: 10px; border-radius: 16px; background: linear-gradient(135deg, #fff4dc, #ffe3ef); }
+.tag-group-cojonuda .tag { background: #fff; }
+.tag-group-cojonuda .tag.on { background: var(--c); }
 
 .dt-grid { display: grid; grid-template-columns: 52px 1fr 104px; gap: 8px; align-items: center; }
 .dt-grid small { font-weight: 800; color: var(--muted); font-size: 12px; }

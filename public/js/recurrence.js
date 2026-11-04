@@ -1,5 +1,6 @@
 // Expansión de actividades (puntuales y repetidas) a ocurrencias de un día concreto.
 import { addDays, diffDays, dow, timeToMin } from './dates.js';
+import { OVERRIDE_TAGS, HABITUAL_TAGS } from './config.js';
 
 export function lastDateOf(a) {
   if (!a.repeat || a.repeat === 'none') return a.endDate || a.startDate;
@@ -51,6 +52,13 @@ export function occurrencesOn(activities, day, personIds) {
     if (set && !set.has(a.person)) continue;
     const o = occurrenceOn(a, day);
     if (o) out.push(o);
+  }
+  // Festivo / Vacaciones anulan las actividades con etiqueta habitual de esa persona
+  const off = new Set(out.filter((o) => OVERRIDE_TAGS.includes(o.a.tag)).map((o) => o.a.person));
+  if (off.size) {
+    for (let i = out.length - 1; i >= 0; i--) {
+      if (off.has(out[i].a.person) && HABITUAL_TAGS.includes(out[i].a.tag)) out.splice(i, 1);
+    }
   }
   out.sort((x, y) => x.startMin - y.startMin || y.endMin - x.endMin);
   return out;

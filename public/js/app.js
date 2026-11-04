@@ -1,5 +1,5 @@
 import {
-  PEOPLE, PERSON, TAG_GROUPS, DEFAULT_TAG, PRIORITIES, PRIORITY, REPEATS, ALERT_OPTIONS,
+  PEOPLE, PERSON, TAG_GROUPS, DEFAULT_TAG, OVERRIDE_TAGS, PRIORITIES, PRIORITY, REPEATS, ALERT_OPTIONS,
   WINDOW_DAYS, DEFAULT_START_HOUR, DEFAULT_END_HOUR, PX_PER_MIN,
 } from './config.js';
 import { fromKey, todayKey, addDays, diffDays, timeToMin, minToTime, fmtTime, nowMin } from './dates.js';
@@ -726,7 +726,7 @@ function openEditor(a, { occ } = {}) {
         <input name="title" value="${esc(d.title)}" placeholder="${esc(t('titlePh'))}" autocomplete="off">
       </label>
 
-      ${TAG_GROUPS.map((g) => `<div class="field"><span>${esc(t(`tagGroup.${g.id}`))}</span>
+      ${TAG_GROUPS.map((g) => `<div class="field tag-group-${g.id}"><span>${esc(t(`tagGroup.${g.id}`))}${g.id === 'cojonuda' ? `<small>${esc(t('tagGroup.cojonudaHint'))}</small>` : ''}</span>
         <div class="tags">${g.tags.map((id) => `<button type="button" class="tag press ${d.tag === id ? 'on' : ''}" data-tag="${id}">${esc(t(`tag.${id}`))}</button>`).join('')}</div>
       </div>`).join('')}
 
@@ -801,6 +801,11 @@ function openEditor(a, { occ } = {}) {
     if (b.dataset.tag) {
       $$('.tag', form).forEach((x) => x.classList.toggle('on', x === b));
       d.tag = b.dataset.tag;
+      // Festivo y Vacaciones: por defecto todo el día
+      if (OVERRIDE_TAGS.includes(d.tag) && !f.allDay.checked) {
+        f.allDay.checked = true;
+        f.allDay.dispatchEvent(new Event('change'));
+      }
     }
     const seg = b.closest('[data-seg]');
     if (seg && b.dataset.v) {
@@ -1099,12 +1104,15 @@ function scheduleLocalAlerts() {
   if (store.mode === 'firebase' || !prefs.notif || !swReg || Notification.permission !== 'granted') return;
   const me = prefs.me || selectedIds()[0];
   const now = Date.now();
+  const cache = {};
+  const visible = (day) => (cache[day] ||= new Set(occurrencesOn(state.activities, day, [me]).map((x) => x.a.id)));
   for (let k = 0; k <= 6; k++) {
     const day = addDays(todayKey(), k);
     for (const a of state.activities) {
       if (a.person !== me || !a.alert?.enabled) continue;
       const o = occurrenceOn(a, day);
       if (!o || o.occStart !== day) continue;
+      if (!visible(day).has(a.id)) continue; // anulada por Festivo / Vacaciones
       const start = fromKey(day);
       start.setMinutes(a.allDay ? 8 * 60 : timeToMin(a.startTime));
       const fire = start.getTime() - (a.alert.minutesBefore || 0) * 60000;

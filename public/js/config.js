@@ -12,8 +12,13 @@ export const PERSON = Object.fromEntries(PEOPLE.map((p) => [p.id, p]));
 // Etiquetas de actividad en dos grupos y en este orden (el texto se traduce en i18n.js con la clave tag.<id>)
 export const TAG_GROUPS = [
   { id: 'habitual', tags: ['trabajo', 'colegio', 'extraescolar', 'deberes', 'futbol', 'piano', 'solfeo', 'ingles', 'gimnasia'] },
-  { id: 'extra', tags: ['examen', 'compras', 'tarea', 'medico', 'burocracia', 'taller_arte', 'viaje_trabajo', 'festivo'] },
+  { id: 'extra', tags: ['examen', 'compras', 'tarea', 'medico', 'burocracia', 'taller_arte', 'viaje_trabajo'] },
+  { id: 'cojonuda', tags: ['festivo', 'vacaciones'] },
 ];
+
+// Festivo y Vacaciones anulan las etiquetas habituales de esa persona ese día
+export const OVERRIDE_TAGS = ['festivo', 'vacaciones'];
+export const HABITUAL_TAGS = TAG_GROUPS[0].tags;
 
 // Etiquetas antiguas: ya no se ofrecen, pero se siguen mostrando si alguna actividad las tiene
 const LEGACY_TAGS = ['evento', 'musica'];
