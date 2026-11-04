@@ -80,6 +80,10 @@ svg { display: block; }
 #splash.login { gap: 16px; padding: 24px; }
 .login-sub { color: var(--cream); opacity: 0.85; margin: 0; font-weight: 700; }
 .login-err { color: #ffd2d2; margin: 0; text-align: center; max-width: 320px; font-size: 14px; }
+.login-form { display: flex; flex-direction: column; gap: 10px; width: min(300px, 100%); }
+.login-form input { background: rgba(255, 255, 255, 0.95); text-align: center; font-size: 16px; }
+.login-form .btn { width: 100%; }
+.login-alt { display: inline-flex; align-items: center; gap: 8px; color: var(--cream); opacity: 0.75; font-weight: 800; font-size: 14px; padding: 8px; }
 
 @keyframes figIn { from { opacity: 0; transform: translateY(22px) scale(0.92); } to { opacity: 1; transform: none; } }
 @keyframes smileIn { from { opacity: 0; transform: scaleX(0.5); } to { opacity: 1; transform: none; } }

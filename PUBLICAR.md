@@ -7,7 +7,7 @@ Al terminar tendréis la app en `https://TU-PROYECTO.firebaseapp.com`, con los d
 
 ## 0. Lo que necesitas
 
-- Una cuenta de Google (la de Carles sirve).
+- Una cuenta de Google **solo para crear el proyecto** (la de Carles sirve). La familia **no** necesita email: entraréis todos con una **cuenta familiar** y una contraseña.
 - En el ordenador: **Node.js** (versión 20 o superior) → https://nodejs.org (botón "LTS").
 - **Git** → https://git-scm.com (en Mac ya viene instalado).
 
@@ -18,7 +18,13 @@ Al terminar tendréis la app en `https://TU-PROYECTO.firebaseapp.com`, con los d
 1. Entra en https://console.firebase.google.com y pulsa **Crear un proyecto**.
    - Nombre: por ejemplo `guachis-home`. Apunta el **ID del proyecto** que te propone (p. ej. `guachis-home-1a2b3`).
    - Google Analytics: puedes desactivarlo.
-2. **Authentication** (menú izquierdo → Compilación → Authentication) → **Comenzar** → pestaña *Método de acceso* → **Google** → Habilitar → elige tu correo de asistencia → Guardar.
+2. **Authentication** (menú izquierdo → Compilación → Authentication) → **Comenzar**:
+   - Pestaña *Método de acceso* → **Correo electrónico/contraseña** → Habilitar (solo el primer interruptor) → Guardar.
+   - Pestaña *Usuarios* → **Añadir usuario**:
+     - Correo: `familia@guachis-home.app` (no tiene que existir, es solo un nombre de usuario)
+     - Contraseña: la que queráis (mínimo 6 caracteres). **Es la contraseña que usará toda la familia.**
+   - Pestaña *Configuración* → *Acciones de usuario* → **desmarca** "Habilitar la creación (registro)". Así nadie más puede crearse una cuenta.
+   - (Opcional) Si alguien quiere entrar con su propio Gmail: *Método de acceso* → **Google** → Habilitar, y añade su correo en `firestore.rules` (paso 3.2).
 3. **Firestore Database** → **Crear base de datos** → *Modo de producción* → ubicación **`europe-west1` (Bélgica)** → Habilitar.
 4. **Configuración del proyecto** (rueda dentada ⚙️ arriba a la izquierda) → pestaña *General* → abajo, en *Tus apps*, pulsa el icono **`</>`** (Web):
    - Apodo: `Guachis Home`. **No** marques Firebase Hosting aquí (lo haremos con la terminal).
@@ -61,6 +67,8 @@ self.FIREBASE_CONFIG = {
   appId: '1:1234567890:web:abcdef',
 };
 
+self.FAMILY_EMAIL = 'familia@guachis-home.app';   // el usuario que creaste en el paso 1.2
+
 self.FIREBASE_VAPID_KEY = 'BOp...la-clave-del-paso-1.5...';
 ```
 
@@ -68,18 +76,18 @@ self.FIREBASE_VAPID_KEY = 'BOp...la-clave-del-paso-1.5...';
 
 ### 3.2 `firestore.rules` — quién puede entrar
 
-Cambia los 4 correos de ejemplo por las **cuentas de Google reales** de la familia (en minúsculas):
+Ya viene preparado para la cuenta familiar `familia@guachis-home.app`: **no hace falta tocar nada** si usaste ese correo en el paso 1.2.
+
+- Si elegiste otro correo para la cuenta familiar, cámbialo aquí **y** en `firebase-config.js` (deben ser iguales).
+- Opcional: si alguien quiere entrar con su propio Gmail, añádelo en la lista (quitando las `//`):
 
 ```
 request.auth.token.email in [
   'carles@gmail.com',
-  'adriana@gmail.com',
-  'gabri@gmail.com',
-  'franci@gmail.com'
 ]
 ```
 
-Solo esas cuentas podrán ver y modificar la agenda. Si alguien no tiene cuenta propia, puede entrar con la de papá o mamá.
+Solo la cuenta familiar (y los Gmail que añadas) podrán ver y modificar la agenda.
 
 ### 3.3 `.firebaserc`
 
@@ -125,8 +133,8 @@ Al terminar verás: `Hosting URL: https://guachis-home-1a2b3.web.app`.
 1. Abre `https://TU-ID.firebaseapp.com`:
    - **iPhone**: con **Safari**.
    - **Android**: con **Chrome**.
-2. Pulsa **Entrar con Google** con la cuenta de esa persona.
-3. Elige **¿Quién eres?** (Carles, Adriana, Gabri o Franci).
+2. Escribe la **contraseña de la familia** y pulsa **Entrar** (solo la primera vez: el móvil la recuerda).
+3. Elige **¿Quién eres?** (Carles, Adriana, Gabri o Franci). Cada móvil recuerda quién es, aunque todos usen la misma cuenta, y los avisos llegan a la persona elegida.
 4. Añádela a la pantalla de inicio (aparecerá con el icono de la casita):
    - **iPhone**: botón Compartir (cuadrado con flecha) → **Añadir a pantalla de inicio**.
    - **Android**: menú ⋮ → **Instalar aplicación** (o *Añadir a pantalla de inicio*).
@@ -148,9 +156,10 @@ La primera vez que alguien entra, la app carga sola los horarios de **Gabri**, *
 
 | Síntoma | Solución |
 |---|---|
-| "Esta cuenta no tiene acceso a la agenda familiar" | El correo no está en `firestore.rules` o está mal escrito. Corrígelo y ejecuta `firebase deploy --only firestore`. |
+| "Contraseña incorrecta" | Revisa la contraseña. Para cambiarla: Authentication → Usuarios → ⋮ junto a `familia@…` → Restablecer contraseña / Editar. |
+| "Esta cuenta no tiene acceso a la agenda familiar" | El correo de la cuenta familiar no coincide entre `firebase-config.js`, `firestore.rules` y el usuario creado. Corrígelo y ejecuta `firebase deploy`. |
 | Ajustes dice *Modo demo* | `firebase-config.js` está vacío o mal copiado. Corrígelo y `firebase deploy --only hosting`. |
-| En iPhone no deja iniciar sesión | Abre la dirección `…firebaseapp.com` (no `…web.app`) y comprueba que `authDomain` es `TU-ID.firebaseapp.com`. |
+| En iPhone no deja entrar con Google | Usa la contraseña de la familia, o abre la dirección `…firebaseapp.com` (no `…web.app`). |
 | No llegan los avisos con la app cerrada | Hace falta el plan Blaze, haber publicado con `firebase deploy` y pulsar *Activar avisos* en ese móvil. En iPhone, abrir la app desde el icono. |
 | `Error: HTTP 403` al publicar funciones | Activa el plan Blaze y vuelve a ejecutar `firebase deploy`. |
 

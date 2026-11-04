@@ -49,6 +49,14 @@ export const firebaseStore = {
     return { ok: !!user, user };
   },
 
+  /** Cuenta familiar compartida (correo + contraseña), sin necesidad de que cada uno tenga email. */
+  async signInFamily(password) {
+    const f = await load();
+    const r = await f.signInWithEmailAndPassword(auth, self.FAMILY_EMAIL, password);
+    this.user = r.user;
+    return r.user;
+  },
+
   async signIn() {
     const f = await load();
     const provider = new f.GoogleAuthProvider();

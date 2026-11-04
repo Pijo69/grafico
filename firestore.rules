@@ -1,18 +1,19 @@
 rules_version = '2';
 
-// Solo los correos de la familia pueden leer y escribir.
-// ✏️ Cambia estos correos por las cuentas de Google de Carles, Adriana, Gabri y Franci.
+// Quién puede leer y escribir la agenda.
+// ✏️ FAMILY_EMAIL debe ser el mismo que pusiste en public/js/firebase-config.js
+//    (la cuenta familiar compartida, con contraseña).
+// ✏️ Opcional: añade en la lista las cuentas de Google de quien quiera entrar con su propio Gmail.
 service cloud.firestore {
   match /databases/{database}/documents {
     function isFamily() {
-      return request.auth != null
-        && request.auth.token.email_verified == true
-        && request.auth.token.email in [
-          'carles@example.com',
-          'adriana@example.com',
-          'gabri@example.com',
-          'franci@example.com'
-        ];
+      return request.auth != null && (
+        request.auth.token.email == 'familia@guachis-home.app'
+        || (request.auth.token.email_verified == true
+            && request.auth.token.email in [
+              // 'carles@gmail.com',
+            ])
+      );
     }
 
     match /activities/{id} {

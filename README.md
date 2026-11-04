@@ -35,11 +35,11 @@ Después abre http://localhost:8080
 👉 **Guía detallada paso a paso: [PUBLICAR.md](PUBLICAR.md)**
 
 1. Crea un proyecto en https://console.firebase.google.com
-2. **Authentication** → Métodos de acceso → activa **Google**.
+2. **Authentication** → activa **Correo electrónico/contraseña** y crea el usuario `familia@guachis-home.app` con la contraseña de la familia (nadie necesita email propio).
 3. **Firestore Database** → Crear base de datos (modo producción, región `eur3` o `europe-west1`).
 4. Configuración del proyecto → **Tus apps** → añade una **App web** y copia su configuración en `public/js/firebase-config.js`.
 5. **Cloud Messaging** → Certificados push web → **Generar par de claves** y pega la clave en `FIREBASE_VAPID_KEY` (en el mismo archivo).
-6. En `firestore.rules` cambia los 4 correos de ejemplo por las cuentas de Google de la familia.
+6. `firestore.rules` ya permite la cuenta familiar; opcionalmente añade Gmail personales.
 7. En `.firebaserc` pon el id de tu proyecto.
 8. Instala la CLI y publica:
 

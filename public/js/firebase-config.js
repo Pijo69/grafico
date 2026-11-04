@@ -12,5 +12,10 @@ self.FIREBASE_CONFIG = {
   appId: '',
 };
 
+// Cuenta familiar compartida: toda la familia entra con este "correo" y una contraseña.
+// No hace falta que sea un email real. Créala en Firebase → Authentication → Usuarios → Añadir usuario.
+// Si lo dejas vacío, se entra con cuentas de Google.
+self.FAMILY_EMAIL = 'familia@guachis-home.app';
+
 // Clave VAPID para avisos push (Consola → Cloud Messaging → Certificados push web).
 self.FIREBASE_VAPID_KEY = '';
