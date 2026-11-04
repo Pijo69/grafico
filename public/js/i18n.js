@@ -131,6 +131,7 @@ const T = {
     'tag.gimnasia': 'Gimnasia',
     'tag.taller_arte': 'Taller arte',
     'tag.viaje_trabajo': 'Viaje trabajo',
+    'tag.festivo': 'Festivo',
     notifTitle: 'Aviso · {name}',
   },
   it: {
@@ -257,6 +258,7 @@ const T = {
     'tag.gimnasia': 'Ginnastica',
     'tag.taller_arte': 'Laboratorio arte',
     'tag.viaje_trabajo': 'Viaggio di lavoro',
+    'tag.festivo': 'Festivo',
     notifTitle: 'Avviso · {name}',
   },
   va: {
@@ -383,6 +385,7 @@ const T = {
     'tag.gimnasia': 'Gimnàstica',
     'tag.taller_arte': 'Taller d’art',
     'tag.viaje_trabajo': 'Viatge de treball',
+    'tag.festivo': 'Festiu',
     notifTitle: 'Avís · {name}',
   },
 };

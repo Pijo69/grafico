@@ -12,7 +12,7 @@ export const PERSON = Object.fromEntries(PEOPLE.map((p) => [p.id, p]));
 // Etiquetas de actividad en dos grupos y en este orden (el texto se traduce en i18n.js con la clave tag.<id>)
 export const TAG_GROUPS = [
   { id: 'habitual', tags: ['trabajo', 'colegio', 'extraescolar', 'deberes', 'futbol', 'piano', 'solfeo', 'ingles', 'gimnasia'] },
-  { id: 'extra', tags: ['examen', 'compras', 'tarea', 'medico', 'burocracia', 'taller_arte', 'viaje_trabajo'] },
+  { id: 'extra', tags: ['examen', 'compras', 'tarea', 'medico', 'burocracia', 'taller_arte', 'viaje_trabajo', 'festivo'] },
 ];
 
 // Etiquetas antiguas: ya no se ofrecen, pero se siguen mostrando si alguna actividad las tiene
