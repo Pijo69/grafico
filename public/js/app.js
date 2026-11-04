@@ -1,5 +1,5 @@
 import {
-  PEOPLE, PERSON, TAGS, PRIORITIES, PRIORITY, REPEATS, ALERT_OPTIONS,
+  PEOPLE, PERSON, TAG_GROUPS, DEFAULT_TAG, PRIORITIES, PRIORITY, REPEATS, ALERT_OPTIONS,
   WINDOW_DAYS, DEFAULT_START_HOUR, DEFAULT_END_HOUR, PX_PER_MIN,
 } from './config.js';
 import { fromKey, todayKey, addDays, diffDays, timeToMin, minToTime, fmtTime, nowMin } from './dates.js';
@@ -195,6 +195,17 @@ async function maybeSeed(list) {
   const patches = list
     .filter((a) => a.source === 'excel-1eso-b' && a.startTime < '15:00' && ['normal', 'relajado'].includes(a.priority))
     .map((a) => ({ id: a.id, data: { priority: 'muy_importante' } }));
+  const NEW_TAGS = { Piano: 'piano', Saxo: 'extraescolar', 'Banda de música': 'extraescolar', Estudiar: 'deberes' };
+  const tagPatches = list
+    .filter((a) => a.source === 'excel-1eso-b' && NEW_TAGS[a.title] && a.tag !== NEW_TAGS[a.title] && ['musica', 'tarea'].includes(a.tag))
+    .map((a) => ({ id: a.id, data: { tag: NEW_TAGS[a.title] } }));
+  if (tagPatches.length && onceFlag('gh.migr.gabri-tags')) {
+    try {
+      await store.patchMany(tagPatches);
+    } catch (e) {
+      console.warn('Migración etiquetas', e);
+    }
+  }
   if (patches.length && onceFlag('gh.migr.gabri-importante')) {
     try {
       await store.patchMany(patches);
@@ -682,7 +693,7 @@ function openEditor(a, { occ } = {}) {
     : {
         person,
         title: '',
-        tag: 'evento',
+        tag: DEFAULT_TAG,
         startDate: state.date,
         endDate: state.date,
         startTime: minToTime(startMin),
@@ -712,9 +723,9 @@ function openEditor(a, { occ } = {}) {
         <input name="title" value="${esc(d.title)}" placeholder="${esc(t('titlePh'))}" autocomplete="off">
       </label>
 
-      <div class="field"><span>${esc(t('tagLabel'))}</span>
-        <div class="tags">${TAGS.map((tg) => `<button type="button" class="tag press ${d.tag === tg.id ? 'on' : ''}" data-tag="${tg.id}">${esc(t(`tag.${tg.id}`))}</button>`).join('')}</div>
-      </div>
+      ${TAG_GROUPS.map((g) => `<div class="field"><span>${esc(t(`tagGroup.${g.id}`))}</span>
+        <div class="tags">${g.tags.map((id) => `<button type="button" class="tag press ${d.tag === id ? 'on' : ''}" data-tag="${id}">${esc(t(`tag.${id}`))}</button>`).join('')}</div>
+      </div>`).join('')}
 
       <div class="field">
         <div class="row-between"><span>${esc(t('from'))} / ${esc(t('to'))}</span>

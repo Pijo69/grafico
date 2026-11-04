@@ -9,25 +9,17 @@ export const PEOPLE = [
 
 export const PERSON = Object.fromEntries(PEOPLE.map((p) => [p.id, p]));
 
-// Etiquetas de actividad (el texto se traduce en i18n.js con la clave tag.<id>)
-export const TAGS = [
-  { id: 'evento', icon: '🎉' },
-  { id: 'examen', icon: '📝' },
-  { id: 'deberes', icon: '📚' },
-  { id: 'compras', icon: '🛒' },
-  { id: 'tarea', icon: '✅' },
-  { id: 'trabajo', icon: '💼' },
-  { id: 'colegio', icon: '🏫' },
-  { id: 'extraescolar', icon: '🧩' },
-  { id: 'medico', icon: '🩺' },
-  { id: 'burocracia', icon: '📄' },
-  { id: 'futbol', icon: '⚽' },
-  { id: 'musica', icon: '🎵' },
-  { id: 'ingles', icon: '🔤' },
-  { id: 'gimnasia', icon: '🤸' },
-  { id: 'taller_arte', icon: '🎨' },
-  { id: 'viaje_trabajo', icon: '✈️' },
+// Etiquetas de actividad en dos grupos y en este orden (el texto se traduce en i18n.js con la clave tag.<id>)
+export const TAG_GROUPS = [
+  { id: 'habitual', tags: ['trabajo', 'colegio', 'extraescolar', 'deberes', 'futbol', 'piano', 'solfeo', 'ingles', 'gimnasia'] },
+  { id: 'extra', tags: ['examen', 'compras', 'tarea', 'medico', 'burocracia', 'taller_arte', 'viaje_trabajo'] },
 ];
+
+// Etiquetas antiguas: ya no se ofrecen, pero se siguen mostrando si alguna actividad las tiene
+const LEGACY_TAGS = ['evento', 'musica'];
+
+export const TAGS = [...TAG_GROUPS.flatMap((g) => g.tags), ...LEGACY_TAGS].map((id) => ({ id }));
+export const DEFAULT_TAG = 'trabajo';
 
 export const TAG = Object.fromEntries(TAGS.map((t) => [t.id, t]));
 

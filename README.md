@@ -9,7 +9,7 @@ App web (PWA, se instala en el móvil) para ver y editar los horarios de **Carle
 - **Franjas horarias** desde las 8:00 (o antes si hay algo más temprano) hasta las 21:00 (o más tarde si hace falta), con una línea que marca la hora actual.
 - **Punto rojo**: aparece en la actividad y en el día de la tira cuando algo es SÚPER IMPORTANTE.
 - **Botón + flotante** (cuando hay una sola persona seleccionada): toca una hora para elegirla y pulsa + para añadir una actividad. Si tocas una actividad, se abre para editarla.
-- **Editor**: etiqueta (evento, tarea, trabajo, colegio, extraescolar, médico, burocracia, fútbol, música, inglés, gimnasia, taller arte, viaje trabajo), desde/hasta (minutos, horas o días, con botones de duración rápida), repetición (extra, diario, entre semana, semanal), importancia (muy importante, urgente, normal, relajado) y **aviso en el móvil**.
+- **Editor**: etiqueta habitual (trabajo, colegio, extraescolar, deberes, fútbol, piano, solfeo, inglés, gimnasia) o extra (examen, compra, tarea, médico, burocracia, taller arte, viaje trabajo), desde/hasta (minutos, horas o días, con botones de duración rápida), repetición (extra, diario, entre semana, semanal), importancia (muy importante, urgente, normal, relajado) y **aviso en el móvil**.
 - El **color de cada actividad es más o menos intenso** según su importancia.
 - **Resumen** del día en texto y **voz** (global o de cada persona).
 - Idiomas: **Español** (predefinido), **Italiano** y **Valenciano**.

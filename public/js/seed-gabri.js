@@ -20,12 +20,12 @@ const SCHOOL = [
 // [día (1=lunes), actividad, etiqueta, inicio, fin, notas]
 const EXTRA = [
   [1, 'Fútbol', 'futbol', '17:30', '19:00', ''],
-  [2, 'Estudiar', 'tarea', '17:00', '18:30', 'Sin horario especificado'],
-  [3, 'Piano', 'musica', '16:00', '18:00', 'A veces termina a las 18:30'],
+  [2, 'Estudiar', 'deberes', '17:00', '18:30', 'Sin horario especificado'],
+  [3, 'Piano', 'piano', '16:00', '18:00', 'A veces termina a las 18:30'],
   [4, 'Inglés', 'ingles', '15:30', '17:00', ''],
-  [4, 'Saxo', 'musica', '17:30', '18:15', ''],
+  [4, 'Saxo', 'extraescolar', '17:30', '18:15', ''],
   [4, 'Fútbol', 'futbol', '18:30', '20:00', ''],
-  [5, 'Banda de música', 'musica', '18:15', '19:15', ''],
+  [5, 'Banda de música', 'extraescolar', '18:15', '19:15', ''],
 ];
 
 const DAY_IDS = ['', 'lun', 'mar', 'mie', 'jue', 'vie'];
