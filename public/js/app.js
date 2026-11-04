@@ -478,6 +478,7 @@ function renderBoard(dir) {
       <div class="grid" style="--n:${ids.length};--hour:${hourPx}px;height:${height}px" data-start="${startH}">
         <div class="gutter">${hours}</div>
         ${columns}
+        <div class="hour-lines" aria-hidden="true"></div>
         <div class="now-line" hidden></div>
         ${emptyHtml}
       </div>

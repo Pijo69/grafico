@@ -327,7 +327,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
 .act.prio-relajado, .pill.prio-relajado { border-left-style: dashed; color: var(--ink-2); }
 
 .slot {
-  position: absolute; left: 3px; right: 3px; top: 0; z-index: 3; border-radius: 12px; padding: 0 8px !important;
+  position: absolute; left: 3px; right: 3px; top: 0; z-index: 4; border-radius: 12px; padding: 0 8px !important;
   display: flex; align-items: center; justify-content: space-between; padding: 0 10px;
   background: color-mix(in srgb, var(--c) 14%, transparent); border: 2px dashed var(--c); color: var(--c); font-weight: 900; font-size: 13px;
   transition: transform 220ms var(--ease-out);
@@ -335,6 +335,13 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
 }
 .slot svg { width: 18px; height: 18px; }
 
+/* Franjas horarias visibles (suaves) también encima de las actividades */
+.hour-lines {
+  position: absolute; top: 0; bottom: 0; left: var(--gutter); right: 0; z-index: 3; pointer-events: none;
+  background-image:
+    repeating-linear-gradient(to bottom, rgba(17, 18, 20, 0.13) 0 1px, transparent 1px var(--hour)),
+    repeating-linear-gradient(to bottom, transparent 0 calc(var(--hour) / 2), rgba(17, 18, 20, 0.05) calc(var(--hour) / 2) calc(var(--hour) / 2 + 1px), transparent calc(var(--hour) / 2 + 1px) var(--hour));
+}
 .now-line {
   position: absolute; top: 0; left: calc(var(--gutter) - 6px); right: 0; height: 2px; background: var(--danger); z-index: 4; pointer-events: none;
   transition: transform 600ms var(--ease-in-out);
